@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <title>Đăng Nhập - VORDER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Đăng nhập tài khoản VORDER" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            min-height: 600px;
+        }
+
+        .auth-left {
+            background: linear-gradient(135deg, #FF6B35 0%, #ff8659 100%);
+            color: white;
+            padding: 50px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .auth-right {
+            padding: 50px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .auth-left h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .auth-left p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .auth-features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .auth-features li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .auth-features li i {
+            margin-right: 10px;
+            color: #ffe6d9;
+        }
+
+        .form-title {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+        }
+
+        .input-group .form-control {
+            border-right: none;
+        }
+
+        .input-group-text {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            color: #666;
+        }
+
+        .form-control:focus + .input-group-text {
+            border-color: #FF6B35;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FF6B35, #ff8659);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid #FF6B35;
+            color: #FF6B35;
+            background: transparent;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-outline:hover {
+            background: #FF6B35;
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-check {
+            margin: 20px 0;
+        }
+
+        .form-check-input:checked {
+            background-color: #FF6B35;
+            border-color: #FF6B35;
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+        }
+
+        .forgot-link {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-link:hover {
+            color: #e55a2e;
+            text-decoration: underline;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #666;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-social {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: white;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-social:hover {
+            border-color: #FF6B35;
+            color: #FF6B35;
+            text-decoration: none;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .alert-danger {
+            background: #ffe6e6;
+            color: #d63384;
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            color: white;
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                margin: 10px;
+            }
+
+            .auth-left {
+                padding: 30px 20px;
+            }
+
+            .auth-right {
+                padding: 30px 20px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .form-title {
+                font-size: 1.5rem;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/index.html" class="back-to-home">
+        <i class="fa fa-arrow-left mr-2"></i>Về Trang Chủ
+    </a>
+
+    <div class="auth-container">
+        <!-- Left Side - Info -->
+        <div class="auth-left">
+            <div class="logo">
+                <i class="fa fa-truck mr-2"></i>VORDER
+            </div>
+            <h2>Chào Mừng Trở Lại!</h2>
+            <p>Đăng nhập để quản lý đơn hàng, theo dõi giao hàng và trải nghiệm dịch vụ tốt nhất từ VORDER.</p>
+            
+            <ul class="auth-features">
+                <li><i class="fa fa-check"></i>Quản lý đơn hàng dễ dàng</li>
+                <li><i class="fa fa-check"></i>Theo dõi realtime</li>
+                <li><i class="fa fa-check"></i>Lịch sử giao dịch chi tiết</li>
+                <li><i class="fa fa-check"></i>Hỗ trợ 24/7</li>
+                <li><i class="fa fa-check"></i>Ưu đãi thành viên</li>
+            </ul>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="auth-right">
+            <h1 class="form-title">Đăng Nhập</h1>
+            <p class="form-subtitle">Nhập thông tin để truy cập tài khoản</p>
+
+            <!-- Error Alert (hidden by default) -->
+            <div class="alert alert-danger" id="errorAlert" style="display: none;">
+                <i class="fa fa-exclamation-triangle mr-2"></i>
+                <span id="errorMessage">Thông tin đăng nhập không chính xác!</span>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email hoặc Số điện thoại</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="username" placeholder="your@email.com hoặc 0901234567" required>
+                        <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Mật khẩu</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                        <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                            <i class="fa fa-eye" id="eyeIcon"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+                    <a href="#" class="forgot-link">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">
+                    <i class="fa fa-sign-in-alt mr-2"></i>Đăng Nhập
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>hoặc</span>
+            </div>
+
+            <!-- Social Login -->
+            <div class="social-login">
+                <a href="#" class="btn-social">
+                    <i class="fab fa-google"></i>Google
+                </a>
+                <a href="#" class="btn-social">
+                    <i class="fab fa-facebook-f"></i>Facebook
+                </a>
+            </div>
+
+            <!-- Register Link -->
+            <div class="text-center">
+                <span class="text-muted">Chưa có tài khoản? </span>
+                <a href="register.html" class="btn-outline mt-2">
+                    <i class="fa fa-user-plus mr-2"></i>Đăng Ký Ngay
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                eyeIcon.className = 'fa fa-eye-slash';
+            } else {
+                password.type = 'password';
+                eyeIcon.className = 'fa fa-eye';
+            }
+        });
+
+        // Form validation and submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hide previous errors
+            errorAlert.style.display = 'none';
+            
+            // Basic validation
+            if (!username || !password) {
+                showError('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+            
+            // Email or phone validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9]{10,11}$/;
+            
+            if (!emailRegex.test(username) && !phoneRegex.test(username)) {
+                showError('Email hoặc số điện thoại không hợp lệ!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('Mật khẩu phải có ít nhất 6 ký tự!');
+                return;
+            }
+            
+            // Simulate login process
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Đang xử lý...';
+            submitBtn.disabled = true;
+            
+            // Demo login (replace with real API call)
+            setTimeout(() => {
+                // Demo accounts for testing
+                const validAccounts = [
+                    { username: 'admin@vorder.vn', password: '123456' },
+                    { username: 'demo@gmail.com', password: 'demo123' },
+                    { username: '0901234567', password: '123456' }
+                ];
+                
+                const isValid = validAccounts.some(account => 
+                    account.username === username && account.password === password
+                );
+                
+                if (isValid) {
+                    // Success - redirect to dashboard
+                    localStorage.setItem('vorder_user', JSON.stringify({
+                        username: username,
+                        loginTime: new Date().toISOString()
+                    }));
+                    
+                    alert('Đăng nhập thành công!\nChuyển đến Dashboard...');
+                    window.location.href = 'dashboard.html';
+                } else {
+                    showError('Email/SĐT hoặc mật khẩu không chính xác!');
+                }
+                
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Show error message
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            errorMessage.textContent = message;
+            errorAlert.style.display = 'block';
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                errorAlert.style.display = 'none';
+            }, 5000);
+        }
+
+        // Auto-format phone number
+        document.getElementById('username').addEventListener('input', function(e) {
+            let value = e.target.value;
+            
+            // If it looks like a phone number, format it
+            if (/^[0-9]+$/.test(value) && value.length > 0) {
+                // Remove any non-digits
+                value = value.replace(/\D/g, '');
+                // Limit to 11 digits
+                if (value.length > 11) {
+                    value = value.substring(0, 11);
+                }
+                e.target.value = value;
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('load', function() {
+            const userData = localStorage.getItem('vorder_user');
+            if (userData) {
+                const user = JSON.parse(userData);
+                // Check if login is still valid (less than 24 hours)
+                const loginTime = new Date(user.loginTime);
+                const now = new Date();
+                const diffHours = (now - loginTime) / (1000 * 60 * 60);
+                
+                if (diffHours < 24) {
+                    // Still logged in, redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }
+            }
+        });
+
+        // Social login handlers
+        document.querySelector('.btn-social:nth-child(1)').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Đăng nhập Google đang được phát triển...');
+        });
+
+        document.querySelector('.btn-social:nth-child(2)').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Đăng nhập Facebook đang được phát triển...');
+        });
+
+        // Forgot password handler
+        document.querySelector('.forgot-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = prompt('Nhập email để khôi phục mật khẩu:');
+            if (email) {
+                alert('Link khôi phục đã được gửi đến: ' + email);
+            }
+        });
+    </script>
+</body>
+
+</html>

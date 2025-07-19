@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <title>Đăng Ký - VORDER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Đăng ký tài khoản VORDER" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            min-height: 700px;
+        }
+
+        .auth-left {
+            background: linear-gradient(135deg, #FF6B35 0%, #ff8659 100%);
+            color: white;
+            padding: 50px 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .auth-right {
+            padding: 40px;
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .auth-left h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .auth-left p {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .auth-benefits {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .auth-benefits li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .auth-benefits li i {
+            margin-right: 12px;
+            color: #ffe6d9;
+            width: 16px;
+        }
+
+        .form-title {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+        }
+
+        .input-group .form-control {
+            border-right: none;
+        }
+
+        .input-group-text {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            color: #666;
+        }
+
+        .form-control:focus + .input-group-text {
+            border-color: #FF6B35;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #FF6B35, #ff8659);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid #FF6B35;
+            color: #FF6B35;
+            background: transparent;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-outline:hover {
+            background: #FF6B35;
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-check {
+            margin: 15px 0;
+        }
+
+        .form-check-input:checked {
+            background-color: #FF6B35;
+            border-color: #FF6B35;
+        }
+
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25);
+        }
+
+        .form-check-label {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .form-check-label a {
+            color: #FF6B35;
+            text-decoration: none;
+        }
+
+        .form-check-label a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .alert-danger {
+            background: #ffe6e6;
+            color: #d63384;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+
+        .strength-weak { color: #dc3545; }
+        .strength-medium { color: #ffc107; }
+        .strength-strong { color: #28a745; }
+
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            color: white;
+            opacity: 1;
+            text-decoration: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-social {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: white;
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-social:hover {
+            border-color: #FF6B35;
+            color: #FF6B35;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                margin: 10px;
+                max-height: 90vh;
+            }
+
+            .auth-left {
+                padding: 25px 20px;
+            }
+
+            .auth-right {
+                padding: 25px 20px;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .form-title {
+                font-size: 1.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fa fa-arrow-left mr-2"></i>Về Trang Chủ
+    </a>
+
+    <div class="auth-container">
+        <!-- Left Side - Info -->
+        <div class="auth-left">
+            <div class="logo">
+                <i class="fa fa-truck mr-2"></i>VORDER
+            </div>
+            <h2>Tham Gia VORDER!</h2>
+            <p>Tạo tài khoản để trải nghiệm dịch vụ giao hàng chuyên nghiệp hàng đầu Việt Nam.</p>
+            
+            <ul class="auth-benefits">
+                <li><i class="fa fa-shipping-fast"></i>Giao hàng nhanh toàn quốc</li>
+                <li><i class="fa fa-chart-line"></i>Theo dõi đơn hàng realtime</li>
+                <li><i class="fa fa-shield-alt"></i>Bảo hiểm hàng hóa an toàn</li>
+                <li><i class="fa fa-gift"></i>Ưu đãi thành viên đặc biệt</li>
+                <li><i class="fa fa-headset"></i>Hỗ trợ khách hàng 24/7</li>
+                <li><i class="fa fa-star"></i>Tích điểm mỗi lần giao hàng</li>
+            </ul>
+        </div>
+
+        <!-- Right Side - Form -->
+        <div class="auth-right">
+            <h1 class="form-title">Đăng Ký Tài Khoản</h1>
+            <p class="form-subtitle">Điền thông tin để tạo tài khoản VORDER</p>
+
+            <!-- Error/Success Alert -->
+            <div class="alert alert-danger" id="errorAlert" style="display: none;">
+                <i class="fa fa-exclamation-triangle mr-2"></i>
+                <span id="errorMessage"></span>
+            </div>
+
+            <div class="alert alert-success" id="successAlert" style="display: none;">
+                <i class="fa fa-check-circle mr-2"></i>
+                <span id="successMessage"></span>
+            </div>
+
+            <!-- Register Form -->
+            <form id="registerForm">
+                <!-- Personal Info -->
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label">Họ và tên *</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Nguyễn Văn A" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label">Số điện thoại *</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="0901234567" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <div class="input-group">
+                        <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                        <span class="input-group-text">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Address Info -->
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label">Tỉnh/Thành phố *</label>
+                            <select class="form-control" id="province" required>
+                                <option value="">Chọn tỉnh/thành</option>
+                                <option value="hcm">TP. Hồ Chí Minh</option>
+                                <option value="hanoi">Hà Nội</option>
+                                <option value="danang">Đà Nẵng</option>
+                                <option value="haiphong">Hải Phòng</option>
+                                <option value="cantho">Cần Thơ</option>
+                                <option value="other">Tỉnh khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label">Quận/Huyện</label>
+                            <input type="text" class="form-control" id="district" placeholder="Quận 1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Địa chỉ cụ thể</label>
+                    <input type="text" class="form-control" id="address" placeholder="123 Nguyễn Huệ, Phường Bến Nghé">
+                </div>
+
+                <!-- Password -->
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label">Mật khẩu *</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                                <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                    <i class="fa fa-eye" id="eyeIcon"></i>
+                                </span>
+                            </div>
+                            <div class="password-strength" id="passwordStrength"></div>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="form-label">Xác nhận mật khẩu *</label>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="••••••••" required>
+                            <div class="mt-1" id="passwordMatch"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Type -->
+                <div class="form-group">
+                    <label class="form-label">Loại tài khoản</label>
+                    <div class="d-flex gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="userType" id="personal" value="personal" checked>
+                            <label class="form-check-label" for="personal">
+                                <i class="fa fa-user mr-1"></i>Cá nhân
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="userType" id="business" value="business">
+                            <label class="form-check-label" for="business">
+                                <i class="fa fa-building mr-1"></i>Doanh nghiệp
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Business Info (hidden by default) -->
+                <div id="businessInfo" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label class="form-label">Tên công ty</label>
+                                <input type="text" class="form-control" id="companyName" placeholder="Công ty ABC">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label class="form-label">Mã số thuế</label>
+                                <input type="text" class="form-control" id="taxCode" placeholder="0123456789">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                    <label class="form-check-label" for="agreeTerms">
+                        Tôi đồng ý với <a href="#" target="_blank">Điều khoản sử dụng</a> và <a href="#" target="_blank">Chính sách bảo mật</a> của VORDER
+                    </label>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="newsletter" checked>
+                    <label class="form-check-label" for="newsletter">
+                        Nhận email thông báo về ưu đãi và tin tức mới từ VORDER
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">
+                    <i class="fa fa-user-plus mr-2"></i>Tạo Tài Khoản
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>hoặc đăng ký với</span>
+            </div>
+
+            <!-- Social Register -->
+            <div class="social-login">
+                <a href="#" class="btn-social">
+                    <i class="fab fa-google"></i>Google
+                </a>
+                <a href="#" class="btn-social">
+                    <i class="fab fa-facebook-f"></i>Facebook
+                </a>
+            </div>
+
+            <!-- Login Link -->
+            <div class="text-center">
+                <span class="text-muted">Đã có tài khoản? </span>
+                <a href="login.html" class="btn-outline mt-2">
+                    <i class="fa fa-sign-in-alt mr-2"></i>Đăng Nhập Ngay
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const password = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (password.type === 'password') {
+                password.type = 'text';
+                eyeIcon.className = 'fa fa-eye-slash';
+            } else {
+                password.type = 'password';
+                eyeIcon.className = 'fa fa-eye';
+            }
+        });
+
+        // Show/hide business info
+        document.querySelectorAll('input[name="userType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const businessInfo = document.getElementById('businessInfo');
+                const companyName = document.getElementById('companyName');
+                const taxCode = document.getElementById('taxCode');
+                
+                if (this.value === 'business') {
+                    businessInfo.style.display = 'block';
+                    companyName.required = true;
+                    taxCode.required = true;
+                } else {
+                    businessInfo.style.display = 'none';
+                    companyName.required = false;
+                    taxCode.required = false;
+                }
+            });
+        });
+
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.substring(0, 11);
+            e.target.value = value;
+        });
+
+        // Password strength checker
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthDiv = document.getElementById('passwordStrength');
+            
+            if (password.length === 0) {
+                strengthDiv.textContent = '';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/\d/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            if (strength < 2) {
+                strengthDiv.textContent = 'Mật khẩu yếu';
+                strengthDiv.className = 'password-strength strength-weak';
+            } else if (strength < 3) {
+                strengthDiv.textContent = 'Mật khẩu trung bình';
+                strengthDiv.className = 'password-strength strength-medium';
+            } else {
+                strengthDiv.textContent = 'Mật khẩu mạnh';
+                strengthDiv.className = 'password-strength strength-strong';
+            }
+        });
+
+        // Password confirmation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const matchDiv = document.getElementById('passwordMatch');
+            
+            if (confirmPassword.length === 0) {
+                matchDiv.textContent = '';
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                matchDiv.innerHTML = '<small class="text-success"><i class="fa fa-check mr-1"></i>Mật khẩu khớp</small>';
+            } else {
+                matchDiv.innerHTML = '<small class="text-danger"><i class="fa fa-times mr-1"></i>Mật khẩu không khớp</small>';
+            }
+        });
+
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                fullName: document.getElementById('fullName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                province: document.getElementById('province').value,
+                district: document.getElementById('district').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                password: document.getElementById('password').value,
+                confirmPassword: document.getElementById('confirmPassword').value,
+                userType: document.querySelector('input[name="userType"]:checked').value,
+                companyName: document.getElementById('companyName').value.trim(),
+                taxCode: document.getElementById('taxCode').value.trim(),
+                agreeTerms: document.getElementById('agreeTerms').checked,
+                newsletter: document.getElementById('newsletter').checked
+            };
+            
+            // Validation
+            if (!validateForm(formData)) return;
+            
+            // Submit form
+            submitRegistration(formData);
+        });
+
+        function validateForm(data) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Hide previous errors
+            errorAlert.style.display = 'none';
+            
+            // Required fields
+            if (!data.fullName || !data.phone || !data.email || !data.province || !data.password) {
+                showError('Vui lòng điền đầy đủ thông tin bắt buộc (*)');
+                return false;
+            }
+            
+            // Name validation
+            if (data.fullName.length < 2) {
+                showError('Họ tên phải có ít nhất 2 ký tự');
+                return false;
+            }
+            
+            // Phone validation
+            const phoneRegex = /^[0-9]{10,11}$/;
+            if (!phoneRegex.test(data.phone)) {
+                showError('Số điện thoại phải có 10-11 chữ số');
+                return false;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                showError('Email không hợp lệ');
+                return false;
+            }
+            
+            // Password validation
+            if (data.password.length < 6) {
+                showError('Mật khẩu phải có ít nhất 6 ký tự');
+                return false;
+            }
+            
+            if (data.password !== data.confirmPassword) {
+                showError('Mật khẩu xác nhận không khớp');
+                return false;
+            }
+            
+            // Business validation
+            if (data.userType === 'business') {
+                if (!data.companyName) {
+                    showError('Vui lòng nhập tên công ty');
+                    return false;
+                }
+                if (!data.taxCode || data.taxCode.length < 10) {
+                    showError('Mã số thuế phải có ít nhất 10 ký tự');
+                    return false;
+                }
+            }
+            
+            // Terms agreement
+            if (!data.agreeTerms) {
+                showError('Vui lòng đồng ý với điều khoản sử dụng');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function submitRegistration(data) {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Đang xử lý...';
+            submitBtn.disabled = true;
+            
+            // Simulate registration process
+            setTimeout(() => {
+                // Check if email/phone already exists (demo)
+                const existingUsers = ['admin@vorder.vn', '0901234567', 'demo@gmail.com'];
+                
+                if (existingUsers.includes(data.email) || existingUsers.includes(data.phone)) {
+                    showError('Email hoặc số điện thoại đã được sử dụng!');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+                
+                // Success
+                showSuccess('Đăng ký thành công! Chuyển đến trang đăng nhập...');
+                
+                // Save user data (demo)
+                const userData = {
+                    ...data,
+                    id: 'user_' + Date.now(),
+                    createdAt: new Date().toISOString(),
+                    status: 'active'
+                };
+                
+                // Store in localStorage (demo)
+                const users = JSON.parse(localStorage.getItem('vorder_users') || '[]');
+                users.push(userData);
+                localStorage.setItem('vorder_users', JSON.stringify(users));
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = 'login.html?registered=true';
+                }, 2000);
+                
+            }, 1500);
+        }
+
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            errorMessage.textContent = message;
+            errorAlert.style.display = 'block';
+            
+            // Scroll to top
+            document.querySelector('.auth-right').scrollTop = 0;
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                errorAlert.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successAlert = document.getElementById('successAlert');
+            const successMessage = document.getElementById('successMessage');
+            
+            successMessage.textContent = message;
+            successAlert.style.display = 'block';
+            
+            // Scroll to top
+            document.querySelector('.auth-right').scrollTop = 0;
+        }
+
+        // Social register handlers
+        document.querySelector('.btn-social:nth-child(1)').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Đăng ký Google đang được phát triển...');
+        });
+
+        document.querySelector('.btn-social:nth-child(2)').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Đăng ký Facebook đang được phát triển...');
+        });
+
+        // Auto-focus first input
+        window.addEventListener('load', function() {
+            document.getElementById('fullName').focus();
+        });
+    </script>
+</body>
+
+</html>

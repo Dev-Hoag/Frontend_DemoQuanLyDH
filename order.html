@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tạo Đơn Hàng - VORDER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Tạo đơn hàng, giao hàng, vận chuyển" name="keywords" />
+    <meta
+      content="Tạo đơn hàng giao hàng nhanh chóng với VORDER"
+      name="description"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f8f9fa;
+        color: #343a40;
+      }
+
+      .navbar-brand h1 {
+        color: #ff6b35 !important;
+      }
+
+      .text-primary {
+        color: #ff6b35 !important;
+      }
+
+      .bg-primary {
+        background-color: #ff6b35 !important;
+      }
+
+      .btn-primary {
+        background-color: #ff6b35;
+        border-color: #ff6b35;
+      }
+
+      .btn-primary:hover {
+        background-color: #e55a2b;
+        border-color: #e55a2b;
+      }
+
+      .order-container {
+        padding: 40px 0;
+        min-height: 70vh;
+      }
+
+      .order-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid #e9ecef;
+      }
+
+      .step-indicator {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        color: #6c757d;
+      }
+
+      .step.active {
+        color: #ff6b35;
+      }
+
+      .step.completed {
+        color: #28a745;
+      }
+
+      .step-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #dee2e6;
+        color: #6c757d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin-right: 10px;
+      }
+
+      .step.active .step-number {
+        background: #ff6b35;
+        color: white;
+      }
+
+      .step.completed .step-number {
+        background: #28a745;
+        color: white;
+      }
+
+      .step-line {
+        width: 60px;
+        height: 2px;
+        background: #dee2e6;
+        margin: 0 20px;
+      }
+
+      .step.completed + .step .step-line {
+        background: #28a745;
+      }
+
+      .form-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-left: 4px solid #ff6b35;
+      }
+
+      .form-section h5 {
+        color: #ff6b35;
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 8px;
+      }
+
+      .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 14px;
+      }
+
+      .form-control:focus {
+        border-color: #ff6b35;
+        box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+      }
+
+      .pickup-option {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .pickup-option:hover {
+        border-color: #ff6b35;
+        background: #fff5f0;
+      }
+
+      .pickup-option.selected {
+        border-color: #ff6b35;
+        background: #fff5f0;
+      }
+
+      .pickup-option input[type="radio"] {
+        margin-right: 15px;
+      }
+
+      .service-card {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .service-card:hover {
+        border-color: #ff6b35;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+      }
+
+      .service-card.selected {
+        border-color: #ff6b35;
+        background: #fff5f0;
+      }
+
+      .service-card input[type="radio"] {
+        margin-right: 15px;
+      }
+
+      .service-price {
+        color: #ff6b35;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .order-summary {
+        background: white;
+        border: 2px solid #ff6b35;
+        border-radius: 12px;
+        padding: 25px;
+        position: sticky;
+        top: 20px;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f3f4;
+      }
+
+      .summary-item:last-child {
+        border-bottom: none;
+        font-weight: 600;
+        font-size: 18px;
+        color: #ff6b35;
+      }
+
+      .btn-calculate {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 8px;
+        margin-right: 15px;
+      }
+
+      .btn-calculate:hover {
+        background: #545b62;
+        color: white;
+      }
+
+      .btn-create-order {
+        background: #ff6b35;
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .btn-create-order:hover {
+        background: #e55a2b;
+        color: white;
+      }
+
+      .required {
+        color: #dc3545;
+      }
+
+      .invalid-feedback {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .order-card {
+          padding: 20px;
+        }
+
+        .step-indicator {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .step-line {
+          width: 2px;
+          height: 30px;
+          margin: 10px 0;
+        }
+
+        .order-summary {
+          position: relative;
+          top: 0;
+          margin-top: 30px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark">
+      <div class="row py-2 px-lg-5">
+        <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+          <div class="d-inline-flex align-items-center text-white">
+            <small><i class="fa fa-phone-alt mr-2"></i>+84 123 456 789</small>
+            <small class="px-3">|</small>
+            <small><i class="fa fa-envelope mr-2"></i>info@vorder.vn</small>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center text-lg-right">
+          <div class="d-inline-flex align-items-center">
+            <a class="text-white px-2" href="">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a class="text-white px-2" href="">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a class="text-white px-2" href="">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a class="text-white px-2" href="">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a class="text-white pl-2" href="">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div id="header-placeholder"></div>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-primary py-5 mb-5">
+      <div class="container py-5">
+        <div class="row align-items-center py-4">
+          <div class="col-md-6 text-center text-md-left">
+            <h1 class="mb-4 mb-md-0 text-white">Tạo Đơn Hàng</h1>
+          </div>
+          <div class="col-md-6 text-center text-md-right">
+            <div class="d-inline-flex align-items-center">
+              <a class="btn btn-sm btn-outline-light" href="index.html"
+                >Trang Chủ</a
+              >
+              <i class="fa fa-angle-double-right text-light mx-2"></i>
+              <span class="text-light">Tạo Đơn Hàng</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Order Container Start -->
+    <div class="order-container">
+      <div class="container">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+          <div class="step active">
+            <div class="step-number">1</div>
+            <span>Thông Tin</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <span>Lấy Hàng</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <span>Dịch Vụ</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <span>Xác Nhận</span>
+          </div>
+        </div>
+
+        <form id="orderForm">
+          <div class="row">
+            <!-- Main Form -->
+            <div class="col-lg-8">
+              <!-- Sender Information -->
+              <div class="form-section">
+                <h5><i class="fa fa-user mr-2"></i>Thông Tin Người Gửi</h5>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Họ và tên <span class="required">*</span></label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="senderName"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label
+                        >Số điện thoại <span class="required">*</span></label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="senderPhone"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Địa chỉ <span class="required">*</span></label>
+                      <textarea
+                        class="form-control"
+                        id="senderAddress"
+                        rows="3"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Receiver Information -->
+              <div class="form-section">
+                <h5>
+                  <i class="fa fa-user-friends mr-2"></i>Thông Tin Người Nhận
+                </h5>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Họ và tên <span class="required">*</span></label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="receiverName"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label
+                        >Số điện thoại <span class="required">*</span></label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="receiverPhone"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Địa chỉ <span class="required">*</span></label>
+                      <textarea
+                        class="form-control"
+                        id="receiverAddress"
+                        rows="3"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Package Information -->
+              <div class="form-section">
+                <h5><i class="fa fa-box mr-2"></i>Thông Tin Hàng Hóa</h5>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label
+                        >Loại hàng hóa <span class="required">*</span></label
+                      >
+                      <select class="form-control" id="packageType" required>
+                        <option value="">Chọn loại hàng hóa</option>
+                        <option value="document">Tài liệu</option>
+                        <option value="clothing">Quần áo</option>
+                        <option value="electronics">Điện tử</option>
+                        <option value="food">Thực phẩm</option>
+                        <option value="fragile">Hàng dễ vỡ</option>
+                        <option value="other">Khác</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label
+                        >Trọng lượng (kg) <span class="required">*</span></label
+                      >
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="weight"
+                        step="0.1"
+                        min="0.1"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Dài (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="length"
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Rộng (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="width"
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Cao (cm)</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="height"
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Ghi chú hàng hóa</label>
+                      <textarea
+                        class="form-control"
+                        id="packageNote"
+                        rows="2"
+                        placeholder="Mô tả chi tiết hàng hóa..."
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pickup Method -->
+              <div class="form-section">
+                <h5>
+                  <i class="fa fa-truck-pickup mr-2"></i>Phương Thức Lấy Hàng
+                </h5>
+                <div class="pickup-option">
+                  <label class="mb-0">
+                    <input
+                      type="radio"
+                      name="pickupMethod"
+                      value="pickup"
+                      checked
+                    />
+                    <strong>Nhân viên đến lấy hàng</strong>
+                    <p class="mb-0 mt-2 text-muted">
+                      Nhân viên VORDER sẽ đến địa chỉ người gửi để lấy hàng
+                    </p>
+                  </label>
+                </div>
+                <div class="pickup-option">
+                  <label class="mb-0">
+                    <input type="radio" name="pickupMethod" value="dropoff" />
+                    <strong>Tự đem hàng đến hub</strong>
+                    <p class="mb-0 mt-2 text-muted">
+                      Bạn tự đem hàng đến hub VORDER gần nhất
+                    </p>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Service Selection -->
+              <div class="form-section">
+                <h5>
+                  <i class="fa fa-shipping-fast mr-2"></i>Chọn Dịch Vụ Giao Hàng
+                </h5>
+                <div class="service-card">
+                  <label class="mb-0">
+                    <input
+                      type="radio"
+                      name="serviceType"
+                      value="standard"
+                      checked
+                    />
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div>
+                        <strong>Giao Hàng Tiêu Chuẩn</strong>
+                        <p class="mb-0 mt-1 text-muted">
+                          Giao hàng trong 3-5 ngày làm việc
+                        </p>
+                      </div>
+                      <div class="service-price">25,000 VNĐ</div>
+                    </div>
+                  </label>
+                </div>
+                <div class="service-card">
+                  <label class="mb-0">
+                    <input type="radio" name="serviceType" value="fast" />
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div>
+                        <strong>Giao Hàng Nhanh</strong>
+                        <p class="mb-0 mt-1 text-muted">
+                          Giao hàng trong 1-2 ngày làm việc
+                        </p>
+                      </div>
+                      <div class="service-price">35,000 VNĐ</div>
+                    </div>
+                  </label>
+                </div>
+                <div class="service-card">
+                  <label class="mb-0">
+                    <input type="radio" name="serviceType" value="express" />
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <div>
+                        <strong>Giao Hàng Hỏa Tốc</strong>
+                        <p class="mb-0 mt-1 text-muted">
+                          Giao hàng trong 4-6 giờ (nội thành)
+                        </p>
+                      </div>
+                      <div class="service-price">85,000 VNĐ</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="col-lg-4">
+              <div class="order-summary">
+                <h5 class="text-center mb-4">
+                  <i class="fa fa-calculator mr-2"></i>Tóm Tắt Đơn Hàng
+                </h5>
+
+                <div class="summary-item">
+                  <span>Cước phí vận chuyển:</span>
+                  <span id="shippingFee">25,000 VNĐ</span>
+                </div>
+                <div class="summary-item">
+                  <span>Phí lấy hàng:</span>
+                  <span id="pickupFee">10,000 VNĐ</span>
+                </div>
+                <div class="summary-item">
+                  <span>Phí khác:</span>
+                  <span id="otherFee">0 VNĐ</span>
+                </div>
+                <div class="summary-item">
+                  <span>Tổng cộng:</span>
+                  <span id="totalFee">35,000 VNĐ</span>
+                </div>
+
+                <hr />
+
+                <div class="text-center">
+                  <button
+                    type="button"
+                    class="btn-calculate"
+                    onclick="calculateFee()"
+                  >
+                    <i class="fa fa-calculator mr-2"></i>Tính Lại Phí
+                  </button>
+                </div>
+
+                <div class="mt-4">
+                  <h6>Mã vận đơn dự kiến:</h6>
+                  <p class="text-muted mb-4" id="estimatedCode">
+                    VOR<span id="randomCode">123456789</span>
+                  </p>
+
+                  <button type="submit" class="btn-create-order btn-block">
+                    <i class="fa fa-check mr-2"></i>Tạo Đơn Hàng
+                  </button>
+                </div>
+
+                <div class="mt-3">
+                  <small class="text-muted">
+                    <i class="fa fa-info-circle mr-1"></i>
+                    Bằng cách tạo đơn hàng, bạn đồng ý với điều khoản dịch vụ
+                    của VORDER.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Order Container End -->
+
+    <!-- Footer Start -->
+    <div id="footer-placeholder"></div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary back-to-top"
+      ><i class="fa fa-angle-double-up"></i
+    ></a>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Service prices
+      const servicePrices = {
+        standard: 25000,
+        fast: 35000,
+        express: 85000,
+      };
+
+      // Pickup fees
+      const pickupFees = {
+        pickup: 10000,
+        dropoff: 0,
+      };
+
+      // Generate random tracking code
+      function generateTrackingCode() {
+        const randomNum = Math.floor(Math.random() * 900000000) + 100000000;
+        document.getElementById("randomCode").textContent = randomNum;
+      }
+
+      // Calculate shipping fee
+      function calculateFee() {
+        const weight = parseFloat(document.getElementById("weight").value) || 0;
+        const serviceType = document.querySelector(
+          'input[name="serviceType"]:checked'
+        ).value;
+        const pickupMethod = document.querySelector(
+          'input[name="pickupMethod"]:checked'
+        ).value;
+
+        let shippingFee = servicePrices[serviceType];
+        let pickupFee = pickupFees[pickupMethod];
+        let otherFee = 0;
+
+        // Weight-based calculation
+        if (weight > 2) {
+          shippingFee += (weight - 2) * 5000; // 5k per additional kg
+        }
+
+        // Package type fee
+        const packageType = document.getElementById("packageType").value;
+        if (packageType === "fragile") {
+          otherFee += 15000; // Fragile handling fee
+        } else if (packageType === "electronics") {
+          otherFee += 10000; // Electronics handling fee
+        }
+
+        const totalFee = shippingFee + pickupFee + otherFee;
+
+        // Update display
+        document.getElementById("shippingFee").textContent =
+          shippingFee.toLocaleString() + " VNĐ";
+        document.getElementById("pickupFee").textContent =
+          pickupFee.toLocaleString() + " VNĐ";
+        document.getElementById("otherFee").textContent =
+          otherFee.toLocaleString() + " VNĐ";
+        document.getElementById("totalFee").textContent =
+          totalFee.toLocaleString() + " VNĐ";
+      }
+
+      // Handle service selection
+      document
+        .querySelectorAll('input[name="serviceType"]')
+        .forEach((radio) => {
+          radio.addEventListener("change", function () {
+            // Remove selected class from all cards
+            document.querySelectorAll(".service-card").forEach((card) => {
+              card.classList.remove("selected");
+            });
+
+            // Add selected class to current card
+            this.closest(".service-card").classList.add("selected");
+
+            // Recalculate fee
+            calculateFee();
+          });
+        });
+
+      // Handle pickup method selection
+      document
+        .querySelectorAll('input[name="pickupMethod"]')
+        .forEach((radio) => {
+          radio.addEventListener("change", function () {
+            // Remove selected class from all options
+            document.querySelectorAll(".pickup-option").forEach((option) => {
+              option.classList.remove("selected");
+            });
+
+            // Add selected class to current option
+            this.closest(".pickup-option").classList.add("selected");
+
+            // Recalculate fee
+            calculateFee();
+          });
+        });
+
+      // Handle form submission
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Basic validation
+          const requiredFields = [
+            "senderName",
+            "senderPhone",
+            "senderAddress",
+            "receiverName",
+            "receiverPhone",
+            "receiverAddress",
+            "packageType",
+            "weight",
+          ];
+
+          let isValid = true;
+
+          requiredFields.forEach((fieldId) => {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+              field.classList.add("is-invalid");
+              isValid = false;
+            } else {
+              field.classList.remove("is-invalid");
+            }
+          });
+
+          if (!isValid) {
+            alert("Vui lòng điền đầy đủ thông tin bắt buộc!");
+            return;
+          }
+
+          // Show success message
+          const trackingCode =
+            "VOR" + document.getElementById("randomCode").textContent;
+
+          if (
+            confirm(
+              `Xác nhận tạo đơn hàng?\n\nMã vận đơn: ${trackingCode}\nTổng phí: ${
+                document.getElementById("totalFee").textContent
+              }\n\nNhấn OK để tạo đơn hàng.`
+            )
+          ) {
+            // Simulate order creation
+            alert(
+              `🎉 Tạo đơn hàng thành công!\n\nMã vận đơn: ${trackingCode}\n\nBạn có thể theo dõi đơn hàng tại trang "Theo Dõi"`
+            );
+
+            // Redirect to tracking page
+            window.location.href = `tracking.html?code=${trackingCode}`;
+          }
+        });
+
+      // Phone number formatting
+      document
+        .getElementById("senderPhone")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 10) {
+            value = value.substring(0, 10);
+          }
+          e.target.value = value;
+        });
+
+      document
+        .getElementById("receiverPhone")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 10) {
+            value = value.substring(0, 10);
+          }
+          e.target.value = value;
+        });
+
+      // Auto-calculate when weight changes
+      document.getElementById("weight").addEventListener("input", calculateFee);
+      document
+        .getElementById("packageType")
+        .addEventListener("change", calculateFee);
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", function () {
+        generateTrackingCode();
+        calculateFee();
+
+        // Set initial selected states
+        document
+          .querySelector('input[name="serviceType"]:checked')
+          .closest(".service-card")
+          .classList.add("selected");
+        document
+          .querySelector('input[name="pickupMethod"]:checked')
+          .closest(".pickup-option")
+          .classList.add("selected");
+      });
+
+      // Back to top functionality
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+          $(".back-to-top").fadeIn("slow");
+        } else {
+          $(".back-to-top").fadeOut("slow");
+        }
+      });
+
+      $(".back-to-top").click(function () {
+        $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
+        return false;
+      });
+      fetch("footer/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+      fetch("header/header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>
