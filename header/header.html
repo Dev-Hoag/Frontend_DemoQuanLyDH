@@ -1,48 +1,108 @@
-<!-- HEADER START -->
+<!-- Navbar Start -->
 <div class="container-fluid p-0">
-  <nav
-    class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-lg-5"
-  >
-    <a href="index.html" class="navbar-brand ml-lg-3">
-      <h1 class="m-0 display-5 text-uppercase text-primary">
-        <i class="fa fa-truck mr-2"></i>VORDER
-      </h1>
-    </a>
-    <button
-      type="button"
-      class="navbar-toggler"
-      data-toggle="collapse"
-      data-target="#navbarCollapse"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div
-      class="collapse navbar-collapse justify-content-between px-lg-3"
-      id="navbarCollapse"
-    >
-      <div class="navbar-nav m-auto py-0">
-        <a href="index.html" class="nav-item nav-link active">Trang Chủ</a>
-        <a href="order.html" class="nav-item nav-link">Đơn hàng</a>
-        <a href="tracking.html" class="nav-item nav-link">Dịch Vụ</a>
-        <a href="price.html" class="nav-item nav-link">Chi phí</a>
-        <div class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
-            >Tài Khoản</a
-          >
-          <div class="dropdown-menu rounded-0 m-0">
-            <a href="login_register/login.html" class="dropdown-item"
-            >
-            <a href="login_register/register.html" class="dropdown-item"
-              >Đăng Ký</a
-            >
-          </div>
+    <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-lg-5">
+        <a href="index.html" class="navbar-brand ml-lg-3">
+            <h1 class="m-0 display-5 text-uppercase text-primary">
+                <i class="fa fa-truck mr-2"></i>VORDER
+            </h1>
+        </a>
+        <button
+            type="button"
+            class="navbar-toggler"
+            data-toggle="collapse"
+            data-target="#navbarCollapse"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+            class="collapse navbar-collapse justify-content-between px-lg-3"
+            id="navbarCollapse"
+        >
+            <div class="navbar-nav m-auto py-0">
+                <a href="index.html" class="nav-item nav-link">Trang Chủ</a>
+                <a href="../order/order.html" class="nav-item nav-link">Đơn hàng</a>
+                <a href="../tracking/tracking.html" class="nav-item nav-link">Theo Dõi</a>
+                <a href="../price/price.html" class="nav-item nav-link">Chi phí</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài Khoản</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                        <a href="login_register/login.html" class="dropdown-item">Đăng Nhập</a>
+                        <a href="login_register/register.html" class="dropdown-item">Đăng Ký</a>
+                    </div>
+                </div>
+                <a href="../mail/contact.html" class="nav-item nav-link">Liên Hệ</a>
+            </div>
+            <a href="../order/order.html" class="btn btn-primary py-2 px-4 d-none d-lg-block">Tạo Đơn Hàng</a>
         </div>
-        <a href="contact.html" class="nav-item nav-link">Liên Hệ</a>
-      </div>
-      <a href="../order.html" class="btn btn-primary py-2 px-4 d-none d-lg-block"
-        >Tạo Đơn Hàng</a
-      >
-    </div>
-  </nav>
-  <!-- HEADER END -->
+    </nav>
 </div>
+<!-- Navbar End -->
+
+<style>
+/* Fix navbar hover effects and colors */
+.navbar-light .navbar-nav .nav-link {
+    color: #1F1F2E !important;
+    padding: 30px 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+    color: #FFFFFF !important;
+    background: #FF4800 !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 991.98px) {
+    .navbar-light .navbar-nav .nav-link {
+        padding: 10px 15px;
+    }
+}
+
+/* Remove any black overlay */
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Fix dropdown styling */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 0;
+}
+
+.dropdown-item {
+    color: #1F1F2E;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: #FF4800;
+    color: white;
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #FF4800;
+    border-color: #FF4800;
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #cc3a00;
+    border-color: #cc3a00;
+}
+
+/* Brand styling */
+.text-primary {
+    color: #FF4800 !important;
+}
+</style>

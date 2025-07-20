@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <title>Bảng Giá - VORDER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="bảng giá giao hàng, phí vận chuyển, chi phí shipping" name="keywords">
+    <meta content="Bảng giá dịch vụ giao hàng minh bạch và cạnh tranh" name="description">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        /* Force white background for navbar on price page */
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand h1 {
+            color: #FF4800 !important;
+        }
+        
+        /* Make sure navbar is not transparent */
+        .navbar-light {
+            background-color: #ffffff !important;
+        }
+
+        .text-primary {
+            color: #FF6B35 !important;
+        }
+
+        .bg-primary {
+            background-color: #FF6B35 !important;
+        }
+
+        .btn-primary {
+            background-color: #FF6B35;
+            border-color: #FF6B35;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #e55a2b;
+            border-color: #e55a2b;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #FF6B35 0%, #e55a2b 100%);
+            padding: 100px 0 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.15"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* Quick Calculator */
+        .quick-calc {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .calc-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .calc-header h3 {
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .calc-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .calc-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .calc-form label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .calc-form .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .calc-form         .form-control:focus {
+            border-color: #FF4800;
+            box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .calc-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .calc-result h4 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .calc-btn {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calc-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 72, 0, 0.3);
+        }
+
+        /* Pricing Cards */
+        .pricing-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-badge {
+            background: #ff48000f;
+            color: #FF4800;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: #FF4800;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 72, 0, 0.2);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .pricing-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .pricing-icon.standard {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .pricing-icon.express {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+        }
+
+        .pricing-icon.premium {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .pricing-desc {
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #FF6B35;
+            margin-bottom: 5px;
+        }
+
+        .pricing-unit {
+            color: #64748b;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            color: #475569;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li i {
+            color: #10b981;
+            margin-right: 12px;
+            width: 20px;
+        }
+
+        .pricing-features li.disabled {
+            opacity: 0.5;
+        }
+
+        .pricing-features li.disabled i {
+            color: #ef4444;
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-btn.btn-outline-primary {
+            border: 2px solid #FF4800;
+            color: #FF4800;
+            background: transparent;
+        }
+
+        .pricing-btn.btn-outline-primary:hover {
+            background: #FF4800;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .pricing-btn.btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 72, 0, 0.4);
+        }
+
+        /* Detailed Pricing Table */
+        .detailed-pricing {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .table-header h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .pricing-table {
+            margin: 0;
+        }
+
+        .pricing-table th {
+            background: #f8fafc;
+            color: #374151;
+            font-weight: 700;
+            padding: 20px 15px;
+            text-align: center;
+            border: none;
+            font-size: 15px;
+        }
+
+        .pricing-table td {
+            padding: 18px 15px;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+            color: #64748b;
+        }
+
+        .pricing-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .weight-col {
+            font-weight: 600;
+            color: #374151;
+            text-align: left !important;
+            padding-left: 25px !important;
+        }
+
+        .price-col {
+            font-weight: 700;
+            color: #FF4800;
+            font-size: 16px;
+        }
+
+        /* Additional Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .service-desc {
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: #FF4800;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .quick-calc {
+                padding: 30px 20px;
+                margin-top: -40px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .pricing-card {
+                padding: 30px 20px;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .pricing-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center text-white">
+                    <small><i class="fa fa-phone-alt mr-2"></i>+84 123 456 789</small>
+                    <small class="px-3">|</small>
+                    <small><i class="fa fa-envelope mr-2"></i>info@vorder.vn</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content text-center">
+                <h1 class="hero-title">Bảng Giá Minh Bạch</h1>
+                <p class="hero-subtitle">Không phí ẩn, không phụ thu bất ngờ. Chỉ những mức giá công bằng và cạnh tranh nhất</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Calculator -->
+    <div class="container">
+        <div class="quick-calc">
+            <div class="calc-header">
+                <h3>Tính Phí Giao Hàng</h3>
+                <p>Nhập thông tin để nhận báo giá ngay lập tức</p>
+            </div>
+            
+            <form class="calc-form">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Từ tỉnh/thành</label>
+                            <select class="form-control" id="fromCity">
+                                <option value="">Chọn tỉnh/thành</option>
+                                <option value="hcm">TP. Hồ Chí Minh</option>
+                                <option value="hanoi">Hà Nội</option>
+                                <option value="danang">Đà Nẵng</option>
+                                <option value="cantho">Cần Thơ</option>
+                                <option value="haiphong">Hải Phòng</option>
+                                <option value="other">Tỉnh khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Đến tỉnh/thành</label>
+                            <select class="form-control" id="toCity">
+                                <option value="">Chọn tỉnh/thành</option>
+                                <option value="hcm">TP. Hồ Chí Minh</option>
+                                <option value="hanoi">Hà Nội</option>
+                                <option value="danang">Đà Nẵng</option>
+                                <option value="cantho">Cần Thơ</option>
+                                <option value="haiphong">Hải Phòng</option>
+                                <option value="other">Tỉnh khác</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Trọng lượng (kg)</label>
+                            <input type="number" class="form-control" id="weight" placeholder="1.0" step="0.1" min="0.1" max="50">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Loại dịch vụ</label>
+                            <select class="form-control" id="serviceType">
+                                <option value="standard">Tiêu chuẩn</option>
+                                <option value="express">Nhanh</option>
+                                <option value="premium">Hỏa tốc</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="button" class="calc-btn" onclick="calculateShipping()">
+                                <i class="fa fa-calculator mr-2"></i>Tính giá
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="calc-result" id="calcResult">
+                <h4 id="resultPrice">0₫</h4>
+                <p id="resultDetails">Chi phí giao hàng ước tính</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pricing Plans -->
+    <section class="pricing-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Gói Dịch Vụ</span>
+                <h2 class="section-title">Chọn Gói Phù Hợp</h2>
+                <p class="section-desc">Từ giao hàng tiêu chuẩn đến hỏa tốc, chúng tôi có giải pháp cho mọi nhu cầu vận chuyển của bạn</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="pricing-card">
+                        <div class="pricing-icon standard">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <h3 class="pricing-title">Tiêu Chuẩn</h3>
+                        <p class="pricing-desc">Giải pháp giao hàng kinh tế cho mọi nhu cầu thông thường</p>
+                        <div class="pricing-price">20K</div>
+                        <div class="pricing-unit">bắt đầu từ / kg</div>
+                        
+                        <ul class="pricing-features">
+                            <li><i class="fa fa-check"></i> Giao hàng 3-5 ngày</li>
+                            <li><i class="fa fa-check"></i> Theo dõi trực tuyến</li>
+                            <li><i class="fa fa-check"></i> Hỗ trợ khách hàng</li>
+                            <li><i class="fa fa-check"></i> Bảo hiểm cơ bản</li>
+                            <li class="disabled"><i class="fa fa-times"></i> Ưu tiên xử lý</li>
+                            <li class="disabled"><i class="fa fa-times"></i> Giao ngoài giờ</li>
+                        </ul>
+                        
+                        <button class="pricing-btn btn-outline-primary">Chọn gói này</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Phổ biến nhất</div>
+                        <div class="pricing-icon express">
+                            <i class="fa fa-shipping-fast"></i>
+                        </div>
+                        <h3 class="pricing-title">Nhanh</h3>
+                        <p class="pricing-desc">Cân bằng hoàn hảo giữa tốc độ và chi phí hợp lý</p>
+                        <div class="pricing-price">35K</div>
+                        <div class="pricing-unit">bắt đầu từ / kg</div>
+                        
+                        <ul class="pricing-features">
+                            <li><i class="fa fa-check"></i> Giao hàng 1-2 ngày</li>
+                            <li><i class="fa fa-check"></i> Theo dõi realtime</li>
+                            <li><i class="fa fa-check"></i> Hỗ trợ ưu tiên</li>
+                            <li><i class="fa fa-check"></i> Bảo hiểm nâng cao</li>
+                            <li><i class="fa fa-check"></i> Ưu tiên xử lý</li>
+                            <li class="disabled"><i class="fa fa-times"></i> Giao ngoài giờ</li>
+                        </ul>
+                        
+                        <button class="pricing-btn btn-primary">Chọn gói này</button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="pricing-card">
+                        <div class="pricing-icon premium">
+                            <i class="fa fa-rocket"></i>
+                        </div>
+                        <h3 class="pricing-title">Hỏa Tốc</h3>
+                        <p class="pricing-desc">Dịch vụ cao cấp cho những đơn hàng cần giao siêu nhanh</p>
+                        <div class="pricing-price">75K</div>
+                        <div class="pricing-unit">bắt đầu từ / kg</div>
+                        
+                        <ul class="pricing-features">
+                            <li><i class="fa fa-check"></i> Giao hàng trong ngày</li>
+                            <li><i class="fa fa-check"></i> Theo dõi realtime</li>
+                            <li><i class="fa fa-check"></i> Hỗ trợ VIP 24/7</li>
+                            <li><i class="fa fa-check"></i> Bảo hiểm cao cấp</li>
+                            <li><i class="fa fa-check"></i> Ưu tiên tối đa</li>
+                            <li><i class="fa fa-check"></i> Giao ngoài giờ</li>
+                        </ul>
+                        
+                        <button class="pricing-btn btn-outline-primary">Chọn gói này</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Pricing Tables -->
+    <section class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Bảng Giá Chi Tiết</span>
+                <h2 class="section-title">Phí Giao Hàng Theo Khu Vực</h2>
+            </div>
+            
+            <!-- Inner City Pricing -->
+            <div class="detailed-pricing">
+                <div class="table-header">
+                    <h4>Giao Hàng Nội Thành</h4>
+                    <small>TP.HCM, Hà Nội, Đà Nẵng và các thành phố lớn</small>
+                </div>
+                <table class="table pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Trọng Lượng</th>
+                            <th>Tiêu Chuẩn</th>
+                            <th>Nhanh</th>
+                            <th>Hỏa Tốc</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="weight-col">0.1 - 0.5 kg</td>
+                            <td class="price-col">15,000₫</td>
+                            <td class="price-col">25,000₫</td>
+                            <td class="price-col">40,000₫</td>
+                            <td class="price-col">85,000₫</td>
+                        </tr>
+                        <tr>
+                            <td class="weight-col">0.6 - 1.0 kg</td>
+                            <td class="price-col">35,000₫</td>
+                            <td class="price-col">55,000₫</td>
+                            <td class="price-col">120,000₫</td>
+                        </tr>
+                        <tr>
+                            <td class="weight-col">1.1 - 2.0 kg</td>
+                            <td class="price-col">50,000₫</td>
+                            <td class="price-col">80,000₫</td>
+                            <td class="price-col">180,000₫</td>
+                        </tr>
+                        <tr>
+                            <td class="weight-col">2.1 - 5.0 kg</td>
+                            <td class="price-col">85,000₫</td>
+                            <td class="price-col">140,000₫</td>
+                            <td class="price-col">320,000₫</td>
+                        </tr>
+                        <tr>
+                            <td class="weight-col">5.1 - 10 kg</td>
+                            <td class="price-col">150,000₫</td>
+                            <td class="price-col">250,000₫</td>
+                            <td class="price-col">550,000₫</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Services -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Dịch Vụ Bổ Sung</span>
+                <h2 class="section-title">Thêm Tiện Ích Cho Đơn Hàng</h2>
+                <p class="section-desc">Các dịch vụ giá trị gia tăng giúp tối ưu hóa trải nghiệm giao hàng</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-money-bill-wave"></i>
+                    </div>
+                    <h4 class="service-title">Thu Hộ COD</h4>
+                    <p class="service-desc">Thu tiền hộ và chuyển về tài khoản của bạn trong 24h</p>
+                    <div class="service-price">2% giá trị đơn hàng</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-shield-alt"></i>
+                    </div>
+                    <h4 class="service-title">Bảo Hiểm Hàng Hóa</h4>
+                    <p class="service-desc">Đền bù thiệt hại trong quá trình vận chuyển</p>
+                    <div class="service-price">1% giá trị hàng</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-box"></i>
+                    </div>
+                    <h4 class="service-title">Đóng Gói Chuyên Nghiệp</h4>
+                    <p class="service-desc">Đóng gói an toàn với vật liệu chất lượng cao</p>
+                    <div class="service-price">15,000₫</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-hand-holding"></i>
+                    </div>
+                    <h4 class="service-title">Lấy Hàng Tận Nơi</h4>
+                    <p class="service-desc">Nhân viên đến tận nơi lấy hàng theo lịch hẹn</p>
+                    <div class="service-price">10,000₫</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-clock"></i>
+                    </div>
+                    <h4 class="service-title">Giao Ngoài Giờ</h4>
+                    <p class="service-desc">Giao hàng từ 17h-22h hoặc sáng sớm 6h-8h</p>
+                    <div class="service-price">+25% phí giao</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-calendar-weekend"></i>
+                    </div>
+                    <h4 class="service-title">Giao Cuối Tuần</h4>
+                    <p class="service-desc">Dịch vụ giao hàng thứ 7, chủ nhật</p>
+                    <div class="service-price">+50% phí giao</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-sms"></i>
+                    </div>
+                    <h4 class="service-title">Thông Báo SMS</h4>
+                    <p class="service-desc">Cập nhật tình trạng đơn hàng qua tin nhắn</p>
+                    <div class="service-price">2,000₫/SMS</div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa fa-photo-video"></i>
+                    </div>
+                    <h4 class="service-title">Chụp Ảnh Giao Hàng</h4>
+                    <p class="service-desc">Chụp ảnh xác nhận khi giao hàng thành công</p>
+                    <div class="service-price">5,000₫</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Ưu Đãi Đặc Biệt</span>
+                <h2 class="section-title">Tiết Kiệm Chi Phí</h2>
+                <p class="section-desc">Các chương trình giảm giá và ưu đãi hấp dẫn</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="service-card text-center">
+                        <div class="service-icon mx-auto">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <h4 class="service-title">Khách Hàng Thân Thiết</h4>
+                        <p class="service-desc">Giảm giá 5-15% cho khách hàng gửi hàng thường xuyên</p>
+                        <div class="service-price">Tùy theo số lượng đơn</div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="service-card text-center">
+                        <div class="service-icon mx-auto">
+                            <i class="fa fa-credit-card"></i>
+                        </div>
+                        <h4 class="service-title">Thanh Toán Trực Tuyến</h4>
+                        <p class="service-desc">Giảm 2% phí giao hàng khi thanh toán online</p>
+                        <div class="service-price">-2% tổng bill</div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <div class="service-card text-center">
+                        <div class="service-icon mx-auto">
+                            <i class="fa fa-boxes"></i>
+                        </div>
+                        <h4 class="service-title">Đơn Hàng Số Lượng Lớn</h4>
+                        <p class="service-desc">Giảm giá khi gửi từ 10 đơn hàng cùng lúc</p>
+                        <div class="service-price">Giảm 10-20%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="py-5 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="mb-3">Cần Tư Vấn Thêm?</h2>
+            <p class="mb-4 lead">Đội ngũ chuyên viên sẵn sàng hỗ trợ bạn tìm giải pháp giao hàng tối ưu nhất</p>
+            <div class="row justify-content-center">
+                <div class="col-auto mb-2">
+                    <a href="tel:+84123456789" class="btn btn-light btn-lg">
+                        <i class="fa fa-phone mr-2"></i>Gọi Ngay: +84 123 456 789
+                    </a>
+                </div>
+                <div class="col-auto mb-2">
+                    <a href="contact.html" class="btn btn-outline-light btn-lg">
+                        <i class="fa fa-envelope mr-2"></i>Liên Hệ Tư Vấn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Shipping Calculator with better debugging
+        function calculateShipping() {
+            console.log('Calculate shipping called');
+            
+            const fromCity = document.getElementById('fromCity').value;
+            const toCity = document.getElementById('toCity').value;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const serviceType = document.getElementById('serviceType').value;
+            
+            console.log('Form values:', {fromCity, toCity, weight, serviceType});
+            
+            // Validation
+            if (!fromCity) {
+                alert('Vui lòng chọn tỉnh/thành gửi!');
+                return;
+            }
+            if (!toCity) {
+                alert('Vui lòng chọn tỉnh/thành nhận!');
+                return;
+            }
+            if (!weight || weight <= 0) {
+                alert('Vui lòng nhập trọng lượng hợp lệ!');
+                return;
+            }
+            
+            // Determine if same city or inter-province
+            const majorCities = ['hcm', 'hanoi', 'danang'];
+            const isSameCity = fromCity === toCity;
+            const isInnerCity = majorCities.includes(fromCity) && majorCities.includes(toCity);
+            
+            let basePrice = 0;
+            
+            // Calculate base price based on location and weight
+            if (isSameCity && majorCities.includes(fromCity)) {
+                // Same major city
+                if (weight <= 0.5) basePrice = 15000;
+                else if (weight <= 1.0) basePrice = 20000;
+                else if (weight <= 2.0) basePrice = 30000;
+                else if (weight <= 5.0) basePrice = 50000;
+                else basePrice = 80000;
+            } else if (isInnerCity && !isSameCity) {
+                // Between major cities
+                if (weight <= 0.5) basePrice = 20000;
+                else if (weight <= 1.0) basePrice = 28000;
+                else if (weight <= 2.0) basePrice = 40000;
+                else if (weight <= 5.0) basePrice = 68000;
+                else basePrice = 110000;
+            } else {
+                // Inter-province pricing
+                if (weight <= 0.5) basePrice = 25000;
+                else if (weight <= 1.0) basePrice = 35000;
+                else if (weight <= 2.0) basePrice = 50000;
+                else if (weight <= 5.0) basePrice = 85000;
+                else basePrice = 150000;
+            }
+            
+            // Apply service multiplier
+            let serviceFee = 0;
+            let serviceName = 'Tiêu chuẩn';
+            let totalPrice = basePrice;
+            
+            switch (serviceType) {
+                case 'express':
+                    serviceFee = Math.round(basePrice * 0.75);
+                    totalPrice = basePrice + serviceFee;
+                    serviceName = 'Nhanh';
+                    break;
+                case 'premium':
+                    serviceFee = Math.round(basePrice * 2.75);
+                    totalPrice = basePrice + serviceFee;
+                    serviceName = 'Hỏa tốc';
+                    break;
+                default:
+                    serviceFee = 0;
+                    totalPrice = basePrice;
+            }
+            
+            console.log('Calculated:', {basePrice, serviceFee, totalPrice});
+            
+            // Display results
+            document.getElementById('resultPrice').textContent = formatVND(totalPrice);
+            
+            // Determine location type for display
+            let locationType = 'Liên tỉnh';
+            if (isSameCity && majorCities.includes(fromCity)) {
+                locationType = 'Nội thành';
+            } else if (isInnerCity) {
+                locationType = 'Liên thành phố';
+            }
+            
+            document.getElementById('resultDetails').textContent = 
+                `Dịch vụ ${serviceName} • ${weight}kg • ${locationType}`;
+            
+            // Show result with animation
+            const resultDiv = document.getElementById('calcResult');
+            resultDiv.classList.add('show');
+            
+            console.log('Result displayed');
+        }
+        
+        function formatVND(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+        
+        // Load header and footer exactly like contact.html
+        fetch('./header/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+            
+        fetch('./footer/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+            
+        // Back to top functionality
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.back-to-top').fadeIn('slow');
+            } else {
+                $('.back-to-top').fadeOut('slow');
+            }
+        });
+        
+        $('.back-to-top').click(function () {
+            $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+            return false;
+        });
+        
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function(event) {
+            var target = $(this.getAttribute('href'));
+            if( target.length ) {
+                event.preventDefault();
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top - 100
+                }, 1000);
+            }
+        });
+        
+        // Add entrance animations
+        $(document).ready(function() {
+            // Animate pricing cards on scroll
+            $(window).scroll(function() {
+                $('.pricing-card, .service-card').each(function() {
+                    var elementTop = $(this).offset().top;
+                    var elementBottom = elementTop + $(this).outerHeight();
+                    var viewportTop = $(window).scrollTop();
+                    var viewportBottom = viewportTop + $(window).height();
+                    
+                    if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                        $(this).addClass('animate__animated animate__fadeInUp');
+                    }
+                });
+            });
+        });
+        
+        // Initialize tooltips if Bootstrap is loaded
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        
+        // Handle form submission
+        $('#contactForm').on('submit', function(e) {
+            e.preventDefault();
+            // Add your form submission logic here
+            alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
+        });
+    </script>
+    
+</body>
+

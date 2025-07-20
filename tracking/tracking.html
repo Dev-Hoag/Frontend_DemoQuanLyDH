@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <title>Theo Dõi Đơn Hàng - VORDER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Theo dõi đơn hàng, tracking, vận đơn" name="keywords">
+    <meta content="Theo dõi đơn hàng realtime với VORDER" name="description">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #1F1F2E;
+        }
+
+        /* Header Colors */
+        .navbar-brand h1 {
+            color: #FF4800 !important;
+        }
+
+        .text-primary {
+            color: #FF4800 !important;
+        }
+
+        .bg-primary {
+            background: linear-gradient(135deg, #FF4800 0%, #cc3a00 100%) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #cc3a00, #b33200);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #FF4800 0%, #cc3a00 100%);
+            padding: 120px 0 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0px); }
+            100% { transform: translateX(-100px); }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+        }
+
+        /* Tracking Container */
+        .tracking-container {
+            padding: 60px 0;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Search Section */
+        .search-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 72, 0, 0.1);
+        }
+
+        .search-title {
+            color: #1F1F2E;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .tracking-search {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .tracking-search input {
+            border: 2px solid #e2e8f0;
+            padding: 20px 25px;
+            font-size: 18px;
+            border-radius: 15px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tracking-search input:focus {
+            outline: none;
+            border-color: #FF4800;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
+        }
+
+        .btn-track {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            border: none;
+            padding: 20px 35px;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3);
+        }
+
+        .btn-track:hover {
+            background: linear-gradient(135deg, #cc3a00, #b33200);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 72, 0, 0.4);
+        }
+
+        /* Sample Codes */
+        .sample-section {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .sample-title {
+            color: #1F1F2E;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sample-title i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+
+        .sample-code {
+            display: inline-block;
+            background: white;
+            padding: 12px 20px;
+            margin: 6px;
+            border-radius: 25px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .sample-code:hover {
+            background: #FF4800;
+            color: white;
+            border-color: #FF4800;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 72, 0, 0.3);
+        }
+
+        /* Cards */
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .main-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        .order-info-card {
+            background: linear-gradient(135deg, #FF4800 0%, #cc3a00 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-info-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .order-info-card h4 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        .info-value {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        /* Shipper Card */
+        .shipper-card {
+            background: white;
+            border: 2px solid #f1f5f9;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shipper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+        }
+
+        .shipper-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid #FF4800;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(255, 72, 0, 0.2);
+        }
+
+        .shipper-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1F1F2E;
+            margin-bottom: 5px;
+        }
+
+        .shipper-role {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn-contact {
+            background: #FF4800;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-contact:hover {
+            background: #cc3a00;
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 72, 0, 0.3);
+        }
+
+        .btn-contact.secondary {
+            background: #64748b;
+        }
+
+        .btn-contact.secondary:hover {
+            background: #475569;
+        }
+
+        /* Timeline */
+        .timeline-header {
+            color: #1F1F2E;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-header i {
+            color: #FF4800;
+            margin-right: 10px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-icon.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .timeline-icon.current {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-icon.pending {
+            background: #e2e8f0;
+            color: #94a3b8;
+        }
+
+        .timeline-icon.failed {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(255, 72, 0, 0.5); }
+            100% { box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3); }
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #f8fafc;
+            padding: 20px 25px;
+            border-radius: 15px;
+            border-left: 4px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content.completed {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .timeline-content.current {
+            border-left-color: #FF4800;
+            background: white;
+            box-shadow: 0 4px 20px rgba(255, 72, 0, 0.1);
+        }
+
+        .timeline-content.failed {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .timeline-title {
+            color: #1F1F2E;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 17px;
+        }
+
+        .timeline-time {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .timeline-desc {
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-badge.info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            color: #64748b;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+        }
+
+        .no-results h4 {
+            color: #1F1F2E;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .no-results small {
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-card {
+                padding: 25px;
+                margin: 0 15px 30px;
+            }
+            
+            .main-card {
+                padding: 20px;
+                margin: 0 15px 20px;
+            }
+
+            .order-info-card {
+                padding: 25px;
+                margin: 0 15px 20px;
+            }
+
+            .timeline-item {
+                margin-bottom: 20px;
+            }
+
+            .timeline-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
+            }
+
+            .timeline-content {
+                padding: 18px 20px;
+            }
+
+            .hero-section {
+                padding: 80px 0 60px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center text-white">
+                    <small><i class="fa fa-phone-alt mr-2"></i>+84 123 456 789</small>
+                    <small class="px-3">|</small>
+                    <small><i class="fa fa-envelope mr-2"></i>info@vorder.vn</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Theo Dõi Đơn Hàng</h1>
+                    <p class="hero-subtitle">Theo dõi hành trình giao hàng của bạn một cách dễ dàng và chính xác</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracking Container -->
+    <div class="tracking-container">
+        <div class="container">
+            <!-- Search Section -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="search-card">
+                        <h2 class="search-title">
+                            <i class="fa fa-search mr-3" style="color: #FF4800;"></i>
+                            Nhập Mã Vận Đơn
+                        </h2>
+                        
+                        <div class="tracking-search">
+                            <div class="input-group">
+                                <input type="text" id="trackingInput" class="form-control" placeholder="Nhập mã vận đơn (VD: VOR123456789)">
+                                <div class="input-group-append">
+                                    <button class="btn-track" type="button" onclick="trackOrder()">
+                                        <i class="fa fa-search mr-2"></i>Theo Dõi
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sample Codes -->
+                        <div class="sample-section">
+                            <div class="sample-title">
+                                <i class="fa fa-lightbulb"></i>
+                                Thử với mã vận đơn mẫu:
+                            </div>
+                            <div>
+                                <span class="sample-code" onclick="useSampleCode('VOR123456789')">VOR123456789 - Đang giao</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR987654321')">VOR987654321 - Hoàn thành</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR555666777')">VOR555666777 - Mới nhận</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR111222333')">VOR111222333 - Vận chuyển</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR444555666')">VOR444555666 - Thất bại</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results (Default) -->
+            <div id="noResults" class="main-card no-results">
+                <i class="fa fa-map-marker-alt"></i>
+                <h4>Sẵn Sàng Theo Dõi Đơn Hàng</h4>
+                <p>Nhập mã vận đơn để xem thông tin chi tiết về lộ trình giao hàng của bạn.</p>
+                <small>Mã vận đơn có định dạng: VOR + 9 chữ số</small>
+            </div>
+
+            <!-- Tracking Results -->
+            <div id="trackingResults" style="display: none;">
+                <div class="row">
+                    <!-- Order Info -->
+                    <div class="col-lg-4">
+                        <div class="order-info-card">
+                            <h4><i class="fa fa-box mr-2"></i>Thông Tin Đơn Hàng</h4>
+                            <div class="info-item">
+                                <span class="info-label">Mã vận đơn:</span>
+                                <span class="info-value" id="orderCode">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Người gửi:</span>
+                                <span class="info-value" id="senderName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Người nhận:</span>
+                                <span class="info-value" id="receiverName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Trọng lượng:</span>
+                                <span class="info-value" id="weight">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Dịch vụ:</span>
+                                <span class="info-value" id="service">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Phí ship:</span>
+                                <span class="info-value" id="fee">-</span>
+                            </div>
+                        </div>
+
+                        <!-- Shipper Info -->
+                        <div class="shipper-card">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=70&h=70&fit=crop&crop=face" class="shipper-avatar" alt="Shipper">
+                            <div class="shipper-name" id="shipperName">Lê Văn Cường</div>
+                            <div class="shipper-role">Shipper phụ trách</div>
+                            <a href="tel:+84987654321" class="btn-contact">
+                                <i class="fa fa-phone mr-1"></i> Gọi điện
+                            </a>
+                            <a href="#" class="btn-contact secondary">
+                                <i class="fa fa-comments mr-1"></i> Nhắn tin
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="col-lg-8">
+                        <div class="main-card">
+                            <h4 class="timeline-header">
+                                <i class="fa fa-route"></i>
+                                Lộ Trình Vận Chuyển
+                            </h4>
+                            
+                            <div id="timeline">
+                                <!-- Timeline will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Sample tracking data
+        const trackingData = {
+            'VOR123456789': {
+                sender: 'Nguyễn Văn A',
+                receiver: 'Trần Thị B',
+                weight: '2.5 kg',
+                service: 'Giao Hàng Nhanh',
+                fee: '35,000 VNĐ',
+                status: 'delivering',
+                shipper: 'Lê Văn Cường',
+                timeline: [
+                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '15/12/2024 - 09:30', desc: 'Đơn hàng đã được tiếp nhận tại Hub TP.HCM', icon: 'fa-check' },
+                    { status: 'completed', title: 'Đã Đóng Gói', time: '15/12/2024 - 11:45', desc: 'Hàng hóa đã được đóng gói và chuẩn bị vận chuyển', icon: 'fa-box' },
+                    { status: 'completed', title: 'Đang Vận Chuyển', time: '15/12/2024 - 14:20', desc: 'Hàng đang trên đường từ Hub TP.HCM đến Hub Hà Nội', icon: 'fa-truck' },
+                    { status: 'current', title: 'Đang Giao Hàng', time: '16/12/2024 - 08:15', desc: 'Shipper đang trên đường giao hàng đến địa chỉ của bạn', icon: 'fa-shipping-fast', badge: 'Dự kiến: 16/12 - 10:30', badgeType: 'warning' },
+                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ giao hàng', desc: 'Đơn hàng sẽ được hoàn thành sau khi giao thành công', icon: 'fa-flag-checkered' }
+                ]
+            },
+            'VOR987654321': {
+                sender: 'Shop ABC',
+                receiver: 'Phạm Thị C',
+                weight: '1.2 kg',
+                service: 'Giao Hàng Tiêu Chuẩn',
+                fee: '25,000 VNĐ',
+                status: 'completed',
+                shipper: 'Trần Văn D',
+                timeline: [
+                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '14/12/2024 - 10:15', desc: 'Đơn hàng đã được tiếp nhận tại Hub Đà Nẵng', icon: 'fa-check' },
+                    { status: 'completed', title: 'Đã Đóng Gói', time: '14/12/2024 - 13:30', desc: 'Hàng hóa đã được đóng gói và chuẩn bị vận chuyển', icon: 'fa-box' },
+                    { status: 'completed', title: 'Đã Vận Chuyển', time: '15/12/2024 - 07:00', desc: 'Hàng đã được vận chuyển đến hub đích', icon: 'fa-truck' },
+                    { status: 'completed', title: 'Đã Giao Hàng', time: '15/12/2024 - 15:45', desc: 'Đã giao hàng thành công đến người nhận', icon: 'fa-shipping-fast' },
+                    { status: 'completed', title: 'Hoàn Thành', time: '15/12/2024 - 15:45', desc: 'Đơn hàng đã hoàn thành thành công', icon: 'fa-flag-checkered', badge: 'Thành công', badgeType: 'success' }
+                ]
+            },
+            'VOR555666777': {
+                sender: 'Công ty XYZ',
+                receiver: 'Lê Văn E',
+                weight: '5.0 kg',
+                service: 'Giao Hàng Hỏa Tốc',
+                fee: '85,000 VNĐ',
+                status: 'received',
+                shipper: 'Chưa phân công',
+                timeline: [
+                    { status: 'current', title: 'Đã Tiếp Nhận', time: '16/12/2024 - 14:20', desc: 'Đơn hàng đã được tiếp nhận và đang xử lý', icon: 'fa-check', badge: 'Đang xử lý', badgeType: 'info' },
+                    { status: 'pending', title: 'Đóng Gói', time: 'Chờ xử lý', desc: 'Đang chuẩn bị đóng gói hàng hóa', icon: 'fa-box' },
+                    { status: 'pending', title: 'Vận Chuyển', time: 'Chờ xử lý', desc: 'Chờ vận chuyển', icon: 'fa-truck' },
+                    { status: 'pending', title: 'Giao Hàng', time: 'Chờ xử lý', desc: 'Chờ giao hàng', icon: 'fa-shipping-fast' },
+                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ xử lý', desc: 'Chờ hoàn thành', icon: 'fa-flag-checkered' }
+                ]
+            },
+            'VOR111222333': {
+                sender: 'Mai Thị F',
+                receiver: 'Hoàng Văn G',
+                weight: '0.8 kg',
+                service: 'Giao Hàng Nhanh',
+                fee: '30,000 VNĐ',
+                status: 'transporting',
+                shipper: 'Nguyễn Thị H',
+                timeline: [
+                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '15/12/2024 - 16:00', desc: 'Đơn hàng đã được tiếp nhận', icon: 'fa-check' },
+                    { status: 'completed', title: 'Đã Đóng Gói', time: '16/12/2024 - 08:00', desc: 'Đã đóng gói xong', icon: 'fa-box' },
+                    { status: 'current', title: 'Đang Vận Chuyển', time: '16/12/2024 - 10:30', desc: 'Đang vận chuyển liên tỉnh', icon: 'fa-truck', badge: 'Trên đường', badgeType: 'warning' },
+                    { status: 'pending', title: 'Giao Hàng', time: 'Dự kiến 17/12', desc: 'Sẽ giao hàng khi đến hub đích', icon: 'fa-shipping-fast' },
+                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ giao hàng', desc: 'Chờ hoàn thành', icon: 'fa-flag-checkered' }
+                ]
+            },
+            'VOR444555666': {
+                sender: 'Store 123',
+                receiver: 'Đỗ Thị I',
+                weight: '3.1 kg',
+                service: 'Giao Hàng Tiêu Chuẩn',
+                fee: '45,000 VNĐ',
+                status: 'failed',
+                shipper: 'Vũ Văn K',
+                timeline: [
+                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '14/12/2024 - 09:00', desc: 'Đơn hàng đã được tiếp nhận', icon: 'fa-check' },
+                    { status: 'completed', title: 'Đã Đóng Gói', time: '14/12/2024 - 11:00', desc: 'Đã đóng gói xong', icon: 'fa-box' },
+                    { status: 'completed', title: 'Đã Vận Chuyển', time: '15/12/2024 - 07:00', desc: 'Đã vận chuyển đến hub đích', icon: 'fa-truck' },
+                    { status: 'failed', title: 'Giao Thất Bại', time: '15/12/2024 - 16:00', desc: 'Không liên lạc được với người nhận', icon: 'fa-times', badge: 'Sẽ giao lại', badgeType: 'danger' },
+                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ giao lại', desc: 'Chờ sắp xếp giao lại', icon: 'fa-flag-checkered' }
+                ]
+            }
+        };
+
+        function useSampleCode(code) {
+            document.getElementById('trackingInput').value = code;
+            trackOrder();
+        }
+
+        function trackOrder() {
+            const trackingCode = document.getElementById('trackingInput').value.trim();
+            const resultsDiv = document.getElementById('trackingResults');
+            const noResultsDiv = document.getElementById('noResults');
+            
+            if (trackingCode === '') {
+                alert('Vui lòng nhập mã vận đơn!');
+                return;
+            }
+            
+            if (trackingData[trackingCode]) {
+                const data = trackingData[trackingCode];
+                
+                // Update order information
+                document.getElementById('orderCode').textContent = trackingCode;
+                document.getElementById('senderName').textContent = data.sender;
+                document.getElementById('receiverName').textContent = data.receiver;
+                document.getElementById('weight').textContent = data.weight;
+                document.getElementById('service').textContent = data.service;
+                document.getElementById('fee').textContent = data.fee;
+                document.getElementById('shipperName').textContent = data.shipper;
+                
+                // Update timeline
+                const timeline = document.getElementById('timeline');
+                timeline.innerHTML = '';
+                
+                data.timeline.forEach(item => {
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'timeline-item';
+                    
+                    let badgeHtml = '';
+                    if (item.badge) {
+                        const badgeClass = item.badgeType || 'warning';
+                        badgeHtml = `<span class="status-badge ${badgeClass}">${item.badge}</span>`;
+                    }
+                    
+                    timelineItem.innerHTML = `
+                        <div class="timeline-icon ${item.status}">
+                            <i class="fa ${item.icon}"></i>
+                        </div>
+                        <div class="timeline-content ${item.status}">
+                            <h6 class="timeline-title">${item.title}</h6>
+                            <div class="timeline-time">
+                                <i class="fa fa-clock mr-1"></i>${item.time}
+                            </div>
+                            <p class="timeline-desc">${item.desc}</p>
+                            ${badgeHtml}
+                        </div>
+                    `;
+                    
+                    timeline.appendChild(timelineItem);
+                });
+                
+                // Show results with animation
+                resultsDiv.style.display = 'block';
+                noResultsDiv.style.display = 'none';
+                
+                // Scroll to results
+                setTimeout(() => {
+                    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                alert('Không tìm thấy thông tin cho mã vận đơn này!');
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('trackingInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                trackOrder();
+            }
+        });
+        
+        // Auto format input
+        document.getElementById('trackingInput').addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase();
+            value = value.replace(/[^A-Z0-9]/g, '');
+            if (value.length > 12) {
+                value = value.substring(0, 12);
+            }
+            e.target.value = value;
+        });
+
+        // Load header and footer
+        fetch('./header/header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('./footer/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    
+</body>
+
+</html>

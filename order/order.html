@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>Tạo Đơn Hàng - VORDER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="Tạo đơn hàng, giao hàng, vận chuyển" name="keywords" />
+    <meta content="Tạo đơn hàng giao hàng nhanh chóng với VORDER" name="description" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f8fafc;
+            color: #1F1F2E;
+        }
+
+        /* Header Colors */
+        .navbar-brand h1 {
+            color: #FF4800 !important;
+        }
+
+        .text-primary {
+            color: #FF4800 !important;
+        }
+
+        .bg-primary {
+            background: linear-gradient(135deg, #FF4800 0%, #cc3a00 100%) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #cc3a00, #b33200);
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #FF4800 0%, #cc3a00 100%);
+            padding: 120px 0 80px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0px); }
+            100% { transform: translateX(-100px); }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1.1rem; }
+        }
+
+        /* Order Container */
+        .order-container {
+            padding: 60px 0;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 30px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #f1f5f9;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            color: #FF4800;
+        }
+
+        .step.completed {
+            color: #10b981;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .step.active .step-number {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3);
+        }
+
+        .step.completed .step-number {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .step-label {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .step-line {
+            width: 80px;
+            height: 3px;
+            background: #e2e8f0;
+            margin: 0 25px;
+            border-radius: 2px;
+        }
+
+        .step.completed + .step .step-line {
+            background: #10b981;
+        }
+
+        /* Cards */
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .main-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #FF4800;
+            position: relative;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            border-radius: 0 0 0 15px;
+        }
+
+        .section-title {
+            color: #FF4800;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            font-size: 22px;
+        }
+
+        /* Form Controls */
+        .form-group label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .form-control {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 15px 18px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-control:focus {
+            border-color: #FF4800;
+            box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
+            background: white;
+        }
+
+        .form-control.is-invalid {
+            border-color: #ef4444;
+        }
+
+        /* Pickup Options */
+        .pickup-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+
+        .pickup-option:hover {
+            border-color: #FF4800;
+            background: #fff5f0;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 72, 0, 0.15);
+        }
+
+        .pickup-option.selected {
+            border-color: #FF4800;
+            background: #fff5f0;
+            box-shadow: 0 8px 25px rgba(255, 72, 0, 0.15);
+        }
+
+        .pickup-option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .pickup-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1F1F2E;
+            margin-bottom: 8px;
+        }
+
+        .pickup-desc {
+            color: #6b7280;
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Service Cards */
+        .service-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+        }
+
+        .service-card:hover {
+            border-color: #FF4800;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 72, 0, 0.15);
+        }
+
+        .service-card.selected {
+            border-color: #FF4800;
+            background: #fff5f0;
+            box-shadow: 0 8px 25px rgba(255, 72, 0, 0.15);
+        }
+
+        .service-card input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .service-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-details h6 {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1F1F2E;
+            margin-bottom: 8px;
+        }
+
+        .service-details p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .service-price {
+            color: #FF4800;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        /* Order Summary - FIXED */
+        .order-summary {
+            background: white;
+            border: 3px solid #FF4800;
+            border-radius: 20px;
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 10px 30px rgba(255, 72, 0, 0.1);
+        }
+
+        .summary-title {
+            color: #FF4800;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-title i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+
+        .summary-item:last-of-type {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 18px;
+            color: #FF4800;
+            padding-top: 15px;
+            margin-top: 8px;
+            border-top: 2px solid #f1f5f9;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #1F1F2E;
+            text-align: right;
+        }
+
+        /* Buttons */
+        .btn-calculate {
+            background: #6b7280;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .btn-calculate:hover {
+            background: #4b5563;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-create-order {
+            background: linear-gradient(135deg, #FF4800, #cc3a00);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3);
+            width: 100%;
+        }
+
+        .btn-create-order:hover {
+            background: linear-gradient(135deg, #cc3a00, #b33200);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 72, 0, 0.4);
+        }
+
+        /* Required field indicator */
+        .required {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        /* Tracking Code */
+        .tracking-code {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .tracking-code h6 {
+            color: #6b7280;
+            font-size: 12px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .tracking-code-value {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF4800;
+            letter-spacing: 1px;
+        }
+
+        /* Terms */
+        .terms-text {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+
+        .terms-text i {
+            color: #3b82f6;
+            margin-right: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-card {
+                padding: 25px;
+                margin: 0 15px 25px;
+            }
+
+            .form-section {
+                padding: 25px;
+            }
+
+            .step-indicator {
+                flex-direction: column;
+                padding: 25px;
+                margin: 0 15px 30px;
+            }
+
+            .step {
+                margin-bottom: 15px;
+            }
+
+            .step:last-child {
+                margin-bottom: 0;
+            }
+
+            .step-line {
+                width: 3px;
+                height: 30px;
+                margin: 8px 0;
+            }
+
+            .order-summary {
+                position: relative;
+                top: 0;
+                margin: 20px 15px 0;
+            }
+
+            .hero-section {
+                padding: 80px 0 60px;
+            }
+
+            .service-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .service-price {
+                margin-top: 10px;
+                align-self: flex-end;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success animation */
+        .success-checkmark {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            position: relative;
+            margin-right: 8px;
+        }
+
+        .success-checkmark::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 4px;
+            border: 2px solid white;
+            border-top: none;
+            border-right: none;
+            transform: rotate(-45deg);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center text-white">
+                    <small><i class="fa fa-phone-alt mr-2"></i>+84 123 456 789</small>
+                    <small class="px-3">|</small>
+                    <small><i class="fa fa-envelope mr-2"></i>info@vorder.vn</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h1 class="hero-title">Tạo Đơn Hàng</h1>
+                    <p class="hero-subtitle">Tạo đơn hàng giao hàng nhanh chóng, dễ dàng chỉ trong vài bước đơn giản</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Container -->
+    <div class="order-container">
+        <div class="container">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <span class="step-label">Thông Tin</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <span class="step-label">Lấy Hàng</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <span class="step-label">Dịch Vụ</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <span class="step-label">Xác Nhận</span>
+                </div>
+            </div>
+
+            <form id="orderForm">
+                <div class="row">
+                    <!-- Main Form -->
+                    <div class="col-lg-8">
+                        <div class="main-card">
+                            <!-- Sender Information -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="fa fa-user"></i>
+                                    Thông Tin Người Gửi
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Họ và tên <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="senderName" required placeholder="Nhập họ và tên người gửi" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Số điện thoại <span class="required">*</span></label>
+                                            <input type="tel" class="form-control" id="senderPhone" required placeholder="Nhập số điện thoại" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Địa chỉ <span class="required">*</span></label>
+                                            <textarea class="form-control" id="senderAddress" rows="3" required placeholder="Nhập địa chỉ chi tiết của người gửi"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Receiver Information -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="fa fa-user-friends"></i>
+                                    Thông Tin Người Nhận
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Họ và tên <span class="required">*</span></label>
+                                            <input type="text" class="form-control" id="receiverName" required placeholder="Nhập họ và tên người nhận" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Số điện thoại <span class="required">*</span></label>
+                                            <input type="tel" class="form-control" id="receiverPhone" required placeholder="Nhập số điện thoại" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Địa chỉ <span class="required">*</span></label>
+                                            <textarea class="form-control" id="receiverAddress" rows="3" required placeholder="Nhập địa chỉ chi tiết của người nhận"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Package Information -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="fa fa-box"></i>
+                                    Thông Tin Hàng Hóa
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Loại hàng hóa <span class="required">*</span></label>
+                                            <select class="form-control" id="packageType" required>
+                                                <option value="">Chọn loại hàng hóa</option>
+                                                <option value="document">Tài liệu</option>
+                                                <option value="clothing">Quần áo</option>
+                                                <option value="electronics">Điện tử</option>
+                                                <option value="food">Thực phẩm</option>
+                                                <option value="fragile">Hàng dễ vỡ</option>
+                                                <option value="other">Khác</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Trọng lượng (kg) <span class="required">*</span></label>
+                                            <input type="number" class="form-control" id="weight" step="0.1" min="0.1" required placeholder="0.0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Dài (cm)</label>
+                                            <input type="number" class="form-control" id="length" min="1" placeholder="0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Rộng (cm)</label>
+                                            <input type="number" class="form-control" id="width" min="1" placeholder="0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cao (cm)</label>
+                                            <input type="number" class="form-control" id="height" min="1" placeholder="0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Ghi chú hàng hóa</label>
+                                            <textarea class="form-control" id="packageNote" rows="2" placeholder="Mô tả chi tiết hàng hóa..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pickup Method -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="fa fa-truck-pickup"></i>
+                                    Phương Thức Lấy Hàng
+                                </h5>
+                                <div class="pickup-option">
+                                    <label class="mb-0">
+                                        <input type="radio" name="pickupMethod" value="pickup" checked />
+                                        <div class="pickup-title">Nhân viên đến lấy hàng</div>
+                                        <p class="pickup-desc">Nhân viên VORDER sẽ đến địa chỉ người gửi để lấy hàng tận nơi</p>
+                                    </label>
+                                </div>
+                                <div class="pickup-option">
+                                    <label class="mb-0">
+                                        <input type="radio" name="pickupMethod" value="dropoff" />
+                                        <div class="pickup-title">Tự đem hàng đến hub</div>
+                                        <p class="pickup-desc">Bạn tự đem hàng đến hub VORDER gần nhất để tiết kiệm chi phí</p>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Service Selection -->
+                            <div class="form-section">
+                                <h5 class="section-title">
+                                    <i class="fa fa-shipping-fast"></i>
+                                    Chọn Dịch Vụ Giao Hàng
+                                </h5>
+                                
+                                <div class="service-card">
+                                    <label class="mb-0">
+                                        <input type="radio" name="serviceType" value="standard" checked />
+                                        <div class="service-info">
+                                            <div class="service-details">
+                                                <h6>Giao Hàng Tiêu Chuẩn</h6>
+                                                <p>Giao hàng trong 3-5 ngày làm việc</p>
+                                            </div>
+                                            <div class="service-price">25,000 VNĐ</div>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="service-card">
+                                    <label class="mb-0">
+                                        <input type="radio" name="serviceType" value="fast" />
+                                        <div class="service-info">
+                                            <div class="service-details">
+                                                <h6>Giao Hàng Nhanh</h6>
+                                                <p>Giao hàng trong 1-2 ngày làm việc</p>
+                                            </div>
+                                            <div class="service-price">35,000 VNĐ</div>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="service-card">
+                                    <label class="mb-0">
+                                        <input type="radio" name="serviceType" value="express" />
+                                        <div class="service-info">
+                                            <div class="service-details">
+                                                <h6>Giao Hàng Hỏa Tốc</h6>
+                                                <p>Giao hàng trong 4-6 giờ (nội thành)</p>
+                                            </div>
+                                            <div class="service-price">85,000 VNĐ</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="col-lg-4">
+                        <div class="order-summary">
+                            <h5 class="summary-title">
+                                <i class="fa fa-calculator"></i>
+                                Tóm Tắt Đơn Hàng
+                            </h5>
+
+                            <div class="summary-item">
+                                <span class="summary-label">Cước phí vận chuyển:</span>
+                                <span class="summary-value" id="shippingFee">25,000 VNĐ</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Phí lấy hàng:</span>
+                                <span class="summary-value" id="pickupFee">10,000 VNĐ</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Phí khác:</span>
+                                <span class="summary-value" id="otherFee">0 VNĐ</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Tổng cộng:</span>
+                                <span id="totalFee">35,000 VNĐ</span>
+                            </div>
+
+                            <button type="button" class="btn-calculate" onclick="calculateFee()">
+                                <i class="fa fa-calculator mr-2"></i>Tính Lại Phí
+                            </button>
+
+                            <div class="tracking-code">
+                                <h6>Mã vận đơn dự kiến:</h6>
+                                <div class="tracking-code-value">
+                                    VOR<span id="randomCode">123456789</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-create-order">
+                                <i class="fa fa-check mr-2"></i>Tạo Đơn Hàng
+                            </button>
+
+                            <div class="terms-text">
+                                <i class="fa fa-info-circle"></i>
+                                Bằng cách tạo đơn hàng, bạn đồng ý với điều khoản dịch vụ của VORDER.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary back-to-top">
+        <i class="fa fa-angle-double-up"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Service prices
+        const servicePrices = {
+            standard: 25000,
+            fast: 35000,
+            express: 85000,
+        };
+
+        // Pickup fees
+        const pickupFees = {
+            pickup: 10000,
+            dropoff: 0,
+        };
+
+        // Generate random tracking code
+        function generateTrackingCode() {
+            const randomNum = Math.floor(Math.random() * 900000000) + 100000000;
+            document.getElementById("randomCode").textContent = randomNum;
+        }
+
+        // Calculate shipping fee
+        function calculateFee() {
+            const weight = parseFloat(document.getElementById("weight").value) || 0;
+            const serviceType = document.querySelector('input[name="serviceType"]:checked').value;
+            const pickupMethod = document.querySelector('input[name="pickupMethod"]:checked').value;
+
+            let shippingFee = servicePrices[serviceType];
+            let pickupFee = pickupFees[pickupMethod];
+            let otherFee = 0;
+
+            // Weight-based calculation
+            if (weight > 2) {
+                shippingFee += (weight - 2) * 5000; // 5k per additional kg
+            }
+
+            // Package type fee
+            const packageType = document.getElementById("packageType").value;
+            if (packageType === "fragile") {
+                otherFee += 15000; // Fragile handling fee
+            } else if (packageType === "electronics") {
+                otherFee += 10000; // Electronics handling fee
+            }
+
+            const totalFee = shippingFee + pickupFee + otherFee;
+
+            // Update display
+            document.getElementById("shippingFee").textContent = shippingFee.toLocaleString() + " VNĐ";
+            document.getElementById("pickupFee").textContent = pickupFee.toLocaleString() + " VNĐ";
+            document.getElementById("otherFee").textContent = otherFee.toLocaleString() + " VNĐ";
+            document.getElementById("totalFee").textContent = totalFee.toLocaleString() + " VNĐ";
+        }
+
+        // Handle service selection
+        document.querySelectorAll('input[name="serviceType"]').forEach((radio) => {
+            radio.addEventListener("change", function () {
+                // Remove selected class from all cards
+                document.querySelectorAll(".service-card").forEach((card) => {
+                    card.classList.remove("selected");
+                });
+
+                // Add selected class to current card
+                this.closest(".service-card").classList.add("selected");
+
+                // Recalculate fee
+                calculateFee();
+            });
+        });
+
+        // Handle pickup method selection
+        document.querySelectorAll('input[name="pickupMethod"]').forEach((radio) => {
+            radio.addEventListener("change", function () {
+                // Remove selected class from all options
+                document.querySelectorAll(".pickup-option").forEach((option) => {
+                    option.classList.remove("selected");
+                });
+
+                // Add selected class to current option
+                this.closest(".pickup-option").classList.add("selected");
+
+                // Recalculate fee
+                calculateFee();
+            });
+        });
+
+        // Handle form submission
+        document.getElementById("orderForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Basic validation
+            const requiredFields = [
+                "senderName",
+                "senderPhone", 
+                "senderAddress",
+                "receiverName",
+                "receiverPhone",
+                "receiverAddress",
+                "packageType",
+                "weight",
+            ];
+
+            let isValid = true;
+
+            requiredFields.forEach((fieldId) => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.classList.add("is-invalid");
+                    isValid = false;
+                } else {
+                    field.classList.remove("is-invalid");
+                }
+            });
+
+            if (!isValid) {
+                alert("Vui lòng điền đầy đủ thông tin bắt buộc!");
+                return;
+            }
+
+            // Show confirmation dialog
+            const trackingCode = "VOR" + document.getElementById("randomCode").textContent;
+            const totalAmount = document.getElementById("totalFee").textContent;
+
+            if (confirm(
+                `🚚 Xác nhận tạo đơn hàng?\n\n` +
+                `📋 Mã vận đơn: ${trackingCode}\n` +
+                `💰 Tổng phí: ${totalAmount}\n\n` +
+                `Nhấn OK để tạo đơn hàng.`
+            )) {
+                // Show loading state
+                const submitBtn = document.querySelector('.btn-create-order');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="loading"></span> Đang tạo đơn hàng...';
+                submitBtn.disabled = true;
+
+                // Simulate order creation
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<span class="success-checkmark"></span> Tạo thành công!';
+                    
+                    setTimeout(() => {
+                        alert(
+                            `🎉 Tạo đơn hàng thành công!\n\n` +
+                            `📦 Mã vận đơn: ${trackingCode}\n` +
+                            `💰 Tổng phí: ${totalAmount}\n\n` +
+                            `✅ Bạn có thể theo dõi đơn hàng tại trang "Theo Dõi"\n` +
+                            `📱 Chúng tôi sẽ gửi SMS xác nhận đến số điện thoại của bạn.`
+                        );
+
+                        // Redirect to tracking page
+                        window.location.href = `tracking.html?code=${trackingCode}`;
+                    }, 1000);
+                }, 2000);
+            }
+        });
+
+        // Phone number formatting
+        function formatPhoneNumber(input) {
+            input.addEventListener("input", function (e) {
+                let value = e.target.value.replace(/\D/g, "");
+                if (value.length > 10) {
+                    value = value.substring(0, 10);
+                }
+                e.target.value = value;
+            });
+        }
+
+        formatPhoneNumber(document.getElementById("senderPhone"));
+        formatPhoneNumber(document.getElementById("receiverPhone"));
+
+        // Auto-calculate when inputs change
+        document.getElementById("weight").addEventListener("input", calculateFee);
+        document.getElementById("packageType").addEventListener("change", calculateFee);
+
+        // Initialize page
+        document.addEventListener("DOMContentLoaded", function () {
+            generateTrackingCode();
+            calculateFee();
+
+            // Set initial selected states
+            document.querySelector('input[name="serviceType"]:checked')
+                .closest(".service-card").classList.add("selected");
+            document.querySelector('input[name="pickupMethod"]:checked')
+                .closest(".pickup-option").classList.add("selected");
+        });
+
+        // Back to top functionality
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $(".back-to-top").fadeIn("slow");
+            } else {
+                $(".back-to-top").fadeOut("slow");
+            }
+        });
+
+        $(".back-to-top").click(function () {
+            $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
+            return false;
+        });
+
+        // Load header and footer
+        fetch("header/header.html")
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById("header-placeholder").innerHTML = data;
+            });
+
+        fetch("footer/footer.html")
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+</body>
+</html>
