@@ -1,108 +1,139 @@
+<!-- ======================================================================= -->
+<!-- ============= HEADER CHUNG - DÙNG CHO TẤT CẢ CÁC TRANG =============== -->
+<!-- ======================================================================= -->
+
 <!-- Navbar Start -->
 <div class="container-fluid p-0">
     <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-lg-5">
-        <a href="index.html" class="navbar-brand ml-lg-3">
+        <!-- Thay thế logo tại đây nếu muốn -->
+        <a href="/index.html" class="navbar-brand ml-lg-3">
             <h1 class="m-0 display-5 text-uppercase text-primary">
                 <i class="fa fa-truck mr-2"></i>VORDER
             </h1>
         </a>
+        
+        <!-- Nút responsive cho di động -->
         <button
             type="button"
             class="navbar-toggler"
             data-toggle="collapse"
             data-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
         >
             <span class="navbar-toggler-icon"></span>
         </button>
+        
+        <!-- Nội dung Menu -->
         <div
             class="collapse navbar-collapse justify-content-between px-lg-3"
             id="navbarCollapse"
         >
             <div class="navbar-nav m-auto py-0">
-                <a href="index.html" class="nav-item nav-link">Trang Chủ</a>
-                <a href="../order/order.html" class="nav-item nav-link">Đơn hàng</a>
-                <a href="../tracking/tracking.html" class="nav-item nav-link">Theo Dõi</a>
-                <a href="../price/price.html" class="nav-item nav-link">Chi phí</a>
+                <a href="/index.html" class="nav-item nav-link">Trang Chủ</a>
+                <a href="/order/order.html" class="nav-item nav-link">Quản lý Đơn hàng</a>
+                <a href="/tracking/tracking.html" class="nav-item nav-link">Theo Dõi</a>
+                <a href="/price/price.html" class="nav-item nav-link">Bảng giá</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài Khoản</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a href="login_register/login.html" class="dropdown-item">Đăng Nhập</a>
-                        <a href="login_register/register.html" class="dropdown-item">Đăng Ký</a>
+                        <a href="../login_register/login.html" class="dropdown-item">Đăng Nhập</a>
+                        <a href="../login_register/register.html" class="dropdown-item">Đăng Ký</a>
                     </div>
                 </div>
-                <a href="../mail/contact.html" class="nav-item nav-link">Liên Hệ</a>
+                <a href="/contact/contact.html" class="nav-item nav-link">Liên Hệ</a>
             </div>
-            <a href="../order/order.html" class="btn btn-primary py-2 px-4 d-none d-lg-block">Tạo Đơn Hàng</a>
+            <a href="/order/order.html" class="btn btn-primary py-2 px-4 d-none d-lg-block">Tạo Đơn Hàng</a>
         </div>
     </nav>
 </div>
 <!-- Navbar End -->
 
+<!-- CSS cho Header -->
 <style>
-/* Fix navbar hover effects and colors */
-.navbar-light .navbar-nav .nav-link {
-    color: #1F1F2E !important;
-    padding: 30px 15px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.navbar-light .navbar-nav .nav-link:hover,
-.navbar-light .navbar-nav .nav-link.active {
-    color: #FFFFFF !important;
-    background: #FF4800 !important;
-}
-
-/* Mobile responsive */
-@media (max-width: 991.98px) {
+    /* Style chung cho các mục menu */
     .navbar-light .navbar-nav .nav-link {
-        padding: 10px 15px;
+        color: #1F1F2E;
+        padding: 30px 15px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+        position: relative; /* Cần thiết cho các hiệu ứng nâng cao sau này */
     }
-}
 
-/* Remove any black overlay */
-.navbar-light .navbar-nav .nav-link:hover,
-.navbar-light .navbar-nav .nav-link:focus {
-    box-shadow: none !important;
-    outline: none !important;
-}
+    /* Hiệu ứng khi di chuột hoặc khi mục menu được active */
+    .navbar-light .navbar-nav .nav-link:hover,
+    .navbar-light .navbar-nav .nav-link.active {
+        color: #FFFFFF;
+        background-color: #FF4800;
+    }
 
-/* Fix dropdown styling */
-.dropdown-menu {
-    border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    border-radius: 0;
-}
+    /* Style cho các mục trong menu dropdown */
+    .dropdown-menu {
+        margin-top: 0;
+        border: 1px solid #f1f1f1;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        border-radius: 0;
+    }
 
-.dropdown-item {
-    color: #1F1F2E;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
-}
+    .dropdown-item {
+        transition: color 0.2s ease, background-color 0.2s ease;
+    }
 
-.dropdown-item:hover,
-.dropdown-item:focus {
-    background-color: #FF4800;
-    color: white;
-}
-
-/* Button styling */
-.btn-primary {
-    background-color: #FF4800;
-    border-color: #FF4800;
-    font-weight: 600;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: #cc3a00;
-    border-color: #cc3a00;
-}
-
-/* Brand styling */
-.text-primary {
-    color: #FF4800 !important;
-}
+    /* Hiệu ứng khi di chuột hoặc active cho mục dropdown */
+    .dropdown-item:hover,
+    .dropdown-item:focus,
+    .dropdown-item.active {
+        background-color: #FF4800;
+        color: white;
+    }
+    
+    /* Responsive cho di động */
+    @media (max-width: 991.98px) {
+        .navbar-light .navbar-nav .nav-link { 
+            padding: 12px 15px; 
+        }
+        .navbar-light .navbar-nav .nav-link:hover,
+        .navbar-light .navbar-nav .nav-link.active {
+            border-radius: 4px; /* Bo tròn nhẹ trên di động cho đẹp */
+        }
+    }
 </style>
+
+<!-- JavaScript để tự động tô màu menu active -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        try {
+            // Lấy đường dẫn của trang hiện tại (vd: "/tracking/tracking.html")
+            const currentPath = window.location.pathname;
+            
+            // Lấy tất cả các thẻ 'a' có thể là mục menu
+            const navLinks = document.querySelectorAll('#navbarCollapse .nav-item .nav-link, #navbarCollapse .dropdown-item');
+
+            navLinks.forEach(link => {
+                // Lấy đường dẫn của thẻ 'a'
+                const linkPath = new URL(link.href).pathname;
+
+                // So sánh đường dẫn của thẻ 'a' với trang hiện tại
+                if (currentPath === linkPath) {
+                    // Thêm class 'active' cho chính xác mục menu đó
+                    link.classList.add('active');
+
+                    // Kiểm tra xem mục menu có nằm trong dropdown không
+                    const parentDropdown = link.closest('.nav-item.dropdown');
+                    if (parentDropdown) {
+                        // Nếu có, thêm class 'active' luôn cho thẻ cha của dropdown
+                        parentDropdown.querySelector('.nav-link.dropdown-toggle').classList.add('active');
+                    }
+                }
+            });
+        } catch (e) {
+            console.error("Lỗi khi xử lý active menu:", e);
+        }
+    });
+</script>
+
+<!-- ======================================================================= -->
+<!-- ======================= KẾT THÚC HEADER CHUNG ========================= -->
+<!-- ======================================================================= -->

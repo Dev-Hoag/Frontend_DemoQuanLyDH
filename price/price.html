@@ -1062,16 +1062,16 @@
         }
         
         // Load header and footer exactly like contact.html
-        fetch('./header/header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-placeholder').innerHTML = data;
+         fetch("../header/header.html")
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById("header-placeholder").innerHTML = data;
             });
-            
-        fetch('./footer/footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
+
+        fetch("../footer/footer.html")
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById("footer-placeholder").innerHTML = data;
             });
             
         // Back to top functionality
