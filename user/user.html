@@ -51,8 +51,8 @@
         <!-- Profile Header -->
         <div class="profile-header">
             <div class="profile-info">
-                <div class="profile-avatar">NT</div>
-                <h1>Nguyễn Văn Thành</h1>
+                <div class="profile-avatar"></div>
+                <h1></h1>
                 <p style="font-size: 1.1rem; opacity: 0.9;">Thành viên VIP từ 15/01/2024</p>
                 <div class="profile-stats">
                     <div class="stat-card">
@@ -122,29 +122,26 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Họ và tên</label>
-                                    <input type="text" class="form-control" value="Nguyễn Văn Thành">
+                                    <input type="text" name="fullName" class="form-control">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Số điện thoại</label>
-                                    <input type="tel" class="form-control" value="0901234567">
+                                    <input type="tel" name="phoneNumber" class="form-control">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" value="nguyen.thanh@email.com">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Ngày sinh</label>
-                                    <input type="date" class="form-control" value="1990-05-15">
-                                </div>
+                            <div class="mb-1">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control">
                             </div>
                             <div class="mb-4">
                                 <label class="form-label">Địa chỉ</label>
-                                <textarea class="form-control" rows="3">123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP.HCM</textarea>
+                                <textarea name="address" class="form-control"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg" onclick="saveProfile()">
                                 <i class="fa fa-save mr-2"></i>Lưu Thay Đổi
+                            </button>
+                            <button type="submit" class="btn btn-secondary btn-lg ms-2" onclick="logout()">
+                                <i class="fa fa-sign-out-alt mr-2"></i>Đăng Xuất
                             </button>
                         </form>
                     </div>
@@ -536,6 +533,37 @@
             }
         }
 
+        async function logout(){
+            if(!confirm("Bạn có chắc chắn muốn đăng xuất?")){
+                return;
+            }
+
+            const token = localStorage.getItem("access_token");
+
+            try{
+                const response = await fetch('http://localhost:9000/api/auth/sign-out', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }    
+                    
+                });
+            }
+            catch(error){
+                console.warn("Lỗi khi gọi API đăng xuất:", error);
+            }
+
+            localStorage.removeItem("vorder_user");
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("vorder_admin");
+
+            alert("Đăng xuất thành công!");
+
+            window.location.href = '../index.html';
+
+        }
+
         // Notification system
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
@@ -572,17 +600,25 @@
         }
 
         // Check authentication on page load
-        window.addEventListener('load', function() {
-            const userData = localStorage.getItem('vorder_user');
-            if (!userData) {
-                if (confirm('Bạn cần đăng nhập để xem trang này. Chuyển đến trang đăng nhập?')) {
-                    window.location.href = '../login_register/login.html';
-                }
-            } else {
-                // Welcome message
-                setTimeout(() => {
-                    showNotification('Chào mừng bạn quay lại! Bạn có 2 thông báo mới.', 'info');
-                }, 1000);
+        window.addEventListener('DOMContentLoaded', function() {
+            const userData = localStorage.getItem("vorder_user");
+            if (userData) {
+                const user = JSON.parse(userData);
+
+                document.querySelector('input[name="fullName"]').value = user.fullName || '';
+                document.querySelector('input[name="email"]').value = user.email || '';
+                document.querySelector('input[name="phoneNumber"]').value = user.phoneNumber || '';
+                document.querySelector('textarea[name="address"]').value = user.address || '';
+
+                const initials = user.fullName
+                    ? user.fullName.split(' ').map(w => w[0]).join('').toUpperCase()
+                    : 'U';
+
+                const avatar = document.querySelector('.profile-avatar');
+                if (avatar) avatar.textContent = initials;
+
+                const profileName = document.querySelector('.profile-info h1');
+                if (profileName) profileName.textContent = user.fullName;
             }
         });
 

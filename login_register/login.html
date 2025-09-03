@@ -428,74 +428,101 @@
             }
         });
 
-        // Form validation and submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
-            const errorAlert = document.getElementById('errorAlert');
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // Hide previous errors
-            errorAlert.style.display = 'none';
-            
-            // Basic validation
-            if (!username || !password) {
-                showError('Vui lòng điền đầy đủ thông tin!');
-                return;
-            }
-            
-            // Email or phone validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const phoneRegex = /^[0-9]{10,11}$/;
-            
-            if (!emailRegex.test(username) && !phoneRegex.test(username)) {
-                showError('Email hoặc số điện thoại không hợp lệ!');
-                return;
-            }
-            
-            if (password.length < 6) {
-                showError('Mật khẩu phải có ít nhất 6 ký tự!');
-                return;
-            }
-            
-            // Simulate login process
             const submitBtn = document.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+
+            errorAlert.style.display = 'none';
+
+            // Validation
+            if (!username || !password) return showError('Vui lòng điền đầy đủ thông tin!');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9]{10,11}$/;
+            if (!emailRegex.test(username) && !phoneRegex.test(username)) return showError('Email hoặc số điện thoại không hợp lệ!');
+            if (password.length < 6) return showError('Mật khẩu phải có ít nhất 6 ký tự!');
+
+            // Loading
             submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Đang xử lý...';
             submitBtn.disabled = true;
-            
-            // Demo login (replace with real API call)
-            setTimeout(() => {
-                // Demo accounts for testing
-                const validAccounts = [
-                    { username: 'admin@vorder.vn', password: '123456' },
-                    { username: 'demo@gmail.com', password: 'demo123' },
-                    { username: '0901234567', password: '123456' }
-                ];
-                
-                const isValid = validAccounts.some(account => 
-                    account.username === username && account.password === password
-                );
-                
-                if (isValid) {
-                    // Success - redirect to dashboard
-                    localStorage.setItem('vorder_user', JSON.stringify({
-                        username: username,
-                        loginTime: new Date().toISOString()
-                    }));
-                    
-                    alert('Đăng nhập thành công!\nChuyển đến Dashboard...');
-                    window.location.href = 'dashboard.html';
-                } else {
-                    showError('Email/SĐT hoặc mật khẩu không chính xác!');
+
+            try {
+                // Gửi yêu cầu đăng nhập
+                const response = await fetch("http://localhost:9000/api/auth/sign-in", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        emailOrPhoneNumber: username,
+                        password: password
+                    })
+                });
+
+                const res = await response.json();
+
+                if (!response.ok) {
+                    showError(res.message || "Đăng nhập thất bại!");
+                    return;
                 }
-                
+
+                const { token } = res.data;
+
+                if (!token) {
+                    showError("Không nhận được token từ server!");
+                    return;
+                }
+
+                // Lưu token
+                localStorage.setItem("access_token", token);
+
+                // Lấy thông tin người dùng
+                const userProfile = await fetch("http://localhost:9000/api/users/get-user-profile", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                const profileData = await userProfile.json();
+
+                if (!userProfile.ok) {
+                    showError(profileData.message || "Không lấy được thông tin người dùng");
+                    return;
+                }
+
+                const user = profileData.data;
+                if (!user || !user.roles) {
+                    showError("Thông tin người dùng không hợp lệ");
+                    return;
+                }
+
+                // Add login timestamp
+                const userWithTimestamp = {
+                    ...user,
+                    loginTime: new Date().toISOString()
+                };
+
+                // Chuyển hướng theo vai trò
+                if (Array.isArray(user.roles) && user.roles.includes("ADMIN")) {
+                    localStorage.setItem("vorder_admin", JSON.stringify(userWithTimestamp));
+                    window.location.href = '../admin/admin.html';
+                } else {
+                    localStorage.setItem("vorder_user", JSON.stringify(userWithTimestamp));
+                    window.location.href = '../user/user.html';
+                }
+
+            } catch (error) {
+                console.error("Login error:", error);
+                showError("Không thể kết nối đến máy chủ.");
+            } finally {
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 1500);
+            }
         });
 
         // Show error message
@@ -529,19 +556,32 @@
         });
 
         // Check if user is already logged in
-        window.addEventListener('load', function() {
-            const userData = localStorage.getItem('vorder_user');
-            if (userData) {
-                const user = JSON.parse(userData);
-                // Check if login is still valid (less than 24 hours)
-                const loginTime = new Date(user.loginTime);
-                const now = new Date();
-                const diffHours = (now - loginTime) / (1000 * 60 * 60);
-                
-                if (diffHours < 24) {
-                    // Still logged in, redirect to dashboard
-                    window.location.href = 'dashboard.html';
+        window.addEventListener('load', async function() {
+            const token = localStorage.getItem("access_token");
+            if (!token) return;
+
+            try {
+                const response = await fetch("http://localhost:9000/api/users/get-user-profile", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data?.data?.roles?.includes('ADMIN')) {
+                        window.location.href = "../admin/admin.html";
+                    } else {
+                        window.location.href = "../user/user.html";
+                    }
+                } else {
+                    // Token hết hạn => xóa token cũ
+                    localStorage.removeItem("access_token");
+                    localStorage.removeItem("vorder_user");
+                    localStorage.removeItem("vorder_admin");
                 }
+            } catch (error) {
+                console.error("Lỗi kiểm tra token:", error);
             }
         });
 

@@ -740,48 +740,51 @@
             
             return true;
         }
-
-        function submitRegistration(data) {
+            
+        async function submitRegistration(data) {
             const submitBtn = document.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
-            
+
             submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>Đang xử lý...';
             submitBtn.disabled = true;
-            
-            // Simulate registration process
-            setTimeout(() => {
-                // Check if email/phone already exists (demo)
-                const existingUsers = ['admin@vorder.vn', '0901234567', 'demo@gmail.com'];
-                
-                if (existingUsers.includes(data.email) || existingUsers.includes(data.phone)) {
-                    showError('Email hoặc số điện thoại đã được sử dụng!');
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                    return;
+
+            try {
+                const response = await fetch("http://localhost:9000/api/auth/sign-up", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email: data.email,
+                        password: data.password,
+                        confirmPassword: data.confirmPassword,
+                        fullName: data.fullName,
+                        phoneNumber: data.phone,
+                        address: `${data.address}, ${data.district}, ${data.province}`
+                    })
+                });
+
+                if (response.ok) {
+                    showSuccess('Đăng ký thành công! Chuyển đến trang đăng nhập...');
+                    setTimeout(() => {
+                        // Sau khi nhận được phản hồi thành công từ backend:
+                        const userInfo = {
+                            fullName: data.fullName,
+                            email: data.email,
+                            phoneNumber: data.phone,
+                            address: `${data.address}, ${data.district}, ${data.province}`
+                            // Thêm thông tin khác nếu backend trả về
+                        };
+                        localStorage.setItem("vorder_user", JSON.stringify(userInfo));
+                        window.location.href = '../user/user.html';
+                    }, 2000);
+                } else {
+                    const res = await response.json();
+                    showError(res.message || 'Đăng ký thất bại, vui lòng thử lại.');
                 }
-                
-                // Success
-                showSuccess('Đăng ký thành công! Chuyển đến trang đăng nhập...');
-                
-                // Save user data (demo)
-                const userData = {
-                    ...data,
-                    id: 'user_' + Date.now(),
-                    createdAt: new Date().toISOString(),
-                    status: 'active'
-                };
-                
-                // Store in localStorage (demo)
-                const users = JSON.parse(localStorage.getItem('vorder_users') || '[]');
-                users.push(userData);
-                localStorage.setItem('vorder_users', JSON.stringify(users));
-                
-                // Redirect after 2 seconds
-                setTimeout(() => {
-                    window.location.href = 'login.html?registered=true';
-                }, 2000);
-                
-            }, 1500);
+            } catch (error) {
+                showError('Lỗi kết nối đến máy chủ.');
+            }
         }
 
         function showError(message) {
