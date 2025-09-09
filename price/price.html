@@ -13,7 +13,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
         * {
@@ -32,13 +33,13 @@
         /* Force white background for navbar on price page */
         .navbar {
             background-color: #ffffff !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .navbar-brand h1 {
             color: #FF4800 !important;
         }
-        
+
         /* Make sure navbar is not transparent */
         .navbar-light {
             background-color: #ffffff !important;
@@ -109,7 +110,7 @@
             margin-top: -60px;
             position: relative;
             z-index: 10;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
         .calc-header {
@@ -142,12 +143,13 @@
         .calc-form .form-control {
             border: 2px solid #e2e8f0;
             border-radius: 12px;
-            padding: 15px;
+            padding: 10px;
             font-size: 16px;
             transition: all 0.3s ease;
+            height: fit-content;
         }
 
-        .calc-form         .form-control:focus {
+        .calc-form .form-control:focus {
             border-color: #FF4800;
             box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
         }
@@ -242,7 +244,7 @@
 
         .pricing-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
 
         .pricing-card.featured {
@@ -383,8 +385,12 @@
             background: white;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             margin-bottom: 40px;
+            width: 100%;
+            /* take full width */
+            max-width: 100%;
+            /* no limit */
         }
 
         .table-header {
@@ -401,6 +407,9 @@
 
         .pricing-table {
             margin: 0;
+            width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 👈 ép các cột chia đều */
         }
 
         .pricing-table th {
@@ -418,6 +427,7 @@
             text-align: center;
             border-bottom: 1px solid #f1f5f9;
             color: #64748b;
+            width: 25%;   
         }
 
         .pricing-table tbody tr:hover {
@@ -449,13 +459,13 @@
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
         }
 
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .service-icon {
@@ -495,36 +505,40 @@
             .hero-title {
                 font-size: 2.5rem;
             }
-            
+
             .hero-subtitle {
                 font-size: 1.1rem;
             }
-            
+
             .quick-calc {
                 padding: 30px 20px;
                 margin-top: -40px;
             }
-            
+
             .section-title {
                 font-size: 2.2rem;
             }
-            
+
             .pricing-card {
                 padding: 30px 20px;
             }
-            
+
             .pricing-card.featured {
                 transform: none;
             }
-            
+
             .pricing-price {
                 font-size: 2.5rem;
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="PriceScript.js"></script>
+
 </head>
 
 <body>
+
     <!-- Topbar Start -->
     <div class="container-fluid bg-dark">
         <div class="row py-2 px-lg-5">
@@ -566,7 +580,8 @@
         <div class="container">
             <div class="hero-content text-center">
                 <h1 class="hero-title">Bảng Giá Minh Bạch</h1>
-                <p class="hero-subtitle">Không phí ẩn, không phụ thu bất ngờ. Chỉ những mức giá công bằng và cạnh tranh nhất</p>
+                <p class="hero-subtitle">Không phí ẩn, không phụ thu bất ngờ. Chỉ những mức giá công bằng và cạnh tranh
+                    nhất</p>
             </div>
         </div>
     </section>
@@ -578,7 +593,7 @@
                 <h3>Tính Phí Giao Hàng</h3>
                 <p>Nhập thông tin để nhận báo giá ngay lập tức</p>
             </div>
-            
+
             <form class="calc-form">
                 <div class="row">
                     <div class="col-md-3">
@@ -595,7 +610,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Đến tỉnh/thành</label>
@@ -610,14 +625,15 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Trọng lượng (kg)</label>
-                            <input type="number" class="form-control" id="weight" placeholder="1.0" step="0.1" min="0.1" max="50">
+                            <input type="number" class="form-control" id="weight" placeholder="1.0" step="0.1" min="0.1"
+                                max="50">
                         </div>
                     </div>
-                    
+
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>Loại dịch vụ</label>
@@ -628,7 +644,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-2">
                         <div class="form-group">
                             <label>&nbsp;</label>
@@ -639,7 +655,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <div class="calc-result" id="calcResult">
                 <h4 id="resultPrice">0₫</h4>
                 <p id="resultDetails">Chi phí giao hàng ước tính</p>
@@ -653,9 +669,10 @@
             <div class="section-header">
                 <span class="section-badge">Gói Dịch Vụ</span>
                 <h2 class="section-title">Chọn Gói Phù Hợp</h2>
-                <p class="section-desc">Từ giao hàng tiêu chuẩn đến hỏa tốc, chúng tôi có giải pháp cho mọi nhu cầu vận chuyển của bạn</p>
+                <p class="section-desc">Từ giao hàng tiêu chuẩn đến hỏa tốc, chúng tôi có giải pháp cho mọi nhu cầu vận
+                    chuyển của bạn</p>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-4 mb-4">
                     <div class="pricing-card">
@@ -666,7 +683,7 @@
                         <p class="pricing-desc">Giải pháp giao hàng kinh tế cho mọi nhu cầu thông thường</p>
                         <div class="pricing-price">20K</div>
                         <div class="pricing-unit">bắt đầu từ / kg</div>
-                        
+
                         <ul class="pricing-features">
                             <li><i class="fa fa-check"></i> Giao hàng 3-5 ngày</li>
                             <li><i class="fa fa-check"></i> Theo dõi trực tuyến</li>
@@ -675,11 +692,11 @@
                             <li class="disabled"><i class="fa fa-times"></i> Ưu tiên xử lý</li>
                             <li class="disabled"><i class="fa fa-times"></i> Giao ngoài giờ</li>
                         </ul>
-                        
+
                         <button class="pricing-btn btn-outline-primary">Chọn gói này</button>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 mb-4">
                     <div class="pricing-card featured">
                         <div class="popular-badge">Phổ biến nhất</div>
@@ -690,7 +707,7 @@
                         <p class="pricing-desc">Cân bằng hoàn hảo giữa tốc độ và chi phí hợp lý</p>
                         <div class="pricing-price">35K</div>
                         <div class="pricing-unit">bắt đầu từ / kg</div>
-                        
+
                         <ul class="pricing-features">
                             <li><i class="fa fa-check"></i> Giao hàng 1-2 ngày</li>
                             <li><i class="fa fa-check"></i> Theo dõi realtime</li>
@@ -699,11 +716,11 @@
                             <li><i class="fa fa-check"></i> Ưu tiên xử lý</li>
                             <li class="disabled"><i class="fa fa-times"></i> Giao ngoài giờ</li>
                         </ul>
-                        
+
                         <button class="pricing-btn btn-primary">Chọn gói này</button>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 mb-4">
                     <div class="pricing-card">
                         <div class="pricing-icon premium">
@@ -713,7 +730,7 @@
                         <p class="pricing-desc">Dịch vụ cao cấp cho những đơn hàng cần giao siêu nhanh</p>
                         <div class="pricing-price">75K</div>
                         <div class="pricing-unit">bắt đầu từ / kg</div>
-                        
+
                         <ul class="pricing-features">
                             <li><i class="fa fa-check"></i> Giao hàng trong ngày</li>
                             <li><i class="fa fa-check"></i> Theo dõi realtime</li>
@@ -722,7 +739,7 @@
                             <li><i class="fa fa-check"></i> Ưu tiên tối đa</li>
                             <li><i class="fa fa-check"></i> Giao ngoài giờ</li>
                         </ul>
-                        
+
                         <button class="pricing-btn btn-outline-primary">Chọn gói này</button>
                     </div>
                 </div>
@@ -737,54 +754,44 @@
                 <span class="section-badge">Bảng Giá Chi Tiết</span>
                 <h2 class="section-title">Phí Giao Hàng Theo Khu Vực</h2>
             </div>
-            
+
             <!-- Inner City Pricing -->
             <div class="detailed-pricing">
                 <div class="table-header">
                     <h4>Giao Hàng Nội Thành</h4>
                     <small>TP.HCM, Hà Nội, Đà Nẵng và các thành phố lớn</small>
                 </div>
-                <table class="table pricing-table">
+
+                <div id="loading-state" class="loading">
+                    <div class="spinner"></div>
+                    <p>Đang tải bảng giá...</p>
+                </div>
+
+                <div id="error-state" class="error" style="display: none;">
+                    <h4>⚠️ Không thể tải dữ liệu</h4>
+                    <p>Vui lòng thử lại sau hoặc liên hệ bộ phận hỗ trợ</p>
+                    <button onclick="loadPricing()"
+                        style="margin-top: 10px; padding: 10px 20px; background: #4facfe; color: white; border: none; border-radius: 5px; cursor: pointer;">Thử
+                        lại</button>
+                </div>
+
+                <table class="pricing-table" id="pricing-table" style="display: none;">
                     <thead>
                         <tr>
                             <th>Trọng Lượng</th>
-                            <th>Tiêu Chuẩn</th>
-                            <th>Nhanh</th>
-                            <th>Hỏa Tốc</th>
+                            <th>
+                                <span class="service-badge service-standard">Tiêu Chuẩn</span>
+                            </th>
+                            <th>
+                                <span class="service-badge service-fast">Nhanh</span>
+                            </th>
+                            <th>
+                                <span class="service-badge service-express">Hỏa Tốc</span>
+                            </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="weight-col">0.1 - 0.5 kg</td>
-                            <td class="price-col">15,000₫</td>
-                            <td class="price-col">25,000₫</td>
-                            <td class="price-col">40,000₫</td>
-                            <td class="price-col">85,000₫</td>
-                        </tr>
-                        <tr>
-                            <td class="weight-col">0.6 - 1.0 kg</td>
-                            <td class="price-col">35,000₫</td>
-                            <td class="price-col">55,000₫</td>
-                            <td class="price-col">120,000₫</td>
-                        </tr>
-                        <tr>
-                            <td class="weight-col">1.1 - 2.0 kg</td>
-                            <td class="price-col">50,000₫</td>
-                            <td class="price-col">80,000₫</td>
-                            <td class="price-col">180,000₫</td>
-                        </tr>
-                        <tr>
-                            <td class="weight-col">2.1 - 5.0 kg</td>
-                            <td class="price-col">85,000₫</td>
-                            <td class="price-col">140,000₫</td>
-                            <td class="price-col">320,000₫</td>
-                        </tr>
-                        <tr>
-                            <td class="weight-col">5.1 - 10 kg</td>
-                            <td class="price-col">150,000₫</td>
-                            <td class="price-col">250,000₫</td>
-                            <td class="price-col">550,000₫</td>
-                        </tr>
+                    <tbody id="pricing-body">
+                        <!-- Dynamic rows will be inserted here -->
                     </tbody>
                 </table>
             </div>
@@ -799,7 +806,7 @@
                 <h2 class="section-title">Thêm Tiện Ích Cho Đơn Hàng</h2>
                 <p class="section-desc">Các dịch vụ giá trị gia tăng giúp tối ưu hóa trải nghiệm giao hàng</p>
             </div>
-            
+
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
@@ -809,7 +816,7 @@
                     <p class="service-desc">Thu tiền hộ và chuyển về tài khoản của bạn trong 24h</p>
                     <div class="service-price">2% giá trị đơn hàng</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-shield-alt"></i>
@@ -818,7 +825,7 @@
                     <p class="service-desc">Đền bù thiệt hại trong quá trình vận chuyển</p>
                     <div class="service-price">1% giá trị hàng</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-box"></i>
@@ -827,7 +834,7 @@
                     <p class="service-desc">Đóng gói an toàn với vật liệu chất lượng cao</p>
                     <div class="service-price">15,000₫</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-hand-holding"></i>
@@ -836,7 +843,7 @@
                     <p class="service-desc">Nhân viên đến tận nơi lấy hàng theo lịch hẹn</p>
                     <div class="service-price">10,000₫</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-clock"></i>
@@ -845,7 +852,7 @@
                     <p class="service-desc">Giao hàng từ 17h-22h hoặc sáng sớm 6h-8h</p>
                     <div class="service-price">+25% phí giao</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-calendar-weekend"></i>
@@ -854,7 +861,7 @@
                     <p class="service-desc">Dịch vụ giao hàng thứ 7, chủ nhật</p>
                     <div class="service-price">+50% phí giao</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-sms"></i>
@@ -863,7 +870,7 @@
                     <p class="service-desc">Cập nhật tình trạng đơn hàng qua tin nhắn</p>
                     <div class="service-price">2,000₫/SMS</div>
                 </div>
-                
+
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fa fa-photo-video"></i>
@@ -884,7 +891,7 @@
                 <h2 class="section-title">Tiết Kiệm Chi Phí</h2>
                 <p class="section-desc">Các chương trình giảm giá và ưu đãi hấp dẫn</p>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-4 mb-4">
                     <div class="service-card text-center">
@@ -896,7 +903,7 @@
                         <div class="service-price">Tùy theo số lượng đơn</div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 mb-4">
                     <div class="service-card text-center">
                         <div class="service-icon mx-auto">
@@ -907,7 +914,7 @@
                         <div class="service-price">-2% tổng bill</div>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4 mb-4">
                     <div class="service-card text-center">
                         <div class="service-icon mx-auto">
@@ -954,105 +961,96 @@
 
     <script>
         // Shipping Calculator with better debugging
-        function calculateShipping() {
-            console.log('Calculate shipping called');
-            
-            const fromCity = document.getElementById('fromCity').value;
-            const toCity = document.getElementById('toCity').value;
-            const weight = parseFloat(document.getElementById('weight').value);
-            const serviceType = document.getElementById('serviceType').value;
-            
-            console.log('Form values:', {fromCity, toCity, weight, serviceType});
-            
-            // Validation
-            if (!fromCity) {
-                alert('Vui lòng chọn tỉnh/thành gửi!');
-                return;
-            }
-            if (!toCity) {
-                alert('Vui lòng chọn tỉnh/thành nhận!');
-                return;
-            }
-            if (!weight || weight <= 0) {
-                alert('Vui lòng nhập trọng lượng hợp lệ!');
-                return;
-            }
-            
-            // Determine if same city or inter-province
-            const majorCities = ['hcm', 'hanoi', 'danang'];
-            const isSameCity = fromCity === toCity;
-            const isInnerCity = majorCities.includes(fromCity) && majorCities.includes(toCity);
-            
-            let basePrice = 0;
-            
-            // Calculate base price based on location and weight
-            if (isSameCity && majorCities.includes(fromCity)) {
-                // Same major city
-                if (weight <= 0.5) basePrice = 15000;
-                else if (weight <= 1.0) basePrice = 20000;
-                else if (weight <= 2.0) basePrice = 30000;
-                else if (weight <= 5.0) basePrice = 50000;
-                else basePrice = 80000;
-            } else if (isInnerCity && !isSameCity) {
-                // Between major cities
-                if (weight <= 0.5) basePrice = 20000;
-                else if (weight <= 1.0) basePrice = 28000;
-                else if (weight <= 2.0) basePrice = 40000;
-                else if (weight <= 5.0) basePrice = 68000;
-                else basePrice = 110000;
-            } else {
-                // Inter-province pricing
-                if (weight <= 0.5) basePrice = 25000;
-                else if (weight <= 1.0) basePrice = 35000;
-                else if (weight <= 2.0) basePrice = 50000;
-                else if (weight <= 5.0) basePrice = 85000;
-                else basePrice = 150000;
-            }
-            
-            // Apply service multiplier
-            let serviceFee = 0;
-            let serviceName = 'Tiêu chuẩn';
-            let totalPrice = basePrice;
-            
-            switch (serviceType) {
-                case 'express':
-                    serviceFee = Math.round(basePrice * 0.75);
-                    totalPrice = basePrice + serviceFee;
-                    serviceName = 'Nhanh';
-                    break;
-                case 'premium':
-                    serviceFee = Math.round(basePrice * 2.75);
-                    totalPrice = basePrice + serviceFee;
-                    serviceName = 'Hỏa tốc';
-                    break;
-                default:
-                    serviceFee = 0;
-                    totalPrice = basePrice;
-            }
-            
-            console.log('Calculated:', {basePrice, serviceFee, totalPrice});
-            
-            // Display results
-            document.getElementById('resultPrice').textContent = formatVND(totalPrice);
-            
-            // Determine location type for display
-            let locationType = 'Liên tỉnh';
-            if (isSameCity && majorCities.includes(fromCity)) {
-                locationType = 'Nội thành';
-            } else if (isInnerCity) {
-                locationType = 'Liên thành phố';
-            }
-            
-            document.getElementById('resultDetails').textContent = 
-                `Dịch vụ ${serviceName} • ${weight}kg • ${locationType}`;
-            
-            // Show result with animation
-            const resultDiv = document.getElementById('calcResult');
-            resultDiv.classList.add('show');
-            
-            console.log('Result displayed');
+        async function calculateShipping() {
+    console.log('Calculate shipping called');
+
+    const fromCity = document.getElementById('fromCity').value;
+    const toCity = document.getElementById('toCity').value;
+    const weight = parseFloat(document.getElementById('weight').value);
+    const serviceTypes = ["Normal", "Express", "Premium"];
+    let serviceType 
+    const selectedIndex = document.getElementById("serviceType").selectedIndex;
+    serviceType = serviceTypes[selectedIndex];
+
+    console.log("Selected serviceType:", serviceType);
+
+    // Validation
+    if (!fromCity) {
+        alert('Vui lòng chọn tỉnh/thành gửi!');
+        return;
+    }
+    if (!toCity) {
+        alert('Vui lòng chọn tỉnh/thành nhận!');
+        return;
+    }
+    if (!weight || weight <= 0) {
+        alert('Vui lòng nhập trọng lượng hợp lệ!');
+        return;
+    }
+
+    // Determine if same city or inter-province
+    const majorCities = ['hcm', 'hanoi', 'danang'];
+    const isSameCity = fromCity === toCity;
+    const isInnerCity = majorCities.includes(fromCity) && majorCities.includes(toCity);
+
+    // Default routeCode
+    let routeCode = "IPC01"; // Inter-province
+    if (isSameCity && majorCities.includes(fromCity)) {
+        routeCode = "SMC01"; // Same Major City
+    } else if (isInnerCity && !isSameCity) {
+        routeCode = "BMC01"; // Between Major Cities
+    }
+
+    console.log("Using routeCode:", routeCode);
+
+    const token = localStorage.getItem("access_token");
+    try {
+        // Call backend API
+        const response = await fetch("http://localhost:9000/api/price/calculate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                sendLocation: fromCity,
+                receiveLocation: toCity,
+                weight: weight,
+                serviceType: serviceType,
+                routeCode: routeCode
+            }),
+        });
+
+        const result = await response.json();
+        console.log("API Response:", result);
+
+        if (result.status !== "SUCCESS") {
+            alert("Không tính được giá, vui lòng thử lại!");
+            return;
         }
-        
+
+        // Update UI from API response
+        document.getElementById('resultPrice').textContent = formatVND(result.finalprice);
+
+        // Determine location type for display
+        let locationType = 'Liên tỉnh';
+        if (routeCode === "SMC01") locationType = "Nội thành";
+        else if (routeCode === "BMC01") locationType = "Liên thành phố";
+
+        document.getElementById('resultDetails').textContent =
+            `Dịch vụ ${result.data.serviceType} • ${result.data.weight}kg • ${locationType}`;
+
+        // Show result with animation
+        const resultDiv = document.getElementById('calcResult');
+        resultDiv.classList.add('show');
+
+    } catch (error) {
+        console.error("Error calling API:", error);
+        alert("Lỗi khi gọi API!");
+    }
+}
+
+
         function formatVND(amount) {
             return new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
@@ -1060,9 +1058,9 @@
                 minimumFractionDigits: 0
             }).format(amount);
         }
-        
+
         // Load header and footer exactly like contact.html
-         fetch("../header/header.html")
+        fetch("../header/header.html")
             .then((response) => response.text())
             .then((data) => {
                 document.getElementById("header-placeholder").innerHTML = data;
@@ -1073,7 +1071,7 @@
             .then((data) => {
                 document.getElementById("footer-placeholder").innerHTML = data;
             });
-            
+
         // Back to top functionality
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
@@ -1082,52 +1080,51 @@
                 $('.back-to-top').fadeOut('slow');
             }
         });
-        
+
         $('.back-to-top').click(function () {
-            $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+            $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
             return false;
         });
-        
+
         // Smooth scrolling for anchor links
-        $('a[href^="#"]').on('click', function(event) {
+        $('a[href^="#"]').on('click', function (event) {
             var target = $(this.getAttribute('href'));
-            if( target.length ) {
+            if (target.length) {
                 event.preventDefault();
                 $('html, body').stop().animate({
                     scrollTop: target.offset().top - 100
                 }, 1000);
             }
         });
-        
+
         // Add entrance animations
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Animate pricing cards on scroll
-            $(window).scroll(function() {
-                $('.pricing-card, .service-card').each(function() {
+            $(window).scroll(function () {
+                $('.pricing-card, .service-card').each(function () {
                     var elementTop = $(this).offset().top;
                     var elementBottom = elementTop + $(this).outerHeight();
                     var viewportTop = $(window).scrollTop();
                     var viewportBottom = viewportTop + $(window).height();
-                    
+
                     if (elementBottom > viewportTop && elementTop < viewportBottom) {
                         $(this).addClass('animate__animated animate__fadeInUp');
                     }
                 });
             });
         });
-        
+
         // Initialize tooltips if Bootstrap is loaded
         $(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
-        
+
         // Handle form submission
-        $('#contactForm').on('submit', function(e) {
+        $('#contactForm').on('submit', function (e) {
             e.preventDefault();
             // Add your form submission logic here
             alert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.');
         });
     </script>
-    
-</body>
 
+</body>

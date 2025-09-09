@@ -1,0 +1,65 @@
+/* Overlay */
+.custom-alert {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    animation: slideIn 0.4s ease;
+  }
+  
+  /* Alert Box */
+  .custom-alert-content {
+    background: linear-gradient(135deg, #FF4800, #cc3a00);
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 250px;
+    position: relative;
+  }
+  
+  /* Close Button */
+  .custom-alert-content .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* Slide animation */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Type styles */
+  .custom-alert.success .custom-alert-content {
+    background: linear-gradient(135deg, #28a745, #218838);
+  }
+  
+  .custom-alert.error .custom-alert-content {
+    background: linear-gradient(135deg, #dc3545, #a71d2a);
+  }
+  
+  .custom-alert.warning .custom-alert-content {
+    background: linear-gradient(135deg, #ffc107, #e0a800);
+    color: #111;
+  }
+  
+  .custom-alert.info .custom-alert-content {
+    background: linear-gradient(135deg, #17a2b8, #117a8b);
+  }
+  

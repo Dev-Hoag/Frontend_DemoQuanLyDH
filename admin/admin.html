@@ -128,7 +128,7 @@
         .topbar {
             background: white;
             padding: 15px 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -247,6 +247,14 @@
         .stat-card:nth-child(3) { border-left-color: #2ecc71; }
         .stat-card:nth-child(4) { border-left-color: #e74c3c; }
 
+        .stat-card:nth-child(3) {
+            border-left-color: #2ecc71;
+        }
+
+        .stat-card:nth-child(4) {
+            border-left-color: #e74c3c;
+        }
+
         .stat-header {
             display: flex;
             justify-content: space-between;
@@ -275,6 +283,18 @@
         .stat-card:nth-child(2) .stat-icon { background: #3498db; }
         .stat-card:nth-child(3) .stat-icon { background: #2ecc71; }
         .stat-card:nth-child(4) .stat-icon { background: #e74c3c; }
+
+        .stat-card:nth-child(2) .stat-icon {
+            background: #3498db;
+        }
+
+        .stat-card:nth-child(3) .stat-icon {
+            background: #2ecc71;
+        }
+
+        .stat-card:nth-child(4) .stat-icon {
+            background: #e74c3c;
+        }
 
         .stat-number {
             font-size: 2rem;
@@ -310,7 +330,7 @@
             background: white;
             border-radius: 12px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .chart-header {
@@ -749,45 +769,13 @@
                                 </tr>
                             </thead>
                             <tbody id="recentOrdersTable">
-                                <tr>
-                                    <td>VOR123456789</td>
-                                    <td>Nguyễn Văn A</td>
-                                    <td><span class="status-badge status-shipping">Đang giao</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view"><i class="fa fa-eye"></i></button>
-                                        <button class="action-btn btn-edit"><i class="fa fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VOR987654321</td>
-                                    <td>Trần Thị B</td>
-                                    <td><span class="status-badge status-completed">Hoàn thành</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view"><i class="fa fa-eye"></i></button>
-                                        <button class="action-btn btn-edit"><i class="fa fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VOR555666777</td>
-                                    <td>Lê Văn C</td>
-                                    <td><span class="status-badge status-pending">Chờ lấy</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view"><i class="fa fa-eye"></i></button>
-                                        <button class="action-btn btn-edit"><i class="fa fa-edit"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>VOR111222333</td>
-                                    <td>Phạm Thị D</td>
-                                    <td><span class="status-badge status-failed">Thất bại</span></td>
-                                    <td>
-                                        <button class="action-btn btn-view"><i class="fa fa-eye"></i></button>
-                                        <button class="action-btn btn-edit"><i class="fa fa-edit"></i></button>
-                                    </td>
-                                </tr>
+                                <!-- Orders will be injected here -->
                             </tbody>
                         </table>
                     </div>
+
+
+
 
                     <div class="table-card">
                         <div class="table-header">
@@ -844,20 +832,19 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
-            
+
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         }
 
-        // Show Section
-        function showSection(section) {
+        function showSection(section, event) {
             // Update active menu
             document.querySelectorAll('.sidebar-menu a').forEach(link => {
                 link.classList.remove('active');
             });
-            event.target.closest('a').classList.add('active');
+            if (event) event.target.closest('a').classList.add('active');
 
-            // Update page title
+            // Titles
             const titles = {
                 'dashboard': 'Dashboard',
                 'orders': 'Quản Lý Đơn Hàng',
@@ -870,11 +857,31 @@
             
             document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
 
-            // Show different content based on section
+            // Show content
             const content = document.getElementById('dashboardContent');
-            
+
             if (section === 'orders') {
-                content.innerHTML = generateOrdersContent();
+                content.innerHTML = `
+            <div class="table-card">
+                <div class="table-header">
+                  <div class="table-title">Danh Sách Đơn Hàng</div>
+                </div>
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Mã ĐH</th>
+                      <th>Khách Hàng</th>
+                      <th>Trạng Thái</th>
+                      <th>Thao Tác</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentOrdersTable">
+                    <!-- Orders will be injected here -->
+                  </tbody>
+                </table>
+            </div>
+        `;
+                loadOrders(); // fetch + render orders
             } else if (section === 'shippers') {
                 content.innerHTML = generateShippersContent();
             } else if (section === 'hubs') {
@@ -892,101 +899,167 @@
             }
         }
 
-        // Generate Orders Content
-        function generateOrdersContent() {
-            return `
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2>Quản Lý Đơn Hàng</h2>
-                    <button class="btn btn-primary">
-                        <i class="fa fa-plus mr-2"></i>Tạo Đơn Hàng Mới
-                    </button>
-                </div>
-                
-                <div class="row mb-4">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="Tìm mã đơn hàng...">
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control">
-                            <option>Tất cả trạng thái</option>
-                            <option>Chờ lấy hàng</option>
-                            <option>Đang vận chuyển</option>
-                            <option>Đang giao</option>
-                            <option>Hoàn thành</option>
-                            <option>Thất bại</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn btn-primary w-100">
-                            <i class="fa fa-search mr-2"></i>Tìm Kiếm
-                        </button>
-                    </div>
-                </div>
+        // order.js
 
-                <div class="table-card">
-                    <table class="custom-table">
-                        <thead>
-                            <tr>
-                                <th>Mã Đơn Hàng</th>
-                                <th>Khách Hàng</th>
-                                <th>Người Nhận</th>
-                                <th>Dịch Vụ</th>
-                                <th>Giá Trị</th>
-                                <th>Trạng Thái</th>
-                                <th>Ngày Tạo</th>
-                                <th>Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>VOR123456789</strong></td>
-                                <td>Nguyễn Văn A<br><small>0901234567</small></td>
-                                <td>Trần Thị B<br><small>Q1, HCM</small></td>
-                                <td>Nhanh</td>
-                                <td>35.000₫</td>
-                                <td><span class="status-badge status-shipping">Đang giao</span></td>
-                                <td>19/07/2025</td>
-                                <td>
-                                    <button class="action-btn btn-view" title="Xem chi tiết"><i class="fa fa-eye"></i></button>
-                                    <button class="action-btn btn-edit" title="Chỉnh sửa"><i class="fa fa-edit"></i></button>
-                                    <button class="action-btn btn-delete" title="Hủy đơn"><i class="fa fa-times"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>VOR987654321</strong></td>
-                                <td>Lê Văn C<br><small>0987654321</small></td>
-                                <td>Phạm Thị D<br><small>Q2, HCM</small></td>
-                                <td>Hỏa tốc</td>
-                                <td>85.000₫</td>
-                                <td><span class="status-badge status-completed">Hoàn thành</span></td>
-                                <td>19/07/2025</td>
-                                <td>
-                                    <button class="action-btn btn-view" title="Xem chi tiết"><i class="fa fa-eye"></i></button>
-                                    <button class="action-btn btn-edit" title="Chỉnh sửa"><i class="fa fa-edit"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><strong>VOR555666777</strong></td>
-                                <td>Hoàng Văn E<br><small>0912345678</small></td>
-                                <td>Nguyễn Thị F<br><small>Q3, HCM</small></td>
-                                <td>Tiêu chuẩn</td>
-                                <td>25.000₫</td>
-                                <td><span class="status-badge status-pending">Chờ lấy</span></td>
-                                <td>19/07/2025</td>
-                                <td>
-                                    <button class="action-btn btn-view" title="Xem chi tiết"><i class="fa fa-eye"></i></button>
-                                    <button class="action-btn btn-edit" title="Chỉnh sửa"><i class="fa fa-edit"></i></button>
-                                    <button class="action-btn btn-delete" title="Hủy đơn"><i class="fa fa-times"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        const validStatuses = ["CREATED", "PROCESSING", "DELIVERING", "COMPLETED", "CANCELLED"];
+
+        // Fetch and render orders
+        async function loadOrders() {
+            const token = localStorage.getItem("access_token") || "";
+            if (!token) {
+                alert("Bạn chưa đăng nhập!");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:9000/api/orders", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("Không thể lấy danh sách đơn hàng!");
+                }
+
+                const orders = await response.json();
+                const tableBody = document.getElementById("recentOrdersTable");
+                tableBody.innerHTML = "";
+
+                orders.forEach((order) => {
+                    const row = document.createElement("tr");
+
+                    // build status dropdown
+                    let statusOptions = validStatuses
+                        .map(
+                            (st) =>
+                                `<option value="${st}" ${st === order.status ? "selected" : ""}>${st}</option>`
+                        )
+                        .join("");
+
+                    row.innerHTML = `
+                <td>${order.id}</td>
+                <td>${order.senderName}</td>
+                <td>
+                    <select class="status-dropdown" data-id="${order.id}">
+                        ${statusOptions}
+                    </select>
+                </td>
+                <td>
+                    <button class="action-btn btn-view" data-id="${order.id}"><i class="fa fa-eye"></i></button>
+                    <button class="action-btn btn-edit" data-id="${order.id}"><i class="fa fa-edit"></i></button>
+                    <button class="action-btn btn-delete" data-id="${order.id}"><i class="fa fa-trash"></i></button>
+                </td>
             `;
+
+                    tableBody.appendChild(row);
+                });
+
+                attachDeleteEvents();
+                attachChangeStatusEvents();
+                console.log("Orders loaded successfully");
+
+            } catch (error) {
+                console.error("Error loading orders:", error);
+                alert("Có lỗi khi tải đơn hàng!");
+            }
         }
+
+        // Attach delete buttons
+        function attachDeleteEvents() {
+            const deleteButtons = document.querySelectorAll(".btn-delete");
+            deleteButtons.forEach((btn) => {
+                btn.addEventListener("click", async () => {
+                    const id = btn.getAttribute("data-id");
+                    if (confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) {
+                        await deleteOrder(id);
+                        loadOrders(); // reload list
+                    }
+                });
+            });
+        }
+
+        // Call API delete
+        async function deleteOrder(id) {
+            const token = localStorage.getItem("access_token") || "";
+            try {
+                const response = await fetch(`http://localhost:9000/api/orders/${id}`, {
+                    method: "DELETE",
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (!response.ok) throw new Error("Xóa đơn hàng thất bại!");
+                alert("Đơn hàng đã được xóa!");
+            } catch (error) {
+                console.error("Error deleting order:", error);
+                alert("Lỗi khi xóa đơn hàng!");
+            }
+        }
+
+        // Attach change-status dropdown
+        function attachChangeStatusEvents() {
+            const dropdowns = document.querySelectorAll(".status-dropdown");
+            dropdowns.forEach((dropdown) => {
+                dropdown.addEventListener("change", async () => {
+                    const id = dropdown.getAttribute("data-id");
+                    const newStatus = dropdown.value;
+                    await changeOrderStatus(id, newStatus);
+                    await changeTrackingStatus(id, newStatus);
+                });
+            });
+        }
+
+        // Call API change status
+        async function changeOrderStatus(id, status) {
+            const token = localStorage.getItem("access_token") || "";
+            try {
+                const response = await fetch(
+                    `http://localhost:9000/api/orders/${id}/status?status=${status}`,
+                    {
+                        method: "PUT",
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+
+                if (!response.ok) throw new Error("Cập nhật trạng thái thất bại!");
+                console.log(`Order ${id} updated to ${status}`);
+            } catch (error) {
+                console.error("Error updating status:", error);
+                alert("Lỗi khi cập nhật trạng thái!");
+            }
+        }
+        async function changeTrackingStatus(id, status) {
+            const token = localStorage.getItem("access_token") || "";
+            try {
+        const response = await fetch("http://localhost:9000/api/tracking/update", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                orderId: id,
+                status: status,
+                updatedBy: "Admin",
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error("❌ Không thể cập nhật trạng thái!");
+        }
+
+        console.log("✅ Tracking updated for order:", orderId, "->", status);
+    } catch (err) {
+        console.error("❌ Lỗi khi cập nhật tracking:", err);
+    }
+        }
+
+
+
+
+
 
         // Generate Shippers Content
         function generateShippersContent() {
@@ -1721,45 +1794,43 @@
             }
         });
 
-        document.getElementById('hubForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const name = document.getElementById('hubName').value.trim();
-            const address = document.getElementById('hubAddress').value.trim();
-            const region = document.getElementById('hubRegion').value.trim();
-            const token = localStorage.getItem('access_token');
-
-            try {
-                const response = await fetch("http://localhost:9000/api/hubs/create", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}` // nếu có JWT
-                    },
-                    body: JSON.stringify({
-                        hubName: name,
-                        hubAddress: address,
-                        hubRegion: region
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || "Tạo Hub thất bại");
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('hubForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const name = document.getElementById('hubName').value.trim();
+                const address = document.getElementById('hubAddress').value.trim();
+                const region = document.getElementById('hubRegion').value.trim();
+                const token = localStorage.getItem('access_token');
+                
+                try {
+                    const response = await fetch("http://localhost:9000/api/hubs/create", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({
+                            hubName: name,
+                            hubAddress: address,
+                            hubRegion: region
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        const error = await response.json();
+                        throw new Error(error.message || "Tạo Hub thất bại");
+                    }
+                    
+                    const result = await response.json();
+                    alert("Tạo Hub thành công!");
+                    await fetchAndRenderHubs();
+                    document.getElementById('hubForm').reset();
+                    bootstrap.Modal.getInstance(document.getElementById('addHubModal')).hide();
+                } catch (error) {
+                    console.error("Chi tiết lỗi:", error);
+                    alert("Lỗi khi tạo Hub: " + error.message);
                 }
-
-                const result = await response.json();
-                alert("Tạo Hub thành công!");
-
-                // Reload hoặc gọi lại hàm fetch danh sách hub nếu có
-                await fetchAndRenderHubs(); // render lại danh sách sau khi tạo
-                document.getElementById('hubForm').reset(); // clear form
-                bootstrap.Modal.getInstance(document.getElementById('addHubModal')).hide();
-
-            } catch (error) {
-                console.error("Chi tiết lỗi:", error); // in chi tiết hơn
-                alert("Lỗi khi tạo Hub: " + error.message);
-            }
+            });
         });
 
         async function fetchAndRenderHubs() {

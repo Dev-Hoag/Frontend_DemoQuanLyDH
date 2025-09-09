@@ -480,6 +480,7 @@
 
                 // Lưu token
                 localStorage.setItem("access_token", token);
+                
 
                 // Lấy thông tin người dùng
                 const userProfile = await fetch("http://localhost:9000/api/users/get-user-profile", {
@@ -489,6 +490,7 @@
                 });
 
                 const profileData = await userProfile.json();
+                localStorage.setItem("userId", profileData?.data?.userId || "");
 
                 if (!userProfile.ok) {
                     showError(profileData.message || "Không lấy được thông tin người dùng");

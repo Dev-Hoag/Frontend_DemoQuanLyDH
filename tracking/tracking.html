@@ -73,15 +73,20 @@
         }
 
         @keyframes float {
-            0% { transform: translateX(0px); }
-            100% { transform: translateX(-100px); }
+            0% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-100px);
+            }
         }
 
         .hero-title {
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hero-subtitle {
@@ -92,8 +97,13 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .hero-subtitle { font-size: 1.1rem; }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
         }
 
         /* Tracking Container */
@@ -108,7 +118,7 @@
         .search-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             padding: 40px;
             margin-bottom: 40px;
             border: 1px solid rgba(255, 72, 0, 0.1);
@@ -211,7 +221,7 @@
         .main-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             padding: 30px;
             margin-bottom: 25px;
             border: 1px solid #f1f5f9;
@@ -219,7 +229,7 @@
         }
 
         .main-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
             transform: translateY(-2px);
         }
 
@@ -240,7 +250,7 @@
             right: -50%;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             border-radius: 50%;
         }
 
@@ -258,7 +268,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             z-index: 2;
         }
@@ -410,9 +420,17 @@
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3); }
-            50% { box-shadow: 0 4px 25px rgba(255, 72, 0, 0.5); }
-            100% { box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3); }
+            0% {
+                box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 4px 25px rgba(255, 72, 0, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 4px 15px rgba(255, 72, 0, 0.3);
+            }
         }
 
         .timeline-content {
@@ -529,7 +547,7 @@
                 padding: 25px;
                 margin: 0 15px 30px;
             }
-            
+
             .main-card {
                 padding: 20px;
                 margin: 0 15px 20px;
@@ -564,16 +582,17 @@
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+            border: 3px solid rgba(255, 255, 255, .3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-
     </style>
 </head>
 
@@ -637,10 +656,11 @@
                             <i class="fa fa-search mr-3" style="color: #FF4800;"></i>
                             Nhập Mã Vận Đơn
                         </h2>
-                        
+
                         <div class="tracking-search">
                             <div class="input-group">
-                                <input type="text" id="trackingInput" class="form-control" placeholder="Nhập mã vận đơn (VD: VOR123456789)">
+                                <input type="text" id="trackingInput" class="form-control"
+                                    placeholder="Nhập mã vận đơn (VD: VOR123456789)">
                                 <div class="input-group-append">
                                     <button class="btn-track" type="button" onclick="trackOrder()">
                                         <i class="fa fa-search mr-2"></i>Theo Dõi
@@ -656,11 +676,16 @@
                                 Thử với mã vận đơn mẫu:
                             </div>
                             <div>
-                                <span class="sample-code" onclick="useSampleCode('VOR123456789')">VOR123456789 - Đang giao</span>
-                                <span class="sample-code" onclick="useSampleCode('VOR987654321')">VOR987654321 - Hoàn thành</span>
-                                <span class="sample-code" onclick="useSampleCode('VOR555666777')">VOR555666777 - Mới nhận</span>
-                                <span class="sample-code" onclick="useSampleCode('VOR111222333')">VOR111222333 - Vận chuyển</span>
-                                <span class="sample-code" onclick="useSampleCode('VOR444555666')">VOR444555666 - Thất bại</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR123456789')">VOR123456789 - Đang
+                                    giao</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR987654321')">VOR987654321 - Hoàn
+                                    thành</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR555666777')">VOR555666777 - Mới
+                                    nhận</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR111222333')">VOR111222333 - Vận
+                                    chuyển</span>
+                                <span class="sample-code" onclick="useSampleCode('VOR444555666')">VOR444555666 - Thất
+                                    bại</span>
                             </div>
                         </div>
                     </div>
@@ -710,7 +735,8 @@
 
                         <!-- Shipper Info -->
                         <div class="shipper-card">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=70&h=70&fit=crop&crop=face" class="shipper-avatar" alt="Shipper">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=70&h=70&fit=crop&crop=face"
+                                class="shipper-avatar" alt="Shipper">
                             <div class="shipper-name" id="shipperName">Lê Văn Cường</div>
                             <div class="shipper-role">Shipper phụ trách</div>
                             <a href="tel:+84987654321" class="btn-contact">
@@ -729,7 +755,7 @@
                                 <i class="fa fa-route"></i>
                                 Lộ Trình Vận Chuyển
                             </h4>
-                            
+
                             <div id="timeline">
                                 <!-- Timeline will be populated by JavaScript -->
                             </div>
@@ -751,185 +777,144 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Sample tracking data
-        const trackingData = {
-            'VOR123456789': {
-                sender: 'Nguyễn Văn A',
-                receiver: 'Trần Thị B',
-                weight: '2.5 kg',
-                service: 'Giao Hàng Nhanh',
-                fee: '35,000 VNĐ',
-                status: 'delivering',
-                shipper: 'Lê Văn Cường',
-                timeline: [
-                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '15/12/2024 - 09:30', desc: 'Đơn hàng đã được tiếp nhận tại Hub TP.HCM', icon: 'fa-check' },
-                    { status: 'completed', title: 'Đã Đóng Gói', time: '15/12/2024 - 11:45', desc: 'Hàng hóa đã được đóng gói và chuẩn bị vận chuyển', icon: 'fa-box' },
-                    { status: 'completed', title: 'Đang Vận Chuyển', time: '15/12/2024 - 14:20', desc: 'Hàng đang trên đường từ Hub TP.HCM đến Hub Hà Nội', icon: 'fa-truck' },
-                    { status: 'current', title: 'Đang Giao Hàng', time: '16/12/2024 - 08:15', desc: 'Shipper đang trên đường giao hàng đến địa chỉ của bạn', icon: 'fa-shipping-fast', badge: 'Dự kiến: 16/12 - 10:30', badgeType: 'warning' },
-                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ giao hàng', desc: 'Đơn hàng sẽ được hoàn thành sau khi giao thành công', icon: 'fa-flag-checkered' }
-                ]
-            },
-            'VOR987654321': {
-                sender: 'Shop ABC',
-                receiver: 'Phạm Thị C',
-                weight: '1.2 kg',
-                service: 'Giao Hàng Tiêu Chuẩn',
-                fee: '25,000 VNĐ',
-                status: 'completed',
-                shipper: 'Trần Văn D',
-                timeline: [
-                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '14/12/2024 - 10:15', desc: 'Đơn hàng đã được tiếp nhận tại Hub Đà Nẵng', icon: 'fa-check' },
-                    { status: 'completed', title: 'Đã Đóng Gói', time: '14/12/2024 - 13:30', desc: 'Hàng hóa đã được đóng gói và chuẩn bị vận chuyển', icon: 'fa-box' },
-                    { status: 'completed', title: 'Đã Vận Chuyển', time: '15/12/2024 - 07:00', desc: 'Hàng đã được vận chuyển đến hub đích', icon: 'fa-truck' },
-                    { status: 'completed', title: 'Đã Giao Hàng', time: '15/12/2024 - 15:45', desc: 'Đã giao hàng thành công đến người nhận', icon: 'fa-shipping-fast' },
-                    { status: 'completed', title: 'Hoàn Thành', time: '15/12/2024 - 15:45', desc: 'Đơn hàng đã hoàn thành thành công', icon: 'fa-flag-checkered', badge: 'Thành công', badgeType: 'success' }
-                ]
-            },
-            'VOR555666777': {
-                sender: 'Công ty XYZ',
-                receiver: 'Lê Văn E',
-                weight: '5.0 kg',
-                service: 'Giao Hàng Hỏa Tốc',
-                fee: '85,000 VNĐ',
-                status: 'received',
-                shipper: 'Chưa phân công',
-                timeline: [
-                    { status: 'current', title: 'Đã Tiếp Nhận', time: '16/12/2024 - 14:20', desc: 'Đơn hàng đã được tiếp nhận và đang xử lý', icon: 'fa-check', badge: 'Đang xử lý', badgeType: 'info' },
-                    { status: 'pending', title: 'Đóng Gói', time: 'Chờ xử lý', desc: 'Đang chuẩn bị đóng gói hàng hóa', icon: 'fa-box' },
-                    { status: 'pending', title: 'Vận Chuyển', time: 'Chờ xử lý', desc: 'Chờ vận chuyển', icon: 'fa-truck' },
-                    { status: 'pending', title: 'Giao Hàng', time: 'Chờ xử lý', desc: 'Chờ giao hàng', icon: 'fa-shipping-fast' },
-                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ xử lý', desc: 'Chờ hoàn thành', icon: 'fa-flag-checkered' }
-                ]
-            },
-            'VOR111222333': {
-                sender: 'Mai Thị F',
-                receiver: 'Hoàng Văn G',
-                weight: '0.8 kg',
-                service: 'Giao Hàng Nhanh',
-                fee: '30,000 VNĐ',
-                status: 'transporting',
-                shipper: 'Nguyễn Thị H',
-                timeline: [
-                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '15/12/2024 - 16:00', desc: 'Đơn hàng đã được tiếp nhận', icon: 'fa-check' },
-                    { status: 'completed', title: 'Đã Đóng Gói', time: '16/12/2024 - 08:00', desc: 'Đã đóng gói xong', icon: 'fa-box' },
-                    { status: 'current', title: 'Đang Vận Chuyển', time: '16/12/2024 - 10:30', desc: 'Đang vận chuyển liên tỉnh', icon: 'fa-truck', badge: 'Trên đường', badgeType: 'warning' },
-                    { status: 'pending', title: 'Giao Hàng', time: 'Dự kiến 17/12', desc: 'Sẽ giao hàng khi đến hub đích', icon: 'fa-shipping-fast' },
-                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ giao hàng', desc: 'Chờ hoàn thành', icon: 'fa-flag-checkered' }
-                ]
-            },
-            'VOR444555666': {
-                sender: 'Store 123',
-                receiver: 'Đỗ Thị I',
-                weight: '3.1 kg',
-                service: 'Giao Hàng Tiêu Chuẩn',
-                fee: '45,000 VNĐ',
-                status: 'failed',
-                shipper: 'Vũ Văn K',
-                timeline: [
-                    { status: 'completed', title: 'Đã Tiếp Nhận', time: '14/12/2024 - 09:00', desc: 'Đơn hàng đã được tiếp nhận', icon: 'fa-check' },
-                    { status: 'completed', title: 'Đã Đóng Gói', time: '14/12/2024 - 11:00', desc: 'Đã đóng gói xong', icon: 'fa-box' },
-                    { status: 'completed', title: 'Đã Vận Chuyển', time: '15/12/2024 - 07:00', desc: 'Đã vận chuyển đến hub đích', icon: 'fa-truck' },
-                    { status: 'failed', title: 'Giao Thất Bại', time: '15/12/2024 - 16:00', desc: 'Không liên lạc được với người nhận', icon: 'fa-times', badge: 'Sẽ giao lại', badgeType: 'danger' },
-                    { status: 'pending', title: 'Hoàn Thành', time: 'Chờ giao lại', desc: 'Chờ sắp xếp giao lại', icon: 'fa-flag-checkered' }
-                ]
-            }
-        };
-
         function useSampleCode(code) {
             document.getElementById('trackingInput').value = code;
             trackOrder();
         }
-
-        function trackOrder() {
+    
+        async function trackOrder() {
             const trackingCode = document.getElementById('trackingInput').value.trim();
             const resultsDiv = document.getElementById('trackingResults');
             const noResultsDiv = document.getElementById('noResults');
-            
+            const timeline = document.getElementById('timeline');
+    
+            console.log("Tracking code:", trackingCode);
+    
             if (trackingCode === '') {
                 alert('Vui lòng nhập mã vận đơn!');
                 return;
             }
-            
-            if (trackingData[trackingCode]) {
-                const data = trackingData[trackingCode];
-                
-                // Update order information
-                document.getElementById('orderCode').textContent = trackingCode;
-                document.getElementById('senderName').textContent = data.sender;
-                document.getElementById('receiverName').textContent = data.receiver;
-                document.getElementById('weight').textContent = data.weight;
-                document.getElementById('service').textContent = data.service;
-                document.getElementById('fee').textContent = data.fee;
-                document.getElementById('shipperName').textContent = data.shipper;
-                
-                // Update timeline
-                const timeline = document.getElementById('timeline');
-                timeline.innerHTML = '';
-                
-                data.timeline.forEach(item => {
-                    const timelineItem = document.createElement('div');
-                    timelineItem.className = 'timeline-item';
-                    
-                    let badgeHtml = '';
-                    if (item.badge) {
-                        const badgeClass = item.badgeType || 'warning';
-                        badgeHtml = `<span class="status-badge ${badgeClass}">${item.badge}</span>`;
+    
+            // Reset UI trước khi load dữ liệu mới
+            resultsDiv.style.display = 'none';
+            noResultsDiv.style.display = 'none';
+            timeline.innerHTML = '';
+    
+            try {
+                let token = localStorage.getItem("access_token");
+                if (!token) {
+                    token =
+                        "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJHaWFvVGhvbmdUTSIsInN1YiI6IkFkbWluIiwiZXhwIjoxNzU3MDgxMjA3LCJpYXQiOjE3NTcwNzc2MDcsInVzZXJJZCI6ImQ0ZDIzMjkzLTAzMWUtNGExMS04YzVkLTU0M2EwZGUyZGUyOCIsInJvbGVzIjpbIkFETUlOIl19.lzK-LTE9ylHebXIX2fLZoDvCg5VHfh0fegA8vfh3xs2YRyMImYvnfrV1GTEGX15eKVRRwLXihiss2NzMGUZv8Q";
+                }
+    
+                // 1️⃣ Gọi API tracking để lấy timeline
+                const response = await fetch(`http://localhost:9000/api/tracking/${trackingCode}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
                     }
-                    
-                    timelineItem.innerHTML = `
-                        <div class="timeline-icon ${item.status}">
-                            <i class="fa ${item.icon}"></i>
-                        </div>
-                        <div class="timeline-content ${item.status}">
-                            <h6 class="timeline-title">${item.title}</h6>
-                            <div class="timeline-time">
-                                <i class="fa fa-clock mr-1"></i>${item.time}
-                            </div>
-                            <p class="timeline-desc">${item.desc}</p>
-                            ${badgeHtml}
-                        </div>
-                    `;
-                    
-                    timeline.appendChild(timelineItem);
                 });
-                
-                // Show results with animation
+    
+                if (!response.ok) throw new Error("Không tìm thấy dữ liệu!");
+    
+                const data = await response.json();
+                if (data.length === 0) throw new Error("Không có thông tin vận đơn!");
+    
+                // 2️⃣ Gọi API order detail để lấy thông tin đơn hàng
+                const orderRes = await fetch(`http://localhost:9000/api/orders/${trackingCode}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+    
+                if (!orderRes.ok) throw new Error("Không lấy được thông tin đơn hàng!");
+    
+                const orderData = await orderRes.json();
+    
+                // 3️⃣ Cập nhật UI từ orderData
+                document.getElementById('orderCode').textContent = orderData.id ?? trackingCode;
+                document.getElementById('senderName').textContent = orderData.senderName ?? "N/A";
+                document.getElementById('receiverName').textContent = orderData.receiverName ?? "N/A";
+                document.getElementById('weight').textContent = orderData.weight ?? "N/A";
+                document.getElementById('service').textContent = orderData.serviceType ?? "Standard";
+                document.getElementById('fee').textContent = orderData.totalFee ?? "Tính toán sau";
+                document.getElementById('shipperName').textContent = data[0].updatedBy ?? "System";
+    
+                // 4️⃣ Update timeline (sắp xếp theo createdAt ASC)
+                data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+                    .forEach(item => {
+                        const timelineItem = document.createElement('div');
+                        timelineItem.className = 'timeline-item';
+    
+                        let icon = 'fa-box';
+                        if (item.status.toLowerCase().includes('deliver')) icon = 'fa-shipping-fast';
+                        else if (item.status.toLowerCase().includes('transit')) icon = 'fa-truck';
+                        else if (item.status.toLowerCase().includes('init')) icon = 'fa-check';
+                        else if (item.status.toLowerCase().includes('fail')) icon = 'fa-times';
+    
+                        timelineItem.innerHTML = `
+                            <div class="timeline-icon ${item.status.toLowerCase()}">
+                                <i class="fa ${icon}"></i>
+                            </div>
+                            <div class="timeline-content ${item.status.toLowerCase()}">
+                                <h6 class="timeline-title">${item.status}</h6>
+                                <div class="timeline-time">
+                                    <i class="fa fa-clock mr-1"></i>
+                                    ${new Date(item.createdAt).toLocaleString()}
+                                </div>
+                                <p class="timeline-desc">${item.note ?? ''}</p>
+                                <span class="status-badge info">Người cập nhật: ${item.updatedBy}</span>
+                            </div>
+                        `;
+                        timeline.appendChild(timelineItem);
+                    });
+    
+                // Hiển thị kết quả
                 resultsDiv.style.display = 'block';
                 noResultsDiv.style.display = 'none';
-                
-                // Scroll to results
+    
                 setTimeout(() => {
                     resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
-            } else {
-                alert('Không tìm thấy thông tin cho mã vận đơn này!');
+    
+            } catch (error) {
+                console.error(error);
+                alert(error.message);
+                resultsDiv.style.display = 'none';
+                noResultsDiv.style.display = 'block';
             }
         }
-        
-        // Enter key support
-        document.getElementById('trackingInput').addEventListener('keypress', function(e) {
+    
+        // Nhấn Enter để tìm
+        document.getElementById('trackingInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 trackOrder();
             }
         });
-        
-        // Auto format input
-        document.getElementById('trackingInput').addEventListener('input', function(e) {
-            let value = e.target.value.toUpperCase();
-            value = value.replace(/[^A-Z0-9]/g, '');
-            if (value.length > 12) {
-                value = value.substring(0, 12);
+    
+        // Hàm kiểm tra code từ URL
+        function checkCodeFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get("code");
+            if (code) {
+                document.getElementById('trackingInput').value = code;
+                trackOrder();
             }
-            e.target.value = value;
-        });
-
-        // Load header and footer
-     fetch("../header/header.html")
+        }
+    
+        window.addEventListener("load", checkCodeFromUrl);
+        window.addEventListener("popstate", checkCodeFromUrl);
+    
+        // Load header và footer
+        fetch("../header/header.html")
             .then((response) => response.text())
             .then((data) => {
                 document.getElementById("header-placeholder").innerHTML = data;
             });
-
+    
         fetch("../footer/footer.html")
             .then((response) => response.text())
             .then((data) => {
@@ -937,6 +922,7 @@
             });
     </script>
     
+
 </body>
 
 </html>

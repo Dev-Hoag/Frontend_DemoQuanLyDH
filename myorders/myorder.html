@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - VOrder</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-orange: #FF4800;
+      --primary-orange-dark: #cc3a00;
+      --primary-orange-light: #ff6b33;
+      --dark-bg: #1a1a1a;
+      --card-bg: #ffffff;
+      --text-dark: #1F1F2E;
+      --text-light: #6B7280;
+      --border-light: #E5E7EB;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --info: #3B82F6;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* Animated Background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .animated-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(255, 72, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255, 72, 0, 0.03) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Header Colors */
+    .text-primary { color: var(--primary-orange) !important; }
+    .bg-primary { background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-dark) 100%) !important; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+      border: none;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--primary-orange-dark), #b33200);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 72, 0, 0.3);
+    }
+
+    /* Topbar Enhancement */
+    .topbar {
+      background: linear-gradient(135deg, var(--dark-bg) 0%, #2d2d2d 100%);
+      backdrop-filter: blur(10px);
+    }
+
+    .topbar .social-links a {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topbar .social-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .topbar .social-links a:hover::before {
+      left: 100%;
+    }
+
+    .topbar .social-links a:hover {
+      color: var(--primary-orange) !important;
+      transform: scale(1.1);
+    }
+
+    /* Hero Section Enhancement */
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-dark) 100%);
+      padding: 120px 0 80px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
+      animation: heroFloat 15s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateX(0px); }
+      50% { transform: translateX(30px); }
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      font-weight: 400;
+      opacity: 0.95;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Main Content Container */
+    .main-content {
+      margin-top: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Enhanced Header */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--border-light);
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .page-title i {
+      color: var(--primary-orange);
+      font-size: 1.8rem;
+    }
+
+    .stats-container {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Filters Section */
+    .filters-section {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-light);
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .filter-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    .filter-select {
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    .filter-select:focus {
+      border-color: var(--primary-orange);
+      box-shadow: 0 0 0 3px rgba(255, 72, 0, 0.1);
+      outline: none;
+    }
+
+    /* Enhanced Table */
+    .orders-table-container {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow-x: auto;
+      max-width: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+    }
+
+    .orders-table {
+      margin: 0;
+      border: none;
+      min-width: 1200px;
+    }
+
+    .orders-table thead {
+      background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-dark) 100%);
+    }
+
+    .orders-table thead th {
+      color: black;
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 1rem 0.75rem;
+      border: none;
+      white-space: nowrap;
+      text-align: center;
+      position: relative;
+    }
+
+    .orders-table thead th::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .orders-table thead th:last-child::after {
+      display: none;
+    }
+
+    .orders-table tbody tr {
+      transition: all 0.3s ease;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .orders-table tbody tr:hover {
+      background: linear-gradient(135deg, rgba(255, 72, 0, 0.02) 0%, rgba(255, 72, 0, 0.05) 100%);
+      transform: scale(1.01);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .orders-table tbody td {
+      vertical-align: middle;
+      text-align: center;
+      padding: 1rem 0.75rem;
+      font-size: 0.875rem;
+      border: none;
+    }
+
+    /* Status Badges */
+    .status-badge {
+      padding: 0.4rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .status-pending { background: #FEF3C7; color: #92400E; }
+    .status-processing { background: #DBEAFE; color: #1E40AF; }
+    .status-shipped { background: #D1FAE5; color: #065F46; }
+    .status-delivered { background: #D1FAE5; color: #065F46; }
+    .status-cancelled { background: #FEE2E2; color: #991B1B; }
+
+    /* Action Buttons */
+    .action-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-track {
+      background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+      color: white;
+    }
+
+    .btn-track:hover {
+      color: white;
+      background: linear-gradient(135deg, var(--primary-orange-dark), #b33200);
+    }
+
+    /* Loading Animation */
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--border-light);
+      border-top: 4px solid var(--primary-orange);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-light);
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: var(--border-light);
+      margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.5rem; }
+      .hero-subtitle { font-size: 1.1rem; }
+      .page-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .stats-container { width: 100%; }
+      .filter-row { flex-direction: column; align-items: stretch; }
+      .filter-item { width: 100%; }
+      .content-card { padding: 1rem; margin-top: 1rem; }
+      
+      .orders-table-container {
+        overflow-x: auto;
+      }
+      
+      .orders-table {
+        min-width: 1400px;
+      }
+      
+      .orders-table thead th,
+      .orders-table tbody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Scroll Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+
+  <!-- Enhanced Topbar -->
+  <div class="topbar">
+    <div class="container-fluid">
+      <div class="row py-2 px-lg-5">
+        <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+          <div class="d-inline-flex align-items-center text-white">
+            <small><i class="fa fa-phone-alt mr-2"></i>+84 123 456 789</small>
+            <small class="px-3">|</small>
+            <small><i class="fa fa-envelope mr-2"></i>info@vorder.vn</small>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center text-lg-right">
+          <div class="d-inline-flex align-items-center social-links">
+            <a class="text-white px-2" href=""><i class="fab fa-facebook-f"></i></a>
+            <a class="text-white px-2" href=""><i class="fab fa-twitter"></i></a>
+            <a class="text-white px-2" href=""><i class="fab fa-linkedin-in"></i></a>
+            <a class="text-white px-2" href=""><i class="fab fa-instagram"></i></a>
+            <a class="text-white pl-2" href=""><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Placeholder -->
+  <div id="header-placeholder"></div>
+
+  <!-- Enhanced Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="hero-title">
+            <i class="fas fa-box-open"></i>
+            Đơn Hàng Của Tôi
+          </h1>
+          <p class="hero-subtitle">Xem và quản lý các đơn hàng của bạn một cách dễ dàng và hiệu quả.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container main-content">
+    <div class="content-card fade-in">
+      <!-- Page Header -->
+      <div class="page-header">
+        <h2 class="page-title">
+          <i class="fas fa-list-ul"></i>
+          Danh Sách Đơn Hàng
+        </h2>
+        <div class="stats-container" id="statsContainer">
+          <div class="stat-item">
+            <i class="fas fa-box"></i>
+            <span id="totalOrders">0 đơn hàng</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters Section -->
+      <div class="filters-section fade-in">
+        <div class="filter-row">
+          <div class="filter-item">
+            <label class="filter-label">Trạng thái</label>
+            <select class="filter-select" id="statusFilter">
+              <option value="">Tất cả</option>
+              <option value="pending">Chờ xử lý</option>
+              <option value="processing">Đang xử lý</option>
+              <option value="shipped">Đã gửi</option>
+              <option value="delivered">Đã giao</option>
+              <option value="cancelled">Đã hủy</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label class="filter-label">Dịch vụ</label>
+            <select class="filter-select" id="serviceFilter">
+              <option value="">Tất cả dịch vụ</option>
+              <option value="standard">Tiêu chuẩn</option>
+              <option value="express">Nhanh</option>
+              <option value="premium">Cao cấp</option>
+            </select>
+          </div>
+          <div class="filter-item">
+            <label class="filter-label">Sắp xếp theo</label>
+            <select class="filter-select" id="sortFilter">
+              <option value="newest">Mới nhất</option>
+              <option value="oldest">Cũ nhất</option>
+              <option value="amount">Giá trị</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="orders-table-container fade-in">
+        <table class="table orders-table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-hashtag  me-2 mr-1 text-black"></i>ID</th>
+              <th><i class="fas fa-tag me-2 mr-1 text-black"></i>Tên đơn</th>
+              <th><i class="fas fa-shipping-fast me-2 mr-1"></i>Dịch vụ</th>
+              <th><i class="fas fa-user me-2 mr-1"></i>Người gửi</th>
+              <th><i class="fas fa-phone me-2 mr-1"></i>SĐT</th>
+              <th><i class="fas fa-user-check me-2 mr-1"></i>Người nhận</th>
+              <th><i class="fas fa-phone-alt me-2 mr-1"></i>SĐT</th>
+              <th><i class="fas fa-map-marker-alt me-2 mr-1"></i>Địa chỉ</th>
+              <th><i class="fas fa-info-circle me-2 mr-1"></i>Trạng thái</th>
+              <th><i class="fas fa-weight  me-2 mr-1"></i>KL (kg)</th>
+              <th><i class="fas fa-map me-2 mr-1"></i>Khu vực</th>
+              <th><i class="fas fa-money-bill-wave me-2 mr-1"></i>Phí (VNĐ)</th>
+              <th><i class="fas fa-search me-2 mr-1"></i>Theo dõi</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr>
+              <td colspan="13">
+                <div class="loading-container">
+                  <div class="spinner"></div>
+                  <p>Đang tải danh sách đơn hàng...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <script>
+    // Animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Load header & footer
+    fetch("../header/header.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+      });
+
+    fetch("../footer/footer.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("footer-placeholder").innerHTML = data;
+      });
+
+    // Enhanced order loading with better error handling
+    let allOrders = [];
+    let filteredOrders = [];
+
+    async function loadOrders() {
+      const token = localStorage.getItem("access_token");
+      const tbody = document.getElementById("ordersBody");
+      const userId = localStorage.getItem("userId");
+      try {
+        const res = await fetch(`http://localhost:9000/api/orders/users`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        allOrders = data || [];
+        filteredOrders = [...allOrders];
+
+        updateStats();
+        renderOrders();
+
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="13">
+              <div class="empty-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Không thể tải đơn hàng</h3>
+                <p>Vui lòng thử lại sau hoặc liên hệ hỗ trợ</p>
+                <button class="btn btn-primary mt-2" onclick="loadOrders()">
+                  <i class="fas fa-redo mr-1"></i>Thử lại
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    function updateStats() {
+      const totalOrders = filteredOrders.length;
+      document.getElementById('totalOrders').textContent = `${totalOrders} đơn hàng`;
+    }
+
+    function getStatusBadge(status) {
+      const statusConfig = {
+        'pending': { class: 'status-pending', icon: 'clock', text: 'Chờ xử lý' },
+        'processing': { class: 'status-processing', icon: 'cog', text: 'Đang xử lý' },
+        'shipped': { class: 'status-shipped', icon: 'truck', text: 'Đã gửi' },
+        'delivered': { class: 'status-delivered', icon: 'check-circle', text: 'Đã giao' },
+        'cancelled': { class: 'status-cancelled', icon: 'times-circle', text: 'Đã hủy' }
+      };
+
+      const config = statusConfig[status] || { class: 'status-pending', icon: 'question', text: status || 'N/A' };
+      
+      return `
+        <span class="status-badge ${config.class}">
+          <i class="fas fa-${config.icon}"></i>
+          ${config.text}
+        </span>
+      `;
+    }
+
+    function renderOrders() {
+      const tbody = document.getElementById("ordersBody");
+
+      if (filteredOrders.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="13">
+              <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <h3>Chưa có đơn hàng</h3>
+                <p>Bạn chưa có đơn hàng nào. Hãy tạo đơn hàng đầu tiên của bạn!</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filteredOrders.map((order, index) => `
+        <tr style="animation-delay: ${index * 0.1}s">
+          <td><strong>#${order.id || "-"}</strong></td>
+          <td><strong>${order.oderName || "-"}</strong></td>
+          <td>
+            <span class="badge bg-info text-white">
+              <i class="fas fa-shipping-fast me-1 mr-1"></i>${order.serviceType || "-"}
+            </span>
+          </td>
+          <td>${order.senderName || "-"}</td>
+          <td>
+            <a href="tel:${order.senderNumber}" class="text-primary">
+              <i class="fas fa-phone me-1  mr-1"></i>${order.senderNumber || "-"}
+            </a>
+          </td>
+          <td><strong>${order.receiverName || "-"}</strong></td>
+          <td>
+            <a href="tel:${order.receiverPhoneNumber}" class="text-primary">
+              <i class="fas fa-phone me-1  mr-1"></i>${order.receiverPhoneNumber || "-"}
+            </a>
+          </td>
+          <td>
+            <small title="${order.address || "-"}">
+              <i class="fas fa-map-marker-alt me-1  mr-1"></i>
+              ${order.address ? order.address.substring(0, 30) + (order.address.length > 30 ? '...' : '') : "-"}
+            </small>
+          </td>
+          <td>${getStatusBadge(order.status)}</td>
+          <td>
+            <span class="badge bg-secondary">
+              <i class="fas fa-weight-hanging me-1  mr-1"></i>${order.weight || "-"}kg
+            </span>
+          </td>
+          <td>
+            <span class="badge bg-warning text-dark">
+              <i class="fas fa-map me-1  mr-1"></i>${order.areaType || "-"}
+            </span>
+          </td>
+          <td>
+            <strong class="text-success">
+              <i class="fas fa-dong-sign me-1  mr-1"></i>
+              ${order.totalFee ? order.totalFee.toLocaleString("vi-VN") : "-"}
+            </strong>
+          </td>
+          <td>
+            <button class="action-btn btn-track" onclick="trackOrder('${order.id}')">
+              <i class="fas fa-search"></i>
+              Theo dõi
+            </button>
+          </td>
+        </tr>
+      `).join("");
+
+      // Add stagger animation
+      tbody.querySelectorAll('tr').forEach((row, index) => {
+        row.style.opacity = '0';
+        row.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          row.style.transition = 'all 0.5s ease';
+          row.style.opacity = '1';
+          row.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+    }
+
+    // Enhanced filtering
+    function setupFilters() {
+      const statusFilter = document.getElementById('statusFilter');
+      const serviceFilter = document.getElementById('serviceFilter');
+      const sortFilter = document.getElementById('sortFilter');
+
+      function applyFilters() {
+        filteredOrders = [...allOrders];
+
+        // Status filter
+        if (statusFilter.value) {
+          filteredOrders = filteredOrders.filter(order => 
+            order.status === statusFilter.value
+          );
+        }
+
+        // Service filter
+        if (serviceFilter.value) {
+          filteredOrders = filteredOrders.filter(order => 
+            order.serviceType === serviceFilter.value
+          );
+        }
+
+        // Sorting
+        if (sortFilter.value === 'newest') {
+          filteredOrders.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        } else if (sortFilter.value === 'oldest') {
+          filteredOrders.sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0));
+        } else if (sortFilter.value === 'amount') {
+          filteredOrders.sort((a, b) => (b.totalFee || 0) - (a.totalFee || 0));
+        }
+
+        updateStats();
+        renderOrders();
+      }
+
+      statusFilter.addEventListener('change', applyFilters);
+      serviceFilter.addEventListener('change', applyFilters);
+      sortFilter.addEventListener('change', applyFilters);
+    }
+
+    function trackOrder(id) {
+      // Show loading state
+      const button = event.target.closest('button');
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang tải...';
+      button.disabled = true;
+
+      // Simulate loading delay
+      setTimeout(() => {
+        window.location.href = `http://127.0.0.1:5500/tracking/tracking.html?code=${id}`;
+      }, 500);
+    }
+
+    // Enhanced search functionality
+    function addSearchFeature() {
+      const searchContainer = document.querySelector('.filter-row');
+      const searchHTML = `
+        <div class="filter-item">
+          <label class="filter-label">Tìm kiếm</label>
+          <input type="text" class="filter-select" id="searchInput" placeholder="Tìm theo ID, tên, người gửi...">
+        </div>
+      `;
+      searchContainer.insertAdjacentHTML('beforeend', searchHTML);
+
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        
+        if (searchTerm === '') {
+          filteredOrders = [...allOrders];
+        } else {
+          filteredOrders = allOrders.filter(order => 
+            (order.id && order.id.toString().toLowerCase().includes(searchTerm)) ||
+            (order.oderName && order.oderName.toLowerCase().includes(searchTerm)) ||
+            (order.senderName && order.senderName.toLowerCase().includes(searchTerm)) ||
+            (order.receiverName && order.receiverName.toLowerCase().includes(searchTerm)) ||
+            (order.address && order.address.toLowerCase().includes(searchTerm))
+          );
+        }
+        
+        updateStats();
+        renderOrders();
+      });
+    }
+
+    // Add export functionality
+    function addExportFeature() {
+      const statsContainer = document.getElementById('statsContainer');
+      const exportButton = `
+        <div class="stat-item" style="background: linear-gradient(135deg, var(--success), #059669); cursor: pointer;" onclick="exportOrders()">
+          <i class="fas fa-download"></i>
+          <span>Xuất Excel</span>
+        </div>
+      `;
+      statsContainer.insertAdjacentHTML('beforeend', exportButton);
+    }
+
+    function exportOrders() {
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "ID,Tên đơn,Dịch vụ,Người gửi,SĐT Người gửi,Người nhận,SĐT Người nhận,Địa chỉ,Trạng thái,Khối lượng,Khu vực,Tổng phí\n"
+        + filteredOrders.map(order => [
+            order.id || "",
+            order.oderName || "",
+            order.serviceType || "",
+            order.senderName || "",
+            order.senderNumber || "",
+            order.receiverName || "",
+            order.receiverPhoneNumber || "",
+            order.address || "",
+            order.status || "",
+            order.weight || "",
+            order.areaType || "",
+            order.totalFee || ""
+          ].join(",")).join("\n");
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `orders_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Add refresh functionality
+    function addRefreshButton() {
+      const pageHeader = document.querySelector('.page-header');
+      const refreshButton = `
+        <button class="btn btn-outline-primary" onclick="refreshOrders()" id="refreshBtn">
+          <i class="fas fa-sync-alt mr-1"></i>
+          Làm mới
+        </button>
+      `;
+      pageHeader.insertAdjacentHTML('beforeend', refreshButton);
+    }
+
+    function refreshOrders() {
+      const refreshBtn = document.getElementById('refreshBtn');
+      const icon = refreshBtn.querySelector('i');
+      
+      icon.classList.add('fa-spin');
+      refreshBtn.disabled = true;
+      
+      loadOrders().finally(() => {
+        icon.classList.remove('fa-spin');
+        refreshBtn.disabled = false;
+      });
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      loadOrders().then(() => {
+        setupFilters();
+        addSearchFeature();
+        addExportFeature();
+        addRefreshButton();
+        
+        // Show initial animations
+        setTimeout(() => {
+          document.querySelectorAll('.fade-in').forEach(el => {
+            el.classList.add('visible');
+          });
+        }, 300);
+      });
+    });
+
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl + F to focus search
+      if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+          searchInput.focus();
+        }
+      }
+      
+      // F5 or Ctrl + R to refresh
+      if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+        e.preventDefault();
+        refreshOrders();
+      }
+    });
+
+    // Add notification system
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `alert alert-${type} position-fixed`;
+      notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideInRight 0.5s ease;
+      `;
+      notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'} mr-2"></i>
+        ${message}
+        <button type="button" class="close" onclick="this.parentElement.remove()">
+          <span>&times;</span>
+        </button>
+      `;
+      
+      document.body.appendChild(notification);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        if (notification.parentElement) {
+          notification.remove();
+        }
+      }, 5000);
+    }
+
+    // Add CSS for slide animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

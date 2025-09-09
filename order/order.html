@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="utf-8" />
     <title>Tạo Đơn Hàng - VORDER</title>
@@ -7,12 +8,14 @@
     <meta content="Tạo đơn hàng, giao hàng, vận chuyển" name="keywords" />
     <meta content="Tạo đơn hàng giao hàng nhanh chóng với VORDER" name="description" />
 
+    <link rel="stylesheet" href="../customeAlert/customeAlert.css">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
 
     <style>
         * {
@@ -72,15 +75,20 @@
         }
 
         @keyframes float {
-            0% { transform: translateX(0px); }
-            100% { transform: translateX(-100px); }
+            0% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-100px);
+            }
         }
 
         .hero-title {
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hero-subtitle {
@@ -91,8 +99,13 @@
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .hero-subtitle { font-size: 1.1rem; }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
         }
 
         /* Order Container */
@@ -107,7 +120,7 @@
         .step-indicator {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             padding: 30px;
             margin-bottom: 40px;
             display: flex;
@@ -171,7 +184,7 @@
             border-radius: 2px;
         }
 
-        .step.completed + .step .step-line {
+        .step.completed+.step .step-line {
             background: #10b981;
         }
 
@@ -179,7 +192,7 @@
         .main-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             padding: 35px;
             margin-bottom: 30px;
             border: 1px solid #f1f5f9;
@@ -187,7 +200,7 @@
         }
 
         .main-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
             transform: translateY(-2px);
         }
 
@@ -296,6 +309,7 @@
             font-size: 15px;
             line-height: 1.5;
         }
+
 
         /* Service Cards */
         .service-card {
@@ -549,14 +563,16 @@
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
+            border: 3px solid rgba(255, 255, 255, .3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Success animation */
@@ -586,6 +602,7 @@
 </head>
 
 <body>
+    <script src="../customeAlert/customeAlert.js"></script>
     <!-- Topbar Start -->
     <div class="container-fluid bg-dark">
         <div class="row py-2 px-lg-5">
@@ -675,19 +692,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Họ và tên <span class="required">*</span></label>
-                                            <input type="text" class="form-control" id="senderName" required placeholder="Nhập họ và tên người gửi" />
+                                            <input type="text" class="form-control" id="senderName" required
+                                                placeholder="Nhập họ và tên người gửi" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Số điện thoại <span class="required">*</span></label>
-                                            <input type="tel" class="form-control" id="senderPhone" required placeholder="Nhập số điện thoại" />
+                                            <input type="tel" class="form-control" id="senderPhone" required
+                                                placeholder="Nhập số điện thoại" />
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Địa chỉ <span class="required">*</span></label>
-                                            <textarea class="form-control" id="senderAddress" rows="3" required placeholder="Nhập địa chỉ chi tiết của người gửi"></textarea>
+                                            <textarea class="form-control" id="senderAddress" rows="3" required
+                                                placeholder="Nhập địa chỉ chi tiết của người gửi"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -703,19 +723,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Họ và tên <span class="required">*</span></label>
-                                            <input type="text" class="form-control" id="receiverName" required placeholder="Nhập họ và tên người nhận" />
+                                            <input type="text" class="form-control" id="receiverName" required
+                                                placeholder="Nhập họ và tên người nhận" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Số điện thoại <span class="required">*</span></label>
-                                            <input type="tel" class="form-control" id="receiverPhone" required placeholder="Nhập số điện thoại" />
+                                            <input type="tel" class="form-control" id="receiverPhone" required
+                                                placeholder="Nhập số điện thoại" />
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Địa chỉ <span class="required">*</span></label>
-                                            <textarea class="form-control" id="receiverAddress" rows="3" required placeholder="Nhập địa chỉ chi tiết của người nhận"></textarea>
+                                            <textarea class="form-control" id="receiverAddress" rows="3" required
+                                                placeholder="Nhập địa chỉ chi tiết của người nhận"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -741,35 +764,73 @@
                                                 <option value="other">Khác</option>
                                             </select>
                                         </div>
+                                        <style>
+                                            /* Reset toàn bộ select và option */
+                                            #packageType {
+                                                appearance: auto !important;
+                                                /* bỏ custom style */
+                                                -webkit-appearance: auto !important;
+                                                -moz-appearance: auto !important;
+
+                                                color: #111 !important;
+                                                /* chữ rõ ràng */
+                                                background-color: #fff !important;
+                                                font-size: 14px !important;
+                                                padding: 8px 10px;
+                                                border: 1px solid #ccc;
+                                                border-radius: 6px;
+                                            }
+
+                                            #packageType option {
+                                                color: #111 !important;
+                                                /* luôn hiển thị chữ */
+                                                background-color: #fff !important;
+                                            }
+                                        </style>
+
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Trọng lượng (kg) <span class="required">*</span></label>
-                                            <input type="number" class="form-control" id="weight" step="0.1" min="0.1" required placeholder="0.0" />
+                                            <input type="number" class="form-control" id="weight" step="0.1" min="0.1"
+                                                required placeholder="0.0" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Dài (cm)</label>
-                                            <input type="number" class="form-control" id="length" min="1" placeholder="0" />
+                                            <input type="number" class="form-control" id="length" min="1"
+                                                placeholder="0" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Rộng (cm)</label>
-                                            <input type="number" class="form-control" id="width" min="1" placeholder="0" />
+                                            <input type="number" class="form-control" id="width" min="1"
+                                                placeholder="0" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Cao (cm)</label>
-                                            <input type="number" class="form-control" id="height" min="1" placeholder="0" />
+                                            <input type="number" class="form-control" id="height" min="1"
+                                                placeholder="0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><input type="radio" name="areaType" value="NOI_THANH" checked> Nội
+                                                thành</label>
+                                            <label><input type="radio" name="areaType" value="NGOAI_THANH"> Ngoại
+                                                thành</label>
+
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Ghi chú hàng hóa</label>
-                                            <textarea class="form-control" id="packageNote" rows="2" placeholder="Mô tả chi tiết hàng hóa..."></textarea>
+                                            <textarea class="form-control" id="packageNote" rows="2"
+                                                placeholder="Mô tả chi tiết hàng hóa..."></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -785,17 +846,49 @@
                                     <label class="mb-0">
                                         <input type="radio" name="pickupMethod" value="pickup" checked />
                                         <div class="pickup-title">Nhân viên đến lấy hàng</div>
-                                        <p class="pickup-desc">Nhân viên VORDER sẽ đến địa chỉ người gửi để lấy hàng tận nơi</p>
+                                        <p class="pickup-desc">Nhân viên VORDER sẽ đến địa chỉ người gửi để lấy hàng tận
+                                            nơi</p>
                                     </label>
                                 </div>
                                 <div class="pickup-option">
                                     <label class="mb-0">
                                         <input type="radio" name="pickupMethod" value="dropoff" />
                                         <div class="pickup-title">Tự đem hàng đến hub</div>
-                                        <p class="pickup-desc">Bạn tự đem hàng đến hub VORDER gần nhất để tiết kiệm chi phí</p>
+                                        <p class="pickup-desc">Bạn tự đem hàng đến hub VORDER gần nhất để tiết kiệm chi
+                                            phí</p>
                                     </label>
                                 </div>
+
+                                <!-- Hub list hiển thị khi chọn "dropoff" -->
+                                <div id="hubListContainer" style="display:none; margin-top:10px;">
+                                    <label for="hubSelect">Chọn Hub:</label>
+                                    <select id="hubSelect" class="form-control" required>
+                                        <option value="">-- Chọn hub --</option>
+                                    </select>
+                                </div>
+
+                                <style>
+                                    /* ✅ Reset để text hiển thị bình thường */
+                                    #hubSelect {
+                                        appearance: auto !important;
+                                        -webkit-appearance: auto !important;
+                                        -moz-appearance: auto !important;
+
+                                        color: #111 !important;
+                                        background-color: #fff !important;
+                                        font-size: 14px !important;
+                                        padding: 8px 10px;
+                                        border: 1px solid #ccc;
+                                        border-radius: 6px;
+                                    }
+
+                                    #hubSelect option {
+                                        color: #111 !important;
+                                        background-color: #fff !important;
+                                    }
+                                </style>
                             </div>
+
 
                             <!-- Service Selection -->
                             <div class="form-section">
@@ -803,7 +896,7 @@
                                     <i class="fa fa-shipping-fast"></i>
                                     Chọn Dịch Vụ Giao Hàng
                                 </h5>
-                                
+
                                 <div class="service-card">
                                     <label class="mb-0">
                                         <input type="radio" name="serviceType" value="standard" checked />
@@ -812,11 +905,11 @@
                                                 <h6>Giao Hàng Tiêu Chuẩn</h6>
                                                 <p>Giao hàng trong 3-5 ngày làm việc</p>
                                             </div>
-                                            <div class="service-price">25,000 VNĐ</div>
+
                                         </div>
                                     </label>
                                 </div>
-                                
+
                                 <div class="service-card">
                                     <label class="mb-0">
                                         <input type="radio" name="serviceType" value="fast" />
@@ -825,11 +918,11 @@
                                                 <h6>Giao Hàng Nhanh</h6>
                                                 <p>Giao hàng trong 1-2 ngày làm việc</p>
                                             </div>
-                                            <div class="service-price">35,000 VNĐ</div>
+
                                         </div>
                                     </label>
                                 </div>
-                                
+
                                 <div class="service-card">
                                     <label class="mb-0">
                                         <input type="radio" name="serviceType" value="express" />
@@ -838,7 +931,7 @@
                                                 <h6>Giao Hàng Hỏa Tốc</h6>
                                                 <p>Giao hàng trong 4-6 giờ (nội thành)</p>
                                             </div>
-                                            <div class="service-price">85,000 VNĐ</div>
+
                                         </div>
                                     </label>
                                 </div>
@@ -916,6 +1009,11 @@
             fast: 35000,
             express: 85000,
         };
+        const serviceName = {
+            standard: "Normal",
+            fast: "Express",
+            express: "Premium"
+        };
 
         // Pickup fees
         const pickupFees = {
@@ -930,16 +1028,21 @@
         }
 
         // Calculate shipping fee
-        function calculateFee() {
+        async function calculateFee() {
             const weight = parseFloat(document.getElementById("weight").value) || 0;
             const serviceType = document.querySelector('input[name="serviceType"]:checked').value;
             const pickupMethod = document.querySelector('input[name="pickupMethod"]:checked').value;
+            const areaType = document.querySelector('input[name="areaType"]:checked')?.value || "NOI_THANH";
 
-            let shippingFee = servicePrices[serviceType];
+            const routeCode = areaType === "NOI_THANH" ? "SMC01" : "BMC01";
+
+            let servicesName = serviceName[serviceType];
             let pickupFee = pickupFees[pickupMethod];
             let otherFee = 0;
+            let shippingFee = 0;
 
-            // Weight-based calculation
+            console.log("serviceType:", servicesName);
+
             if (weight > 2) {
                 shippingFee += (weight - 2) * 5000; // 5k per additional kg
             }
@@ -947,14 +1050,45 @@
             // Package type fee
             const packageType = document.getElementById("packageType").value;
             if (packageType === "fragile") {
-                otherFee += 15000; // Fragile handling fee
+                otherFee += 15000;
             } else if (packageType === "electronics") {
-                otherFee += 10000; // Electronics handling fee
+                otherFee += 10000;
+            }
+
+            try {
+                const response = await fetch("http://localhost:9000/api/price/calculate", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+                    },
+                    body: JSON.stringify({
+                        sendLocation: "",
+                        receiveLocation: "",
+                        weight: weight,
+                        serviceType: servicesName,
+                        routeCode: routeCode
+                    }),
+                });
+
+                const result = await response.json();
+                console.log("API Response:", result);
+
+                if (result.status !== "SUCCESS") {
+                    alert("Không tính được giá, vui lòng thử lại!");
+                    return;
+                }
+
+                shippingFee = result.finalprice || shippingFee;
+
+            } catch (error) {
+                console.error("Error calling API:", error);
+                alert("Lỗi khi gọi API!");
             }
 
             const totalFee = shippingFee + pickupFee + otherFee;
 
-            // Update display
+            // Update UI
             document.getElementById("shippingFee").textContent = shippingFee.toLocaleString() + " VNĐ";
             document.getElementById("pickupFee").textContent = pickupFee.toLocaleString() + " VNĐ";
             document.getElementById("otherFee").textContent = otherFee.toLocaleString() + " VNĐ";
@@ -964,15 +1098,10 @@
         // Handle service selection
         document.querySelectorAll('input[name="serviceType"]').forEach((radio) => {
             radio.addEventListener("change", function () {
-                // Remove selected class from all cards
                 document.querySelectorAll(".service-card").forEach((card) => {
                     card.classList.remove("selected");
                 });
-
-                // Add selected class to current card
                 this.closest(".service-card").classList.add("selected");
-
-                // Recalculate fee
                 calculateFee();
             });
         });
@@ -980,27 +1109,67 @@
         // Handle pickup method selection
         document.querySelectorAll('input[name="pickupMethod"]').forEach((radio) => {
             radio.addEventListener("change", function () {
-                // Remove selected class from all options
                 document.querySelectorAll(".pickup-option").forEach((option) => {
                     option.classList.remove("selected");
                 });
-
-                // Add selected class to current option
                 this.closest(".pickup-option").classList.add("selected");
 
-                // Recalculate fee
+                // Nếu chọn dropoff thì load danh sách hub
+                if (this.value === "dropoff") {
+                    document.getElementById("hubListContainer").style.display = "block";
+                    loadHubList();
+                } else {
+                    document.getElementById("hubListContainer").style.display = "none";
+                    document.getElementById("hubSelect").innerHTML = `<option value="">-- Chọn hub --</option>`;
+                }
+
                 calculateFee();
             });
         });
 
+        // Load danh sách hub ACTIVE
+        async function loadHubList() {
+            try {
+                let token = localStorage.getItem("access_token");
+                if (!token) {
+                    token = "eyJhbGciOi..."; // fallback token
+                }
+
+                const response = await fetch("http://localhost:9000/api/hubs/list", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) throw new Error("Không thể lấy danh sách hub!");
+
+                const result = await response.json();
+
+                const hubSelect = document.getElementById("hubSelect");
+                hubSelect.innerHTML = `<option value="">-- Chọn hub --</option>`;
+                result.data
+                    .filter(hub => hub.hubStatus === "ACTIVE")
+                    .forEach(hub => {
+                        const option = document.createElement("option");
+                        option.value = hub.hubId;
+                        option.textContent = `${hub.hubName} - ${hub.hubAddress} (${hub.hubRegion})`;
+                        hubSelect.appendChild(option);
+                    });
+            } catch (error) {
+                console.error(error);
+                alert("Lỗi khi tải danh sách hub!");
+            }
+        }
+
         // Handle form submission
-        document.getElementById("orderForm").addEventListener("submit", function (e) {
+        document.getElementById("orderForm").addEventListener("submit", async function (e) {
             e.preventDefault();
 
-            // Basic validation
             const requiredFields = [
                 "senderName",
-                "senderPhone", 
+                "senderPhone",
                 "senderAddress",
                 "receiverName",
                 "receiverPhone",
@@ -1010,7 +1179,6 @@
             ];
 
             let isValid = true;
-
             requiredFields.forEach((fieldId) => {
                 const field = document.getElementById(fieldId);
                 if (!field.value.trim()) {
@@ -1026,39 +1194,91 @@
                 return;
             }
 
-            // Show confirmation dialog
-            const trackingCode = "VOR" + document.getElementById("randomCode").textContent;
-            const totalAmount = document.getElementById("totalFee").textContent;
+            let token = localStorage.getItem("access_token");
+            if (!token) {
+                token = "eyJhbGciOi..."; // fallback token
+            }
 
-            if (confirm(
-                `🚚 Xác nhận tạo đơn hàng?\n\n` +
-                `📋 Mã vận đơn: ${trackingCode}\n` +
-                `💰 Tổng phí: ${totalAmount}\n\n` +
-                `Nhấn OK để tạo đơn hàng.`
-            )) {
-                // Show loading state
-                const submitBtn = document.querySelector('.btn-create-order');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<span class="loading"></span> Đang tạo đơn hàng...';
-                submitBtn.disabled = true;
+            const serviceType = document.querySelector('input[name="serviceType"]:checked').value;
+            let servicesName = serviceName[serviceType];
+            const pickupMethod = document.querySelector('input[name="pickupMethod"]:checked').value;
+            const selectedHub = document.getElementById("hubSelect").value;
 
-                // Simulate order creation
+            const body = {
+                senderName: document.getElementById("senderName").value,
+                senderNumber: document.getElementById("senderPhone").value,
+                receiverName: document.getElementById("receiverName").value,
+                receiverPhoneNumber: document.getElementById("receiverPhone").value,
+                address: document.getElementById("receiverAddress").value,
+                oderName: document.getElementById("packageType").value,
+                weight: parseFloat(document.getElementById("weight").value),
+                areaType: document.querySelector('input[name="areaType"]:checked')?.value || "NOI_THANH",
+                totalFee: document.getElementById("totalFee").textContent.replace(/[^0-9]/g, ''),
+                serviceType: servicesName,
+                pickupMethod: pickupMethod,
+                hubId: pickupMethod === "dropoff" ? selectedHub : null
+            };
+            console.log("Request body:", body);
+
+            const submitBtn = document.querySelector(".btn-create-order");
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading"></span> Đang tạo đơn hàng...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch("http://localhost:9000/api/orders", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(body),
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(errorText || "Tạo đơn hàng thất bại");
+                }
+
+                const data = await response.json();
+                if (data.id) {
+                    try {
+                        await fetch("http://localhost:9000/api/tracking/initialize", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`,
+                            },
+                            body: JSON.stringify({ orderId: data.id }),
+                        });
+                        console.log("✅ Tracking initialized:", data.id);
+                    } catch (initErr) {
+                        console.error("❌ Lỗi khi initialize tracking:", initErr);
+                    }
+                }
+
+                submitBtn.innerHTML = '<span class="success-checkmark"></span> Tạo thành công!';
+
                 setTimeout(() => {
-                    submitBtn.innerHTML = '<span class="success-checkmark"></span> Tạo thành công!';
-                    
-                    setTimeout(() => {
-                        alert(
-                            `🎉 Tạo đơn hàng thành công!\n\n` +
-                            `📦 Mã vận đơn: ${trackingCode}\n` +
-                            `💰 Tổng phí: ${totalAmount}\n\n` +
-                            `✅ Bạn có thể theo dõi đơn hàng tại trang "Theo Dõi"\n` +
-                            `📱 Chúng tôi sẽ gửi SMS xác nhận đến số điện thoại của bạn.`
-                        );
+                    showCustomAlert(
+                        `🎉 Tạo đơn hàng thành công!<br><br>
+                        📦 <b>Mã đơn hàng:</b> ${data.id || "N/A"}<br>
+                        📋 <b>Người nhận:</b> ${data.receiverName}<br>
+                        📱 <b>SĐT:</b> ${data.receiverPhoneNumber}<br><br>
+                        ✅ Bạn có thể theo dõi đơn hàng tại trang <b>"Theo Dõi"</b>.`,
+                        "success",
+                        6000
+                    );
 
-                        // Redirect to tracking page
-                        window.location.href = `tracking.html?code=${trackingCode}`;
-                    }, 1000);
-                }, 2000);
+
+                    if (data.id) {
+                        window.location.href = `http://127.0.0.1:5500/tracking/tracking.html?code=${data.id}`;
+                    }
+                }, 1000);
+            } catch (err) {
+                alert("❌ Lỗi khi tạo đơn hàng: " + err.message);
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             }
         });
 
@@ -1072,27 +1292,24 @@
                 e.target.value = value;
             });
         }
-
         formatPhoneNumber(document.getElementById("senderPhone"));
         formatPhoneNumber(document.getElementById("receiverPhone"));
 
-        // Auto-calculate when inputs change
+        // Auto-calc
         document.getElementById("weight").addEventListener("input", calculateFee);
         document.getElementById("packageType").addEventListener("change", calculateFee);
 
-        // Initialize page
         document.addEventListener("DOMContentLoaded", function () {
             generateTrackingCode();
             calculateFee();
 
-            // Set initial selected states
             document.querySelector('input[name="serviceType"]:checked')
                 .closest(".service-card").classList.add("selected");
             document.querySelector('input[name="pickupMethod"]:checked')
                 .closest(".pickup-option").classList.add("selected");
         });
 
-        // Back to top functionality
+        // Back to top
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $(".back-to-top").fadeIn("slow");
@@ -1100,24 +1317,24 @@
                 $(".back-to-top").fadeOut("slow");
             }
         });
-
         $(".back-to-top").click(function () {
             $("html, body").animate({ scrollTop: 0 }, 1500, "easeInOutExpo");
             return false;
         });
 
-        // Load header and footer
+        // Load header & footer
         fetch("../header/header.html")
             .then((response) => response.text())
             .then((data) => {
                 document.getElementById("header-placeholder").innerHTML = data;
             });
-
         fetch("../footer/footer.html")
             .then((response) => response.text())
             .then((data) => {
                 document.getElementById("footer-placeholder").innerHTML = data;
             });
     </script>
+
 </body>
+
 </html>
