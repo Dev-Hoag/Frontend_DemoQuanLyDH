@@ -233,19 +233,27 @@
             background: white;
             border-radius: 12px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-left: 4px solid #FF6B35;
             transition: all 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
 
-        .stat-card:nth-child(2) { border-left-color: #3498db; }
-        .stat-card:nth-child(3) { border-left-color: #2ecc71; }
-        .stat-card:nth-child(4) { border-left-color: #e74c3c; }
+        .stat-card:nth-child(2) {
+            border-left-color: #3498db;
+        }
+
+        .stat-card:nth-child(3) {
+            border-left-color: #2ecc71;
+        }
+
+        .stat-card:nth-child(4) {
+            border-left-color: #e74c3c;
+        }
 
         .stat-card:nth-child(3) {
             border-left-color: #2ecc71;
@@ -279,10 +287,21 @@
             font-size: 1.2rem;
         }
 
-        .stat-card:nth-child(1) .stat-icon { background: #FF6B35; }
-        .stat-card:nth-child(2) .stat-icon { background: #3498db; }
-        .stat-card:nth-child(3) .stat-icon { background: #2ecc71; }
-        .stat-card:nth-child(4) .stat-icon { background: #e74c3c; }
+        .stat-card:nth-child(1) .stat-icon {
+            background: #FF6B35;
+        }
+
+        .stat-card:nth-child(2) .stat-icon {
+            background: #3498db;
+        }
+
+        .stat-card:nth-child(3) .stat-icon {
+            background: #2ecc71;
+        }
+
+        .stat-card:nth-child(4) .stat-icon {
+            background: #e74c3c;
+        }
 
         .stat-card:nth-child(2) .stat-icon {
             background: #3498db;
@@ -368,7 +387,7 @@
             background: white;
             border-radius: 12px;
             padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .table-header {
@@ -735,7 +754,8 @@
                         </div>
                         <div class="chart-placeholder">
                             <div style="text-align: center;">
-                                <i class="fa fa-chart-line" style="font-size: 3rem; color: #ddd; margin-bottom: 10px;"></i>
+                                <i class="fa fa-chart-line"
+                                    style="font-size: 3rem; color: #ddd; margin-bottom: 10px;"></i>
                                 <p>Biểu đồ thống kê đơn hàng theo ngày</p>
                             </div>
                         </div>
@@ -746,7 +766,8 @@
                         </div>
                         <div class="chart-placeholder">
                             <div style="text-align: center;">
-                                <i class="fa fa-chart-pie" style="font-size: 3rem; color: #ddd; margin-bottom: 10px;"></i>
+                                <i class="fa fa-chart-pie"
+                                    style="font-size: 3rem; color: #ddd; margin-bottom: 10px;"></i>
                                 <p>Biểu đồ tròn trạng thái</p>
                             </div>
                         </div>
@@ -854,35 +875,46 @@
                 'analytics': 'Thống Kê & Báo Cáo',
                 'settings': 'Cài Đặt Hệ Thống'
             };
-            
+
             document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
 
             // Show content
             const content = document.getElementById('dashboardContent');
 
+            // showSection orders part
             if (section === 'orders') {
                 content.innerHTML = `
-            <div class="table-card">
-                <div class="table-header">
-                  <div class="table-title">Danh Sách Đơn Hàng</div>
+      <div class="orders-table-container fade-in">
+        <table class="table orders-table">
+          <thead>
+            <tr>
+              <th><i class="fas fa-hashtag me-2 text-black"></i>ID</th>
+              <th><i class="fas fa-shipping-fast me-2"></i>Dịch vụ</th>
+              <th><i class="fas fa-user me-2"></i>Người gửi</th>
+              <th><i class="fas fa-phone me-2"></i>SĐT</th>
+              <th><i class="fas fa-user-check me-2"></i>Người nhận</th>
+              <th><i class="fas fa-info-circle me-2"></i>Trạng thái</th>
+              <th><i class="fas fa-weight me-2"></i>KL (kg)</th>
+              <th><i class="fas fa-money-bill-wave me-2"></i>Phí (VNĐ)</th>
+              <th><i class="fas fa-search me-2"></i>Thao Tac</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr>
+              <td colspan="13">
+                <div class="loading-container">
+                  <div class="spinner"></div>
+                  <p>Đang tải danh sách đơn hàng...</p>
                 </div>
-                <table class="custom-table">
-                  <thead>
-                    <tr>
-                      <th>Mã ĐH</th>
-                      <th>Khách Hàng</th>
-                      <th>Trạng Thái</th>
-                      <th>Thao Tác</th>
-                    </tr>
-                  </thead>
-                  <tbody id="recentOrdersTable">
-                    <!-- Orders will be injected here -->
-                  </tbody>
-                </table>
-            </div>
-        `;
-                loadOrders(); // fetch + render orders
-            } else if (section === 'shippers') {
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `;
+                loadOrders();
+            }
+            else if (section === 'shippers') {
                 content.innerHTML = generateShippersContent();
             } else if (section === 'hubs') {
                 content.innerHTML = generateHubsContent();
@@ -920,52 +952,58 @@
                     },
                 });
 
-                if (!response.ok) {
-                    throw new Error("Không thể lấy danh sách đơn hàng!");
-                }
+                if (!response.ok) throw new Error("Không thể lấy danh sách đơn hàng!");
 
                 const orders = await response.json();
-                const tableBody = document.getElementById("recentOrdersTable");
+                const tableBody = document.getElementById("ordersBody");
                 tableBody.innerHTML = "";
 
-                orders.forEach((order) => {
+                orders.forEach(order => {
                     const row = document.createElement("tr");
 
-                    // build status dropdown
                     let statusOptions = validStatuses
-                        .map(
-                            (st) =>
-                                `<option value="${st}" ${st === order.status ? "selected" : ""}>${st}</option>`
-                        )
+                        .map(st => `<option value="${st}" ${st === order.status ? "selected" : ""}>${st}</option>`)
                         .join("");
 
                     row.innerHTML = `
-                <td>${order.id}</td>
-                <td>${order.senderName}</td>
-                <td>
-                    <select class="status-dropdown" data-id="${order.id}">
-                        ${statusOptions}
-                    </select>
-                </td>
-                <td>
-                    <button class="action-btn btn-view" data-id="${order.id}"><i class="fa fa-eye"></i></button>
-                    <button class="action-btn btn-edit" data-id="${order.id}"><i class="fa fa-edit"></i></button>
-                    <button class="action-btn btn-delete" data-id="${order.id}"><i class="fa fa-trash"></i></button>
-                </td>
+              <td>${order.id}</td>
+              <td>${order.serviceType || "-"}</td>
+              <td>${order.senderName || "-"}</td>
+              <td>${order.receiverName || "-"}</td>
+              <td>${order.receiverPhoneNumber || "-"}</td>
+              <td>
+                  <select class="status-dropdown" data-id="${order.id}">
+                    ${statusOptions}
+                  </select>
+              </td>
+              <td>${order.weight || "-"}</td>
+              <td>${order.totalFee
+                || 0}</td>
+              <td>
+                <button class="action-btn btn-view" data-id="${order.id}">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="action-btn btn-edit" data-id="${order.id}">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="action-btn btn-delete" data-id="${order.id}">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
             `;
 
                     tableBody.appendChild(row);
                 });
+                console.log("Orders loaded:", orders);
 
                 attachDeleteEvents();
                 attachChangeStatusEvents();
-                console.log("Orders loaded successfully");
-
             } catch (error) {
                 console.error("Error loading orders:", error);
                 alert("Có lỗi khi tải đơn hàng!");
             }
         }
+
 
         // Attach delete buttons
         function attachDeleteEvents() {
@@ -1002,12 +1040,29 @@
         function attachChangeStatusEvents() {
             const dropdowns = document.querySelectorAll(".status-dropdown");
             dropdowns.forEach((dropdown) => {
-                dropdown.addEventListener("change", async () => {
+                dropdown.addEventListener("change", async (e) => {
                     const id = dropdown.getAttribute("data-id");
                     const newStatus = dropdown.value;
-                    await changeOrderStatus(id, newStatus);
-                    await changeTrackingStatus(id, newStatus);
+                    const oldStatus = dropdown.getAttribute("data-old") || ""; // store old status
+
+                    // Confirm with admin before updating
+                    const confirmed = confirm(
+                        `⚠️ Bạn có chắc chắn muốn đổi trạng thái đơn hàng #${id}\n` +
+                        `Từ: ${oldStatus || "?"} ➝ ${newStatus} ?`
+                    );
+
+                    if (confirmed) {
+                        await changeOrderStatus(id, newStatus);
+                        await changeTrackingStatus(id, newStatus);
+                        dropdown.setAttribute("data-old", newStatus); // update old status
+                    } else {
+                        // Revert back to previous value
+                        dropdown.value = oldStatus || dropdown.value;
+                    }
                 });
+
+                // Store initial status as old value
+                dropdown.setAttribute("data-old", dropdown.value);
             });
         }
 
@@ -1033,27 +1088,27 @@
         async function changeTrackingStatus(id, status) {
             const token = localStorage.getItem("access_token") || "";
             try {
-        const response = await fetch("http://localhost:9000/api/tracking/update", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                orderId: id,
-                status: status,
-                updatedBy: "Admin",
-            }),
-        });
+                const response = await fetch("http://localhost:9000/api/tracking/update", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        orderId: id,
+                        status: status,
+                        updatedBy: "Admin",
+                    }),
+                });
 
-        if (!response.ok) {
-            throw new Error("❌ Không thể cập nhật trạng thái!");
-        }
+                if (!response.ok) {
+                    throw new Error("❌ Không thể cập nhật trạng thái!");
+                }
 
-        console.log("✅ Tracking updated for order:", orderId, "->", status);
-    } catch (err) {
-        console.error("❌ Lỗi khi cập nhật tracking:", err);
-    }
+                console.log("✅ Tracking updated for order:", orderId, "->", status);
+            } catch (err) {
+                console.error("❌ Lỗi khi cập nhật tracking:", err);
+            }
         }
 
 
@@ -1683,7 +1738,7 @@
         function handleResize() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
-            
+
             if (window.innerWidth <= 768) {
                 sidebar.classList.add('collapsed');
                 mainContent.classList.add('expanded');
@@ -1698,11 +1753,11 @@
         window.addEventListener('resize', handleResize);
 
         // Initialize tooltips
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Add tooltips to action buttons
             const tooltips = document.querySelectorAll('[title]');
             tooltips.forEach(element => {
-                element.addEventListener('mouseenter', function() {
+                element.addEventListener('mouseenter', function () {
                     // Simple tooltip implementation
                     const tooltip = document.createElement('div');
                     tooltip.className = 'tooltip-custom';
@@ -1718,19 +1773,19 @@
                         pointer-events: none;
                     `;
                     document.body.appendChild(tooltip);
-                    
+
                     const rect = this.getBoundingClientRect();
                     tooltip.style.left = rect.left + 'px';
                     tooltip.style.top = (rect.top - 35) + 'px';
-                    
-                    this.addEventListener('mouseleave', function() {
+
+                    this.addEventListener('mouseleave', function () {
                         tooltip.remove();
                     }, { once: true });
                 });
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const adminData = localStorage.getItem('vorder_admin');
             const token = localStorage.getItem('access_token');
 
@@ -1740,17 +1795,17 @@
         });
 
         // Action button handlers
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (e.target.classList.contains('btn-view') || e.target.parentElement.classList.contains('btn-view')) {
                 e.preventDefault();
                 alert('Xem chi tiết (Tính năng đang phát triển)');
             }
-            
+
             if (e.target.classList.contains('btn-edit') || e.target.parentElement.classList.contains('btn-edit')) {
                 e.preventDefault();
                 alert('Chỉnh sửa (Tính năng đang phát triển)');
             }
-            
+
             if (e.target.classList.contains('btn-delete') || e.target.parentElement.classList.contains('btn-delete')) {
                 e.preventDefault();
                 if (confirm('Bạn có chắc muốn xóa?')) {
@@ -1760,7 +1815,7 @@
         });
 
         // Notification click handler
-        document.querySelector('.notification-bell').addEventListener('click', function() {
+        document.querySelector('.notification-bell').addEventListener('click', function () {
             alert('Thông báo:\n\n• 5 đơn hàng mới cần xử lý\n• 2 shipper yêu cầu hỗ trợ\n• Hub TP.HCM đạt 95% công suất\n• Báo cáo tuần đã sẵn sàng\n• 1 khách hàng VIP phản hồi');
         });
 
@@ -1787,21 +1842,21 @@
             </div>
         `);
 
-        document.getElementById('quickSearch').addEventListener('keypress', function(e) {
+        document.getElementById('quickSearch').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 quickSearch(this.value);
                 this.value = '';
             }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('hubForm').addEventListener('submit', async function (e) {
                 e.preventDefault();
                 const name = document.getElementById('hubName').value.trim();
                 const address = document.getElementById('hubAddress').value.trim();
                 const region = document.getElementById('hubRegion').value.trim();
                 const token = localStorage.getItem('access_token');
-                
+
                 try {
                     const response = await fetch("http://localhost:9000/api/hubs/create", {
                         method: "POST",
@@ -1815,12 +1870,12 @@
                             hubRegion: region
                         })
                     });
-                    
+
                     if (!response.ok) {
                         const error = await response.json();
                         throw new Error(error.message || "Tạo Hub thất bại");
                     }
-                    
+
                     const result = await response.json();
                     alert("Tạo Hub thành công!");
                     await fetchAndRenderHubs();
@@ -1885,36 +1940,36 @@
     </script>
 
     <!-- Modal thêm Hub mới -->
-        <div class="modal fade" id="addHubModal" tabindex="-1" aria-labelledby="addHubLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
+    <div class="modal fade" id="addHubModal" tabindex="-1" aria-labelledby="addHubLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <form id="hubForm">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="addHubLabel">Thêm Hub Mới</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title" id="addHubLabel">Thêm Hub Mới</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                    <div class="mb-3">
-                        <label>Tên Hub</label>
-                        <input type="text" class="form-control" id="hubName" required />
-                    </div>
-                    <div class="mb-3">
-                        <label>Địa chỉ</label>
-                        <input type="text" class="form-control" id="hubAddress" required />
-                    </div>
-                    <div class="mb-3">
-                        <label>Khu vực (TP.HCM hoặc HÀ NỘI)</label>
-                        <input type="text" class="form-control" id="hubRegion" required />
-                    </div>
+                        <div class="mb-3">
+                            <label>Tên Hub</label>
+                            <input type="text" class="form-control" id="hubName" required />
+                        </div>
+                        <div class="mb-3">
+                            <label>Địa chỉ</label>
+                            <input type="text" class="form-control" id="hubAddress" required />
+                        </div>
+                        <div class="mb-3">
+                            <label>Khu vực (TP.HCM hoặc HÀ NỘI)</label>
+                            <input type="text" class="form-control" id="hubRegion" required />
+                        </div>
                     </div>
                     <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Tạo</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Tạo</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     </div>
                 </form>
-                </div>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
